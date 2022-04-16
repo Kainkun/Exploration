@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: be23d12135f594f40ae41a2b0878ff76
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Coneria Script Demo
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 65aca21f8656f054ebdf356d2ef7ef2e, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

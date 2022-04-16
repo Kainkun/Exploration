@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 0e857dacc75457b4faeddbb52bb26f8f
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Mr Sunshine
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 9e89fd7385eaf564992229b8942e0d18, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
