@@ -1,0 +1,1 @@
+git pull https://github.com/Kainkun/TEMPLATE-K.git template-k-3d-fps --allow-unrelated-histories --squash
