@@ -45,7 +45,7 @@ namespace DaveFPS
         [Header("Gravity")]
         public bool useGravity;
 
-        public float gravityCounterForce;
+        public float wallRunGravity = 10;
 
         [Header("References")]
         public Transform orientation;
@@ -141,7 +141,7 @@ namespace DaveFPS
 
             rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
             
-            pm.SetGravity(10);
+            pm.SetGravity(wallRunGravity);
 
             // apply camera effects
             cam.DoFov(90f);
@@ -172,10 +172,6 @@ namespace DaveFPS
             // push to wall force
             if (!(wallLeft && horizontalInput > 0) && !(wallRight && horizontalInput < 0))
                 rb.AddForce(-wallNormal * 100, ForceMode.Force);
-
-            // // weaken gravity
-            // if (useGravity)
-            //     rb.AddForce(transform.up * gravityCounterForce, ForceMode.Force);
         }
 
         private void StopWallRun()
