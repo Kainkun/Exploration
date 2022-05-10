@@ -67,7 +67,15 @@ namespace DaveFPS
         Rigidbody rb;
 
         public MovementState state;
-
+        
+        [Header("Boost")]
+        public float upBoost = 100;
+        public float forwardBoost = 100;
+        public float forwardUpBoost = 100;
+        private bool doubleJump = true;
+        
+        [Header("Teleporter")]
+        public Rigidbody teleporter;
         public enum MovementState
         {
             walking,
@@ -112,6 +120,46 @@ namespace DaveFPS
                 rb.drag = groundDrag;
             else
                 rb.drag = 0;
+            
+            //boost
+            if (grounded)
+                doubleJump = true;
+            
+            if (Input.GetKeyDown(KeyCode.Space) && state == MovementState.air)
+            {
+                Vector3 v = Camera.main.transform.forward;
+                v.y = 0;
+                v = v.normalized * 0.25f;
+                Debug.DrawRay(transform.position - v, -v, Color.red, 1);
+                if(Physics.Raycast(transform.position - v, -v, 1))
+                {
+                    print("YADAS");
+                    Vector3 f = Camera.main.transform.forward;
+                    f.y = 0;
+                    f = f.normalized * forwardBoost;
+                    f.y = forwardBoost;
+                    GetComponent<Rigidbody>().velocity = f;
+                    //GetComponent<Rigidbody>().AddForce(f, ForceMode.Impulse);
+                }
+                else
+                {
+                    if(!doubleJump)
+                        return;
+                    
+                    print("NADAS");
+                    Vector3 vel = GetComponent<Rigidbody>().velocity;
+                    vel.y = upBoost;
+                    GetComponent<Rigidbody>().velocity = vel;
+                    //GetComponent<Rigidbody>().AddForce(Vector3.up * upBoost, ForceMode.Impulse);
+                    doubleJump = false;
+                }
+            }
+
+            //teleport
+            if (Input.GetMouseButtonDown(1))
+            {
+                transform.position = teleporter.position + Vector3.up;
+            }
         }
 
         private void FixedUpdate()
@@ -281,18 +329,18 @@ namespace DaveFPS
                     rb.velocity = rb.velocity.normalized * moveSpeed;
             }
 
-            // limiting speed on ground or in air
-            else
-            {
-                Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-
-                // limit velocity if needed
-                if (flatVel.magnitude > moveSpeed)
-                {
-                    Vector3 limitedVel = flatVel.normalized * moveSpeed;
-                    rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
-                }
-            }
+            // // limiting speed on ground or in air
+            // else
+            // {
+            //     Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+            //
+            //     // limit velocity if needed
+            //     if (flatVel.magnitude > moveSpeed)
+            //     {
+            //         Vector3 limitedVel = flatVel.normalized * moveSpeed;
+            //         rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
+            //     }
+            // }
         }
 
         private void Jump()

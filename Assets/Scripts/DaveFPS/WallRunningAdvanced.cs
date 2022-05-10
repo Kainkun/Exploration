@@ -53,6 +53,8 @@ namespace DaveFPS
         public PlayerCam cam;
         private PlayerMovementAdvanced pm;
         private Rigidbody rb;
+        
+
 
         private void Start()
         {

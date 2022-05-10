@@ -15,6 +15,10 @@ namespace DaveFPS
         float xRotation;
         float yRotation;
 
+
+        public Rigidbody teleporter;
+        public float teleporterVelocity = 10;
+
         private void Start()
         {
             Cursor.lockState = CursorLockMode.Locked;
@@ -35,6 +39,30 @@ namespace DaveFPS
             // rotate cam and orientation
             camHolder.rotation = Quaternion.Euler(xRotation, yRotation, 0);
             orientation.rotation = Quaternion.Euler(0, yRotation, 0);
+            
+            //quick turn
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                StartCoroutine(Spin(180, 0.15f));
+            }
+            
+            //teleport throw
+            if (Input.GetMouseButtonDown(0))
+            {
+                teleporter.MovePosition(transform.position + (transform.forward * 1.5f));
+                teleporter.velocity = transform.forward * teleporterVelocity;
+            }
+        }
+
+        IEnumerator Spin(float rotation, float time)
+        {
+            float t = 0;
+            while (t < time)
+            {
+                yRotation += Time.deltaTime * rotation / time;
+                t += Time.deltaTime;
+                yield return null;
+            }
         }
 
         public void DoFov(float endValue)
