@@ -133,7 +133,6 @@ namespace DaveFPS
                 Debug.DrawRay(transform.position - v, -v, Color.red, 1);
                 if(Physics.Raycast(transform.position - v, -v, 1))
                 {
-                    print("YADAS");
                     Vector3 f = Camera.main.transform.forward;
                     f.y = 0;
                     f = f.normalized * forwardBoost;
@@ -146,7 +145,6 @@ namespace DaveFPS
                     if(!doubleJump)
                         return;
                     
-                    print("NADAS");
                     Vector3 vel = GetComponent<Rigidbody>().velocity;
                     vel.y = upBoost;
                     GetComponent<Rigidbody>().velocity = vel;
