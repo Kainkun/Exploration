@@ -7,15 +7,10 @@ using Yarn.Unity;
 public class Npc : MonoBehaviour, IInteractable
 {
     public string startNode;
-    DialogueRunner dialogueRunner;
 
-    public void Start()
-    {
-        dialogueRunner = FindObjectOfType<DialogueRunner>();
-    }
-    
     public void PrimaryInteract()
     {
-        dialogueRunner.StartDialogue(startNode);
+        if(!YarnSingleton.Get().dialogueRunner.IsDialogueRunning)
+            YarnSingleton.Get().dialogueRunner.StartDialogue(startNode);
     }
 }

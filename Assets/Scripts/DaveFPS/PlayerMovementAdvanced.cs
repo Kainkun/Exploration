@@ -154,7 +154,7 @@ namespace DaveFPS
             }
 
             //teleport
-            if (Input.GetMouseButtonDown(1))
+            if (teleporter && Input.GetMouseButtonDown(1))
             {
                 transform.position = teleporter.position + Vector3.up;
             }

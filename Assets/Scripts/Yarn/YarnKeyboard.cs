@@ -11,14 +11,12 @@ public class YarnKeyboard : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            LineView lineView = GetComponentInChildren<LineView>();
-            if (lineView)
-                lineView.UserRequestedViewAdvancement();
+            if (YarnSingleton.Get().lineView)
+                YarnSingleton.Get().lineView.UserRequestedViewAdvancement();
             
             if(EventSystem.current.currentSelectedGameObject)
             {
-                OptionView optionView = EventSystem.current.currentSelectedGameObject.GetComponent<OptionView>();
-                optionView.InvokeOptionSelected();
+                YarnSingleton.Get().OptionView.InvokeOptionSelected();
             }
         }
     }

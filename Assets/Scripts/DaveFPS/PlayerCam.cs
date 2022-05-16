@@ -47,7 +47,7 @@ namespace DaveFPS
             }
             
             //teleport throw
-            if (Input.GetMouseButtonDown(0))
+            if (teleporter && Input.GetMouseButtonDown(0))
             {
                 teleporter.MovePosition(transform.position + (transform.forward * 1.5f));
                 teleporter.velocity = transform.forward * teleporterVelocity;
