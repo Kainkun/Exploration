@@ -1,6 +1,7 @@
 ﻿title: Welcome
 ---
 <<declare $jobTokenCount to 0>>
+<<declare $hasMultiTool to false>>
 
 Welcome!
 Nice to meet you

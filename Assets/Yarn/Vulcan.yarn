@@ -1,4 +1,5 @@
 ﻿title: LibraryVulcan
+position: 186,181
 ---
 <<if $libraryVulcanFixed is false>>
     Error...<br>\[  \] I am not a Robot
@@ -12,8 +13,19 @@
 ===
 
 title:LibraryVulcanFixed
+position: 427,169
 ---
 Interface to talk with Vulcan
 Mitoshi exoses John
 Mitoshi later reaction to John's murder
+===
+
+title: PlayerRoomVulcan
+position: 187,313
+---
+<<declare $hasStandardKeyard to false>>
+Conglaturation for completing the orientation.
+Here is your keycard. It will give you access to the second floor with a few labs.
+You will need to complete more jobs for your keycard to be granted First-Class access to reach the advanced labs.
+<<set $hasStandardKeyard to true>>
 ===
