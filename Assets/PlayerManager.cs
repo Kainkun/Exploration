@@ -27,6 +27,9 @@ public class PlayerManager : MonoBehaviour
     }
 
     [EasyButtons.Button]
+    public static void ToggleNoclip() => playerMovement.ToggleNoclip();
+
+    [EasyButtons.Button]
     public static void UnlockMultiTool() => playerMultiTool.Activate();
 
     [EasyButtons.Button]
@@ -45,6 +48,6 @@ public class PlayerManager : MonoBehaviour
     public static void PickUp5Trash() => YarnAccess.AddValue("trashCount", 5);
 
     public static void PickUpTrash(float amount) => YarnAccess.AddValue("trashCount", amount);
-    
+
     public static void PickUpEssence(float amount) => YarnAccess.AddValue("essenceCount", amount);
 }

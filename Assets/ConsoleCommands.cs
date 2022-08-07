@@ -147,4 +147,25 @@ namespace ConsoleUtility
             }
         }
     }
+    
+    [AutoRegisterConsoleCommand]
+    public class Noclip : IConsoleCommand
+    {
+        public void Execute(string[] args)
+        {
+            PlayerManager.ToggleNoclip();
+        }
+
+        public string name => "noclip";
+        public string summary => "nc, noclip";
+        public string help => "usage: nc, noclip";
+
+        public IEnumerable<Console.Alias> aliases
+        {
+            get
+            {
+                yield return Console.Alias.Get("nc", "noclip");
+            }
+        }
+    }
 }

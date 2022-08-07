@@ -4,10 +4,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Cinemachine;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using Cursor = UnityEngine.Cursor;
 
@@ -36,16 +33,27 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         movementInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
+        mouseInput = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
+
         sprinting = Input.GetKey(KeyCode.LeftShift);
 
-        HandleClimb();
         HandleCamera();
-        HandleFuel();
-        HandleBoost();
-        if (!climbing && Input.GetKeyDown(KeyCode.Space))
-            jumpBuffer.Queue();
 
-        jumpBuffer.Tick(Time.deltaTime);
+        if (noclip)
+        {
+            HandleNoclip();
+            return;
+        }
+        else
+        {
+            HandleClimb();
+            HandleFuel();
+            HandleBoost();
+            if (!climbing && Input.GetKeyDown(KeyCode.Space))
+                jumpBuffer.Queue();
+
+            jumpBuffer.Tick(Time.deltaTime);
+        }
 
         HandleUi();
 
@@ -94,13 +102,55 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!climbing)
+        if (!climbing && !noclip)
         {
             HandleGlide();
             HandleJumpMovement();
             HandleMovement();
         }
     }
+
+
+    #region Noclip
+
+    private bool noclip;
+
+    public void ToggleNoclip()
+    {
+        if (!noclip)
+            EnableNoclip();
+        else
+            DisableNoclip();
+    }
+
+    public void EnableNoclip()
+    {
+        rb.isKinematic = true;
+        noclip = true;
+    }
+
+    public void DisableNoclip()
+    {
+        rb.isKinematic = false;
+        noclip = false;
+    }
+
+    void HandleNoclip()
+    {
+        float speed = 5;
+        float sprint = 20;
+        transform.position += ((PlayerManager.playerCamera.transform.forward * movementInput.y) +
+                               (PlayerManager.playerCamera.transform.right * movementInput.x)) *
+                              ((sprinting ? sprint : speed) * Time.deltaTime);
+        if (Input.GetKey(KeyCode.Space))
+            transform.position += (PlayerManager.playerCamera.transform.up) *
+                                  ((sprinting ? sprint : speed) * Time.deltaTime);
+        if (Input.GetKey(KeyCode.LeftControl))
+            transform.position += (-PlayerManager.playerCamera.transform.up) *
+                                  ((sprinting ? sprint : speed) * Time.deltaTime);
+    }
+
+    #endregion
 
 
     #region Movement Variables
@@ -287,8 +337,6 @@ public class PlayerMovement : MonoBehaviour
 
     void HandleCamera()
     {
-        mouseInput = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
-
         BodyYaw(mouseInput.x * mouseSensitivity * Time.deltaTime);
 
         CameraRotate(
