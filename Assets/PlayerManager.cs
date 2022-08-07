@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
-using Yarn.Unity;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -43,10 +42,9 @@ public class PlayerManager : MonoBehaviour
     public static void UnlockJetpackBoost() => playerMovement.canBoost = true;
 
     [EasyButtons.Button]
-    public static void PickUp5Trash()
-    {
-        YarnAccess.TryGetValue("trashCount", out float result);
-        result += 5;
-        YarnAccess.SetValue("trashCount", result);
-    }
+    public static void PickUp5Trash() => YarnAccess.AddValue("trashCount", 5);
+
+    public static void PickUpTrash(float amount) => YarnAccess.AddValue("trashCount", amount);
+    
+    public static void PickUpEssence(float amount) => YarnAccess.AddValue("essenceCount", amount);
 }

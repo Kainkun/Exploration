@@ -14,6 +14,7 @@
     "com.unity.timeline": "1.6.4",
     "com.unity.ugui": "1.0.0",
     "dev.yarnspinner.unity": "2.2.0",
+    "net.peeweek.console": "1.5.2",
     "com.unity.modules.ai": "1.0.0",
     "com.unity.modules.androidjni": "1.0.0",
     "com.unity.modules.animation": "1.0.0",
@@ -51,7 +52,8 @@
       "name": "OpenUPM",
       "url": "https://package.openupm.com",
       "scopes": [
-        "dev.yarnspinner"
+        "dev.yarnspinner",
+        "net.peeweek"
       ]
     }
   ]
