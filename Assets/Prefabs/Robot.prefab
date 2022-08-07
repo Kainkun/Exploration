@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 8467017382804282970}
   - component: {fileID: 4072494439367008897}
   - component: {fileID: 8467017382804283044}
+  - component: {fileID: 56230273}
   m_Layer: 0
   m_Name: Robot
   m_TagString: Untagged
@@ -78,8 +79,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 949ead675dc52924e90f798a30ae27a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startNode: Welcome
+  startNode: 
   playerInteractionBound: {fileID: 0}
+  smoothTime: 0.3
+  maxSpeed: 120
 --- !u!65 &8467017382804283044
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -93,6 +96,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.3916352, y: 1.9919931, z: 1.3388381}
   m_Center: {x: 0, y: 1.02, z: 0}
+--- !u!114 &56230273
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8467017382804283046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc1b91c5119cd944589413a989e335f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameObjects: []
 --- !u!1 &8467017382851758703
 GameObject:
   m_ObjectHideFlags: 0
@@ -1540,7 +1556,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 0
+  m_VersionIndex: 120
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -1856,7 +1872,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 0
+  m_VersionIndex: 120
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -1952,8 +1968,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8467017383201981427}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.509, y: 0.237, z: 0.484}
+  m_LocalRotation: {x: -0, y: -0.70710677, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: -0.479, y: 0.237, z: -0.572}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1963,7 +1979,7 @@ Transform:
   - {fileID: 8467017382851758700}
   m_Father: {fileID: 5745457838798667664}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!114 &8467017383201981428
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2416,7 +2432,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 0
+  m_VersionIndex: 120
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -2743,7 +2759,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 0
+  m_VersionIndex: 120
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -8112,7 +8128,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 0
+  m_VersionIndex: 120
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
