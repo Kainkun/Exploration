@@ -1,0 +1,19 @@
+﻿title: LibraryVulcan
+---
+<<if $libraryVulcanFixed is false>>
+    Error...<br>\[  \] I am not a Robot
+    -> Press "I am not a Robot" button
+    Loading...
+    Fixed!
+    <<set $libraryVulcanFixed to true>>
+<<endif>>
+
+<<jump LibraryVulcanFixed>>
+===
+
+title:LibraryVulcanFixed
+---
+Interface to talk with Vulcan
+Mitoshi exoses John
+Mitoshi later reaction to John's murder
+===

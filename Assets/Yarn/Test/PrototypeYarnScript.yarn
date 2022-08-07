@@ -1,0 +1,205 @@
+﻿title: WakeUp
+position: -196,-393
+---
+
+<<declare $FitzgeraldKey to false>>
+<<declare $MitoshiKey to false>>
+<<declare $JohnKey to false>>
+<<declare $IndigoKey to false>>
+<<declare $VacantKey to false>>
+
+<<declare $tokenCount to 0>>
+<<declare $Trash to 0>>
+
+You wake up in the onboarding room where a robot tells you to do jobs.
+The robot gives you a Multi-tool.
+
+-> Thanks!
+-> What do i do now?
+    Robot: Go talk to other bots and ask for jobs.
+
+<<jump Floor1Hub>>
+===
+
+
+title: Floor1Hub
+position: 83,-381
+---
+-> Go to Library
+    <<jump Library>>
+-> Go to Park
+    <<if $tokenCount >= 3>>
+        <<jump Park>>
+    <<else>>
+        The Park requires 3 work tokens
+    <<endif>>
+-> Go to Arcade
+    <<if $tokenCount >= 10>>
+        <<jump Arcade>>
+    <<else>>
+        The Arcade requires 10 work tokens
+    <<endif>>
+-> Talk to trash bot
+    <<if $TrashPickup == true>>
+        Robot: Hi again, remeber you need to pick up 10 trash.
+    <<else>>
+        Robot: Hello, here is the trash module for your Multi-tool. Pick up 10 peices of trash and ill give you a work token
+        <<set $TrashPickup to true>>
+    <<endif>>
+-> Pick up 10 trash <<if $TrashPickup>>
+    <<set $Trash += 10>>
+    you now have {$Trash} Trash!
+    <<if $TrashDone is false>>
+        <<set $tokenCount += 1>>
+        <<set $TrashDone to true>>
+        you now have {$tokenCount} work tokens!
+    <<endif>>
+-> Got to Second Floor <<if $keycard>>
+    <<jump Floor2Hub>>
+    Ding!
+
+<<jump Floor1Hub>>
+===
+
+title: Library
+position: 436,-456
+---
+-> Pick up jetpack boots
+    <<if $HasJetpackK == true>>
+        You put on the jetpack boots
+        <<set $HasJetpack to true>>
+    <<else>>
+        The jetpack is in a locked container
+    <<endif>>
+-> Go inside presentation room
+    There is stuff blocking the enterance, it looks like you might be able to enter through the stairs on the roof
+-> Go to table area and read papers
+    John: Surely theres something I can do with this essence, Nix has been doing all kinds of things with it. Surely I dont need Mitoshi's help to invent one lously invention by midnight
+-> Go to library machine and press button
+    <<set $libraryMachineReset to false>>
+    The library spins around and rearanges
+-> Go to left study room
+    Its locked
+-> Go to right study room
+    Its locked
+-> Go to living quarters
+    <<if $tokenCount >= 3>>
+        <<jump LivingQuarters>>>
+    <<else>>
+        You need at least 3 work tokens to rest
+    <<endif>>
+-> Go to second floor
+    <<jump LibrarySecondFloor>>
+-> Return to Hub
+    <<jump Floor1Hub>>
+
+<<jump Library>>
+===
+
+title: LibrarySecondFloor
+position: 443,-590
+---
+-> Push reset button
+    <<if $libraryMachineReset == false>>
+        -> Push "I am not a robot" button
+            <<set $libraryMachineReset to true>>
+            <<set $tokenCount += 1>>
+            The library spins around and rearanged to a neat row
+            you now have {$tokenCount} work tokens!
+    <<else>>
+        Library machine is already reset
+    <<endif>>
+-> Climb onto the library machine and hop onto the presentation room's roof <<if $libraryMachineReset>>
+    You carefully climb onto the machine and leap your way to the roof
+    <<jump PresentationRoof>>
+
+<<jump LibrarySecondFloor>>
+===
+
+title: PresentationRoof
+position: 777,-560
+---
+-> Use Vulcan interface
+    Mitoshi: John is a lier! Ive been inventing stuff for him and recently he even stle Nix's work!
+    Vulcan: I'll handle this
+    ...
+    Mitoshi: I didnt mean for this, I just wanted you to disipline him, not KILL him!
+    Vulcan: Dont worry, creative output has doubled since John was eliminiated
+    <<if $VulcanDone == false>>
+        <<set $tokenCount += 1>>
+        you now have {$tokenCount} work tokens!
+        <<set $VulcanDone to true>>
+    <<endif>>
+-> Go down stairs <<if $JohnKey == false>>
+    You find John's corpse and the key to his room
+    <<set $JohnKey to true>>
+-> Drop down to ground floor
+    <<jump Library>>
+
+<<jump PresentationRoof>>
+===
+
+
+
+title: Park
+position: 465,-254
+---
+-> look at trees
+    the trees look fake
+-> Go to hub
+    <<jump Floor1Hub>>
+-> Go to living quarters
+    <<jump LivingQuarters>>
+
+<<jump Park>>
+===
+
+title: Arcade
+position: 460,-44
+---
+Arcade!
+
+<<jump Arcade>>
+===
+
+title: LivingQuarters
+position: 826,-258
+---
+->Fitzgerald's Room <<if $FitzgeraldKey>>
+->Mitoshi's Room <<if $MitoshiKey>>
+->John's Room <<if $JohnKey>>
+    <<if $essenceCollector is false>>
+        <<set $essenceCollector to true>>
+        you found the essence collector
+    <<else>>
+        there is nothing to do here
+    <<endif>>
+->Your Room
+    <<if $tokenCount >= 3>>
+        <<set $keycard to true>>
+        you got a keycard
+    <<else>>
+        there is nothing to do in your room until you get 3 work tokens. you currently have {$tokenCount}
+    <<endif>>
+->Indigo's Room <<if $IndigoKey>>
+->Vacant Room <<if $VacantKey>>
+
+->Go to Library
+    <<jump Library>>
+->Go to Park
+    <<jump Park>>
+->Go to Arcade
+    <<jump Arcade>>
+->Go to Veranda
+
+<<jump LivingQuarters>>
+===
+
+
+title: Floor2Hub
+position: 85,-884
+---
+Floor 2
+
+<<jump Floor2Hub>>
+===

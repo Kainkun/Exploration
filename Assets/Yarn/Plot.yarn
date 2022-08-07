@@ -1,0 +1,15 @@
+﻿title: Welcome
+---
+<<declare $jobTokenCount to 0>>
+
+Welcome!
+Nice to meet you
+how are you
+incredible
+
+<<if $hasMultiTool is false>>
+    Heres a multitool
+    <<SetActiveName WelcomeBot multiTool>>
+<<endif>>
+
+===

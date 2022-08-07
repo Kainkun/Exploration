@@ -1,0 +1,104 @@
+fileFormatVersion: 2
+guid: 287f4904c06811249b0bf50279a87978
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: 053561912b1654d80a424bb0696a74ae, type: 3}
+  sourceScripts:
+  - {fileID: 6391573757903218779, guid: a3be71390f3702d42a03d87410144fda, type: 3}
+  - {fileID: 6391573757903218779, guid: 75fed78f2e0cd9b4aa2fef30f873cc2b, type: 3}
+  - {fileID: 6391573757903218779, guid: aee6a8df013713948bf4c9c0d5bef572, type: 3}
+  - {fileID: 6391573757903218779, guid: f1c917311d391ce46b74a56c6c2df52f, type: 3}
+  - {fileID: 6391573757903218779, guid: 03cdeae630fa7624188f270720b12829, type: 3}
+  compileErrors: []
+  serializedDeclarations:
+  - name: $trashJobStart
+    typeName: Bool
+    defaultValueBool: 0
+    defaultValueNumber: 0
+    defaultValueString: 
+    description: 
+    isImplicit: 0
+    sourceYarnAsset: {fileID: 6391573757903218779, guid: f1c917311d391ce46b74a56c6c2df52f, type: 3}
+  - name: $trashJobComplete
+    typeName: Bool
+    defaultValueBool: 0
+    defaultValueNumber: 0
+    defaultValueString: 
+    description: 
+    isImplicit: 0
+    sourceYarnAsset: {fileID: 6391573757903218779, guid: f1c917311d391ce46b74a56c6c2df52f, type: 3}
+  - name: $trash
+    typeName: Number
+    defaultValueBool: 0
+    defaultValueNumber: 0
+    defaultValueString: 
+    description: 
+    isImplicit: 0
+    sourceYarnAsset: {fileID: 6391573757903218779, guid: f1c917311d391ce46b74a56c6c2df52f, type: 3}
+  - name: $jobToken
+    typeName: Number
+    defaultValueBool: 0
+    defaultValueNumber: 0
+    defaultValueString: 
+    description: Implicitly declared in Vulcan.yarn, node LibraryVulcan
+    isImplicit: 1
+    sourceYarnAsset: {fileID: 6391573757903218779, guid: aee6a8df013713948bf4c9c0d5bef572, type: 3}
+  defaultLanguage: en-US
+  languagesToSourceAssets: []
+  useAddressableAssets: 0
+  searchAllAssembliesForActions: 1
+  assembliesToSearch: []
+  ListOfFunctions:
+  - Name: Random
+    ReturnType: -> Single
+    Parameters: []
+  - Name: RandomRange
+    ReturnType: -> Single
+    Parameters:
+    - minInclusive
+    - maxInclusive
+  - Name: Dice
+    ReturnType: -> Int32
+    Parameters:
+    - sides
+  - Name: Round
+    ReturnType: -> Int32
+    Parameters:
+    - num
+  - Name: RoundPlaces
+    ReturnType: -> Single
+    Parameters:
+    - num
+    - places
+  - Name: Floor
+    ReturnType: -> Int32
+    Parameters:
+    - num
+  - Name: Ceil
+    ReturnType: -> Int32
+    Parameters:
+    - num
+  - Name: Inc
+    ReturnType: -> Int32
+    Parameters:
+    - num
+  - Name: Dec
+    ReturnType: -> Int32
+    Parameters:
+    - num
+  - Name: Decimal
+    ReturnType: -> Single
+    Parameters:
+    - num
+  - Name: Int
+    ReturnType: -> Int32
+    Parameters:
+    - num
+  - Name: CoolFunction
+    ReturnType: -> Int32
+    Parameters: []
