@@ -2,34 +2,25 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Robot : YarnDialogueInteractable
 {
-    private bool lookTowardsPlayer;
     public float smoothTime;
     public float maxSpeed;
 
-    private Vector3 startLocalRotation;
     private float angleVelocity;
+    private bool lookTowardsPlayer;
 
-    private void Start()
-    {
-        startLocalRotation = transform.localEulerAngles;
-    }
-
-    private void Update()
+    private void FixedUpdate()
     {
         if (lookTowardsPlayer)
         {
             Vector3 playerPosition = PlayerManager.playerMovement.transform.position;
             Vector3 directionToPlayerFlat = playerPosition - transform.position;
             directionToPlayerFlat.y = 0;
-            float targetAngle = Vector3.SignedAngle(Vector3.forward, directionToPlayerFlat, Vector3.up);
 
-            float angle = Mathf.SmoothDampAngle(transform.localEulerAngles.y, targetAngle, ref angleVelocity,
-                smoothTime, maxSpeed);
-
-            transform.localRotation = Quaternion.Euler(startLocalRotation.x, angle, startLocalRotation.z);
+            Utility.YAxisLookTowardsSmoothDamp(transform, playerPosition, ref angleVelocity, smoothTime, maxSpeed, Time.fixedDeltaTime);
 
             if (Vector3.Angle(transform.forward, directionToPlayerFlat) < 0.1f)
             {

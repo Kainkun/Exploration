@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public static class Utility
@@ -36,5 +37,24 @@ public static class Utility
         halfExtent = boxCollider.size / 2;
 
         rotation = boxColliderTransform.rotation;
+    }
+
+    public static void YAxisLookTowardsSmoothDamp(
+        Transform selfTransform,
+        Vector3 positionToLookAt,
+        ref float angleVelocity,
+        float smoothTime,
+        float maxSpeed,
+        float deltaTime)
+    {
+        Vector3 directionToPlayerFlat = positionToLookAt - selfTransform.position;
+        directionToPlayerFlat.y = 0;
+        float targetAngle = Vector3.SignedAngle(Vector3.forward, directionToPlayerFlat, Vector3.up);
+
+        Vector3 localEulerAngles = selfTransform.localEulerAngles;
+        float angle = Mathf.SmoothDampAngle(localEulerAngles.y, targetAngle, ref angleVelocity,
+            smoothTime, maxSpeed, deltaTime);
+
+        selfTransform.localRotation = Quaternion.Euler(localEulerAngles.x, angle, localEulerAngles.z);
     }
 }

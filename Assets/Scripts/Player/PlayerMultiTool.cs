@@ -97,7 +97,7 @@ public class PlayerMultiTool : MonoBehaviour
             {
                 if (YarnAccess.TryGetValue("trashCount", out float trashCount) && trashCount > 0) ;
                 {
-                    trashBin.Deposit(trashCount);
+                    TrashBin.DepositStatic(trashCount);
                     YarnAccess.SetValue("trashCount", 0);
                 }
             }

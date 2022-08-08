@@ -1,7 +1,17 @@
 using System;
+using System.Collections.Generic;
 
 public static class YarnUtils
 {
+    public static Dictionary<string, string> variableNameToStringDict = new Dictionary<string, string>()
+    {
+        { "jobTokenCount", "Job Token" },
+        { "hasJohnRoomKey", "John's Keycard" },
+        { "hasStandardKeycard", "Your Keycard" },
+        { "hasLeftStudyRoomKey", "Study Room 1 Keycard" },
+        { "hasRightStudyRoomKey", "Study Room 2 Keycard" }
+    };
+
     public static bool HasRequiredCollectables(CollectableAmountPair[] requiredStackingCollectableAmountPairs,
         string[] requiredUniqueCollectables)
     {
@@ -37,7 +47,8 @@ public static class YarnUtils
             CollectableAmountPair requirementPair = requiredStackingCollectableAmountPairs[i];
             string requiredStackingCollectable = requirementPair.collectableName;
 
-            if (!YarnAccess.TryGetValue(requiredStackingCollectable, out float amount) || amount < requirementPair.collectableAmount)
+            if (!YarnAccess.TryGetValue(requiredStackingCollectable, out float amount) ||
+                amount < requirementPair.collectableAmount)
                 return false;
         }
 

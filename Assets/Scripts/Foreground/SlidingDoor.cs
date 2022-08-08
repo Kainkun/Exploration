@@ -33,6 +33,9 @@ public class SlidingDoor : MonoBehaviour
     private Utility.CheckBoxData frontTriggerCheckBoxData;
     private Utility.CheckBoxData backTriggerCheckBoxData;
 
+    public Hologram frontHologram;
+    public Hologram backHologram;
+
 
     public enum DoorState
     {
@@ -60,7 +63,7 @@ public class SlidingDoor : MonoBehaviour
         LayerMask.GetMask("Player"),
         QueryTriggerInteraction.Ignore);
 
-    private void Start()
+    private void Awake()
     {
         frontTriggerCheckBoxData = Utility.GetCheckBoxData(frontSideTrigger);
         backTriggerCheckBoxData = Utility.GetCheckBoxData(backSideTrigger);
@@ -69,12 +72,68 @@ public class SlidingDoor : MonoBehaviour
             rightStartPosition = rightDoor.position;
         if (leftDoor)
             leftStartPosition = leftDoor.position;
+
+
+        if (frontHologram)
+            frontHologram.OnTurnOn += GetFrontDisplayText;
+        if (backHologram)
+            backHologram.OnTurnOn += GetBackDisplayText;
+    }
+
+    private void OnDestroy()
+    {
+        if (frontHologram)
+            frontHologram.OnTurnOn -= GetFrontDisplayText;
+        if (backHologram)
+            backHologram.OnTurnOn -= GetBackDisplayText;
     }
 
     private void Update()
     {
         CheckDoorState();
         AnimateDoor();
+    }
+
+
+    public string GetFrontDisplayText() =>
+        GetDisplayText(frontSideRequiredUniqueCollectables, frontSideRequiredStackingCollectables);
+
+    public string GetBackDisplayText() =>
+        GetDisplayText(backSideRequiredUniqueCollectables, backSideRequiredStackingCollectables);
+
+    private string GetDisplayText(string[] requiredUniqueCollectables,
+        YarnUtils.CollectableAmountPair[] requiredStackingCollectables
+    )
+    {
+        string s = "";
+        if (requiredUniqueCollectables.Length > 0)
+            for (int i = 0; i < requiredUniqueCollectables.Length; i++)
+            {
+                string name = requiredUniqueCollectables[i];
+                if (YarnUtils.variableNameToStringDict.ContainsKey(name))
+                    name = YarnUtils.variableNameToStringDict[name];
+                s += name + " required\n";
+            }
+
+        if (requiredStackingCollectables.Length > 0)
+        {
+            for (int i = 0; i < requiredStackingCollectables.Length; i++)
+            {
+                string name = requiredStackingCollectables[i].collectableName;
+                if (YarnUtils.variableNameToStringDict.ContainsKey(name))
+                    name = YarnUtils.variableNameToStringDict[name];
+
+                float amount = requiredStackingCollectables[i].collectableAmount;
+                s += amount + " " + name + (amount > 1 ? "s" : "") +
+                     " required\n";
+            }
+        }
+
+        if (requiredUniqueCollectables.Length > 0 || requiredStackingCollectables.Length > 0)
+            s = s.Substring(0, s.Length - 1);
+
+        //YarnAccess.TryGetValue("depositedTrashCount", out float currentDepositedTrashCount);
+        return s;
     }
 
     void CheckDoorState()

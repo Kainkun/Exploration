@@ -12,8 +12,8 @@ public class Door : MonoBehaviour, IInteractable
     Vector3 startRotation;
     public Vector3 toggledPosition;
     public Vector3 toggledRotation;
-
-    private void Start()
+    
+    private void Awake()
     {
         var t = transform;
         startPosition = t.localPosition;
