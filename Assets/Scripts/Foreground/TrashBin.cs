@@ -27,7 +27,7 @@ public class TrashBin : MonoBehaviour
     public static string GetDisplayText()
     {
         YarnAccess.TryGetValue("depositedTrashCount", out float currentDepositedTrashCount);
-        return currentDepositedTrashCount + " total deposited\n";
+        return currentDepositedTrashCount + " total trash deposited\n";
     }
 
     public static void DepositStatic(float trashCount)

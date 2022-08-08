@@ -21,6 +21,7 @@ public class Hologram : MonoBehaviour
     public float directionSmoothTime;
     public float directionMaxSpeed;
 
+    [TextArea]
     public string textOverride;
 
     private Coroutine coroutine;
@@ -51,13 +52,10 @@ public class Hologram : MonoBehaviour
         if (!displaying && distance <= distanceToDisplay)
         {
             displaying = true;
+            string s = textOverride;
             if (OnTurnOn != null)
-            {
-                string s = OnTurnOn.Invoke();
-                if (textOverride != "")
-                    s = textOverride;
-                textMeshPro.text = s;
-            }
+                s = OnTurnOn.Invoke();
+            textMeshPro.text = s;
             if (coroutine != null)
                 StopCoroutine(coroutine);
             StartCoroutine(TurnOn());
