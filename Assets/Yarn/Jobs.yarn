@@ -10,7 +10,7 @@ position: 501,-339
     <<if $trashCount > 10>>
         <<jump TrashJobCompletedEarly>>
     <<else>>
-        <<jump TrashJobBefore>>
+        <<jump TrashJobStart>>
     <<endif>>
 <<endif>>
 
@@ -31,7 +31,7 @@ BruhBot: Well put the trash in the bin. It will give you a jobToken for every 10
 <<set $trashJobCompleted to true>>
 ===
 
-title: TrashJobBefore
+title: TrashJobStart
 position: 773,-396
 ---
 BruhBot: Bruh its dirty here, go pick up 10 pieces of trash. I'll give you a jobToken for it.
@@ -95,7 +95,7 @@ position: 501,676
     <<if $libraryMachineFixed is true>>
         <<jump LibraryFixMachineJobCompletedEarly>>
     <<else>>
-        <<jump LibraryFixMachineJobBefore>>
+        <<jump LibraryFixMachineJobStart>>
     <<endif>>
 <<endif>>
 
@@ -103,7 +103,7 @@ position: 501,676
     <<jump LibraryFixMachineJobDuring>>
 <<endif>>
 
-<<jump LibraryFixMachineJobAfter>>
+//<<jump LibraryFixMachineJobAfter>>
 ===
 
 title: LibraryFixMachineJobCompletedEarly
@@ -111,18 +111,20 @@ tags:
 colorID: 8
 position: 773,517
 ---
-RepairBot: Job_Early_Completion_Reaction
+RepairBot: Your first job is to fix the library machine.
+RepairBot: Oh. you already did? Well you deserve a jobToken for that. Here.
 <<set $libraryFixMachineJobStarted to true>>
 <<set $libraryFixMachineJobCompleted to true>>
 <<set $jobTokenCount += 1>>
+<<jump LibraryFixVulcanJob>>
 ===
 
-title: LibraryFixMachineJobBefore
+title: LibraryFixMachineJobStart
 tags: 
 colorID: 8
 position: 773,620
 ---
-RepairBot: Fix the library machine plz
+RepairBot: Your first job is to fix the library machine. Come back here after and ill give you a jobToken.
 <<set $libraryFixMachineJobStarted to true>>
 ===
 
@@ -132,20 +134,17 @@ colorID: 8
 position: 773,724
 ---
 <<if $libraryMachineFixed is true>>
-    RepairBot: Thanks for fixing the library machine. Heres a jobToken
+    RepairBot: Thanks for fixing the library machine. Heres the jobToken.
     <<set $jobTokenCount += 1>>
     <<set $libraryFixMachineJobCompleted to true>>
+    <<jump LibraryFixVulcanJob>>
 <<else>>
-    RepairBot: I asked you to fix the library machine. The main control panel is on the second floor.
+    RepairBot: Hey, did you fix the library machine yet?
+    -> I'm still working on it.
+        RepairBot: Alright, come back when you're done.
+    -> Can you help me out?
+        RepairBot: The library machine's main control panel is on the second floor.
 <<endif>>
-===
-
-title: LibraryFixMachineJobAfter
-tags: 
-colorID: 8
-position: 773,833
----
-If you're reading this, something went wrong.
 ===
 
 
@@ -161,7 +160,7 @@ position: 501,139
     <<if $libraryVulcanFixed is true>>
         <<jump LibraryFixVulcanJobCompletedEarly>>
     <<else>>
-        <<jump LibraryFixVulcanJobBefore>>
+        <<jump LibraryFixVulcanJobStart>>
     <<endif>>
 <<endif>>
 
@@ -175,16 +174,17 @@ position: 501,139
 title: LibraryFixVulcanJobCompletedEarly
 position: 773,-15
 ---
-RepairBot: Wow you fixed the Vulcan thingy? You deserve a jobToken for that.
+RepairBot: And for your next job, fix the vulcan thingy.
+RepairBot: Oh, you already did? We'll heres your jobToken for that.
 <<set $LibraryFixVulcanJobStarted to true>>
 <<set $LibraryFixVulcanJobCompleted to true>>
 <<set $jobTokenCount += 1>>
 ===
 
-title: LibraryFixVulcanJobBefore
+title: LibraryFixVulcanJobStart
 position: 773,93
 ---
-RepairBot: Hey can you go fix the Vulcan thingy? Climb up the stairs in the presentation room to get there.
+RepairBot: For your next job, can you go fix the Vulcan thingy? It's in the presentation room.
 <<set $LibraryFixVulcanJobStarted to true>>
 ===
 
@@ -196,7 +196,11 @@ position: 773,194
     <<set $jobTokenCount += 1>>
     <<set $LibraryFixVulcanJobCompleted to true>>
 <<else>>
-    RepairBot: Can you go fix the Vulcan thingy? Find your way ontop of the presentation room.
+    RepairBot: Hey, did you fix the vulcan thingy yet?
+    -> I'm still working on it.
+        RepairBot: Alright, come back when you're done.
+    -> Can you help me out?
+        RepairBot: The vulcan thingy is in the presentation room. If its currently being used by someone the door will be locked. Of course then the only way in is from the stairs on the roof but there is absolutely clearly no way to the roof of the presentation room I positively guarantee it...
 <<endif>>
 ===
 
@@ -205,7 +209,3 @@ position: 773,302
 ---
 If you're reading this, something went wrong.
 ===
-
-
-
-

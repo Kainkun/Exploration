@@ -1,0 +1,141 @@
+{
+	"Job": {
+		"prefix": "Job",
+		"body": [
+		  "title: ${1}Job",
+		  "position: 0,0",
+		  "---",
+		  "<<declare $${1/(.*)/${1:/camelcase}/}JobStarted to false>>",
+		  "<<declare $${1/(.*)/${1:/camelcase}/}JobCompleted to false>>",
+		  "<<declare $${3:variable} to ${4:value}>>",
+		  "",
+		  "<<if $${1/(.*)/${1:/camelcase}/}JobCompleted is true>>",
+		  "    <<jump ${1}JobAfter>>",
+		  "",
+		  "<<elseif $${1/(.*)/${1:/camelcase}/}JobStarted is false>>",
+		  "    <<if $${3:variable} ${5:condition}>>",
+		  "        <<jump ${1}JobCompletedEarly>>",
+		  "    <<else>>",
+		  "        <<jump ${1}JobStart>>",
+		  "    <<endif>>",
+		  "",
+		  "<<elseif $${3:variable} ${5:condition}>>",
+		  "    <<jump ${1}JobComplete>>",
+		  "<<else>>",
+		  "    <<jump ${1}JobDuring>>",
+		  "",
+		  "<<endif>>",
+		  "===",
+		  "",
+		  "title: ${1}JobCompletedEarly",
+		  "position: 250,0",
+		  "---",
+		  "${2:Name}: ${Job_Early_Completion_Reaction}",
+		  "<<set $${1/(.*)/${1:/camelcase}/}JobStarted to true>>",
+		  "<<set $${1/(.*)/${1:/camelcase}/}JobCompleted to true>>",
+		  "<<set \\$jobTokenCount += 1>>",
+		  "===",
+		  "",
+		  "title: ${1}JobStart",
+		  "position: 250,100",
+		  "---",
+		  "${2:Name}: ${Job_Request}",
+		  "<<set $${1/(.*)/${1:/camelcase}/}JobStarted to true>>",
+		  "===",
+		  "",
+		  "title: ${1}JobDuring",
+		  "position: 250,200",
+		  "---",
+		  "${2:Name}: ${Job_Follow_Up}",
+		  "-> ${I_Dont_Need_Help}",
+		  "    ${2:Name}: ${Come_Back_When_Youre_Done}",
+		  "-> ${I_Need_Help}",
+		  "    ${2:Name}: ${Job_Hint}",
+		  "===",
+		  "",
+		  "title: ${1}JobComplete",
+		  "position: 250,300",
+		  "---",
+		  "${2:Name}: ${Job_Completion_Acknowledgement}",
+		  "<<set $${1/(.*)/${1:/camelcase}/}JobCompleted to true>>",
+		  "<<set \\$jobTokenCount += 1>>",
+		  "===",
+		  "",
+		  "",
+		  "title: ${1}JobAfter",
+		  "position: 250,400",
+		  "---",
+		  "${2:Name}: ${Job_Completion_Reminder}",
+		  "==="
+		],
+		"description": "Job"
+	  }
+}
+
+/*
+title: ${1}Job
+position: 0,0
+---
+<<declare $${1/(.*)/${1:/camelcase}/}JobStarted to false>>
+<<declare $${1/(.*)/${1:/camelcase}/}JobCompleted to false>>
+<<declare $${3:variable} to ${4:value}>>
+
+<<if $${1/(.*)/${1:/camelcase}/}JobCompleted is true>>
+    <<jump ${1}JobAfter>>
+
+<<elseif $${1/(.*)/${1:/camelcase}/}JobStarted is false>>
+    <<if $${3:variable} ${5:condition}>>
+        <<jump ${1}JobCompletedEarly>>
+    <<else>>
+        <<jump ${1}JobStart>>
+    <<endif>>
+
+<<elseif $${3:variable} ${5:condition}>>
+    <<jump ${1}JobComplete>>
+<<else>>
+    <<jump ${1}JobDuring>>
+
+<<endif>>
+===
+
+title: ${1}JobCompletedEarly
+position: 250,0
+---
+${2:Name}: ${Job_Early_Completion_Reaction}
+<<set $${1/(.*)/${1:/camelcase}/}JobStarted to true>>
+<<set $${1/(.*)/${1:/camelcase}/}JobCompleted to true>>
+<<set \$jobTokenCount += 1>>
+===
+
+title: ${1}JobStart
+position: 250,100
+---
+${2:Name}: ${Job_Request}
+<<set $${1/(.*)/${1:/camelcase}/}JobStarted to true>>
+===
+
+title: ${1}JobDuring
+position: 250,200
+---
+${2:Name}: ${Job_Follow_Up}
+-> ${I_Dont_Need_Help}
+    ${2:Name}: ${Come_Back_When_Youre_Done}
+-> ${I_Need_Help}
+    ${2:Name}: ${Job_Hint}
+===
+
+title: ${1}JobComplete
+position: 250,300
+---
+${2:Name}: ${Job_Completion_Acknowledgement}
+<<set $${1/(.*)/${1:/camelcase}/}JobCompleted to true>>
+<<set \$jobTokenCount += 1>>
+===
+
+
+title: ${1}JobAfter
+position: 250,400
+---
+${2:Name}: ${Job_Completion_Reminder}
+===
+*/
