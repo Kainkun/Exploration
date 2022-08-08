@@ -6,7 +6,6 @@ public class TrashCollectable : YarnCollectable
 {
     public override void Collect()
     {
-        print("trash");
         base.Collect();
     }
 }

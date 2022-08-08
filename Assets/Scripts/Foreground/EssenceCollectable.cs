@@ -6,7 +6,6 @@ public class EssenceCollectable : YarnCollectable
 {
     public override void Collect()
     {
-        print("essence");
         base.Collect();
     }
 }
