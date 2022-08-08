@@ -126,7 +126,7 @@ namespace ConsoleUtility
 
         public string name => "cl";
         public string summary => "Collect";
-        public string help => "usage: cl, cl [tr, es, jt] amount";
+        public string help => "usage: cl, cl [tr, es, jt] amount, cl name";
 
         public IEnumerable<Console.Alias> aliases { get; }
     }
