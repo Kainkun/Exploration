@@ -86,7 +86,7 @@ namespace ConsoleUtility
 
         public string name => "ul";
         public string summary => "Unlock";
-        public string help => "usage: ul [mt, tc, ec, gl, bo]";
+        public string help => "usage: ul, ul [mt, tc, ec, gl, bo]";
 
         public IEnumerable<Console.Alias> aliases { get; }
     }
@@ -98,6 +98,9 @@ namespace ConsoleUtility
         {
             if (args.Length == 0)
             {
+                PlayerManager.PickUpTrash(1000);
+                PlayerManager.PickUpEssence(1000);
+                PlayerManager.GetJobToken(1000);
                 return;
             }
 
@@ -109,12 +112,21 @@ namespace ConsoleUtility
                 case "es":
                     PlayerManager.PickUpEssence(int.Parse(args[1]));
                     break;
+                case "jt":
+                    PlayerManager.GetJobToken(int.Parse(args[1]));
+                    break;
+                default:
+                    if (args.Length == 1)
+                        YarnAccess.SetValue(args[0], true);
+                    else
+                        YarnAccess.AddValue(args[0], float.Parse(args[1]));
+                    break;
             }
         }
 
         public string name => "cl";
         public string summary => "Collect";
-        public string help => "usage: cl [tr, es] amount";
+        public string help => "usage: cl, cl [tr, es, jt] amount";
 
         public IEnumerable<Console.Alias> aliases { get; }
     }
@@ -147,7 +159,7 @@ namespace ConsoleUtility
             }
         }
     }
-    
+
     [AutoRegisterConsoleCommand]
     public class Noclip : IConsoleCommand
     {
@@ -162,10 +174,7 @@ namespace ConsoleUtility
 
         public IEnumerable<Console.Alias> aliases
         {
-            get
-            {
-                yield return Console.Alias.Get("nc", "noclip");
-            }
+            get { yield return Console.Alias.Get("nc", "noclip"); }
         }
     }
 }
