@@ -105,6 +105,9 @@ public class SlidingDoor : MonoBehaviour
         YarnUtils.CollectableAmountPair[] requiredStackingCollectables
     )
     {
+        if (YarnUtils.HasRequiredCollectables(requiredUniqueCollectables, requiredStackingCollectables))
+            return "";
+        
         string s = "";
         if (requiredUniqueCollectables.Length > 0)
             for (int i = 0; i < requiredUniqueCollectables.Length; i++)
@@ -124,15 +127,17 @@ public class SlidingDoor : MonoBehaviour
                     name = YarnUtils.variableNameToStringDict[name];
 
                 float amount = requiredStackingCollectables[i].collectableAmount;
-                s += amount + " " + name + (amount > 1 ? "s" : "") +
+                s += "<size=100%>" + amount + " " + name + (amount > 1 ? "s" : "") +
                      " required\n";
+
+                YarnAccess.TryGetValue(requiredStackingCollectables[i].collectableName, out float result);
+                s += "<size=50%>You currently have " + result + "\n";
             }
         }
 
         if (requiredUniqueCollectables.Length > 0 || requiredStackingCollectables.Length > 0)
             s = s.Substring(0, s.Length - 1);
 
-        //YarnAccess.TryGetValue("depositedTrashCount", out float currentDepositedTrashCount);
         return s;
     }
 

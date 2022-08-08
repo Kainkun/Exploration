@@ -51,6 +51,8 @@ public class YarnCollectable : MonoBehaviour
 
         collected = true;
 
+        Hologram.RefreshHolograms();
+
         if (!dontDestroy)
             Destroy(gameObject);
     }

@@ -21,8 +21,7 @@ public class Hologram : MonoBehaviour
     public float directionSmoothTime;
     public float directionMaxSpeed;
 
-    [TextArea]
-    public string textOverride;
+    [TextArea] public string textOverride;
 
     private Coroutine coroutine;
     private bool displaying;
@@ -34,16 +33,24 @@ public class Hologram : MonoBehaviour
 
     public delegate string TurnOnHandler();
 
+    private static List<Hologram> _holograms = new List<Hologram>();
     public event TurnOnHandler OnTurnOn;
 
-    private void Start()
+    private void Awake()
     {
+        _holograms.Add(this);
         text = transform.GetChild(0).GetComponent<RectTransform>();
         textMeshPro = text.GetComponent<TextMeshPro>();
 
         Color color = textMeshPro.color;
         color.a = 0;
         textMeshPro.color = color;
+    }
+
+    public static void RefreshHolograms()
+    {
+        foreach (Hologram hologram in _holograms)
+            hologram.SetText(hologram.OnTurnOn?.Invoke());
     }
 
     private void FixedUpdate()
