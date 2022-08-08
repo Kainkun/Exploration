@@ -6,19 +6,22 @@ public class YarnDialogueInteractable : MonoBehaviour, IInteractable
     public string startNode;
     public BoxCollider playerInteractionBound;
 
+    private Utility.CheckBoxData triggerCheckBoxData;
+
     private void Start()
     {
         if (playerInteractionBound)
-            playerInteractionBound.transform.parent = null;
+            triggerCheckBoxData = Utility.GetCheckBoxData(playerInteractionBound);
     }
 
     public virtual void PrimaryInteract()
     {
         if (playerInteractionBound && !Physics.CheckBox(
-                playerInteractionBound.transform.position + playerInteractionBound.center,
-                playerInteractionBound.size / 2,
-                playerInteractionBound.transform.rotation,
-                LayerMask.GetMask("Player")))
+                triggerCheckBoxData.triggerGlobalPosition,
+                triggerCheckBoxData.triggerHalfExtent,
+                triggerCheckBoxData.triggerRotation,
+                LayerMask.GetMask("Player"),
+                QueryTriggerInteraction.Ignore))
             return;
 
         if (!YarnAccess.dialogueRunner.IsDialogueRunning)
