@@ -102,11 +102,18 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!climbing && !noclip)
+        if (!climbing && !noclip && !YarnAccess.dialogueRunner.IsDialogueRunning)
         {
             HandleGlide();
             HandleJumpMovement();
             HandleMovement();
+        }
+        else
+        {
+            moveTowardsTargetMovementLocalVelocity = Vector2.zero;
+            prev = rb.position;
+            globalVelocity = Vector3.zero;
+            localVelocity = Vector3.zero;
         }
     }
 

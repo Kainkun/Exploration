@@ -3,13 +3,13 @@
 <<declare $jobTokenCount to 0>>
 <<declare $hasMultiTool to false>>
 
-Welcome!
-Nice to meet you
-how are you
-incredible
+WelcomeBot: Welcome!
+WelcomeBot: Nice to meet you
+WelcomeBot: how are you
+WelcomeBot: incredible
 
 <<if $hasMultiTool is false>>
-    Heres a multitool
+    WelcomeBot: Heres a multitool
     <<SetActiveName WelcomeBot multiTool>>
 <<endif>>
 

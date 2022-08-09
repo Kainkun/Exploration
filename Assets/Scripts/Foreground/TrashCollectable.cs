@@ -27,7 +27,6 @@ public class TrashCollectable : YarnCollectable
 
     private void Update()
     {
-        print(isDisplayingBounds);
         if (isDisplayingBounds)
         {
             if (currentBoundDistance < boundMinDistance)

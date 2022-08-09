@@ -7,11 +7,15 @@ public class YarnKeyboard : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            if (YarnAccess.lineView)
-                YarnAccess.lineView.UserRequestedViewAdvancement();
+            if (YarnAccess.dialogueRunner.IsDialogueRunning)
+                YarnAccess.lineView.OnContinueClicked();
+
+            // if (YarnAccess.dialogueRunner.IsDialogueRunning)
+            //     YarnAccess.dialogueRunner.OnViewRequestedInterrupt();
 
             if (EventSystem.current.currentSelectedGameObject)
             {
+                //optionview is EventSystem.current.currentSelectedGameObject.GetComponent<OptionView>();
                 YarnAccess.OptionView.InvokeOptionSelected();
             }
         }

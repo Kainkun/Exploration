@@ -1,4 +1,5 @@
 using System;
+using Antlr4.Runtime.Atn;
 using UnityEngine;
 
 public class YarnDialogueInteractable : MonoBehaviour, IInteractable
@@ -25,6 +26,15 @@ public class YarnDialogueInteractable : MonoBehaviour, IInteractable
             return;
 
         if (!YarnAccess.dialogueRunner.IsDialogueRunning)
+        {
             YarnAccess.dialogueRunner.StartDialogue(startNode);
+
+            YarnAccess.dialogueRunner.onDialogueComplete.AddListener(EndDialogue);
+        }
+    }
+
+    private void EndDialogue()
+    {
+        YarnAccess.dialogueRunner.onDialogueComplete.RemoveListener(EndDialogue);
     }
 }
