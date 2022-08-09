@@ -94,7 +94,6 @@ public class TrashCollectorModule : MultiToolModule
 
     public override void Update()
     {
-        Debug.Log("ye");
         if (Input.GetMouseButtonDown(0))
         {
             RaycastGet<TrashCollectable>()?.Collect();

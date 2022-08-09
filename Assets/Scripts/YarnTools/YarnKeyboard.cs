@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Yarn.Unity;
 
 public class YarnKeyboard : MonoBehaviour
 {
@@ -13,10 +14,13 @@ public class YarnKeyboard : MonoBehaviour
             // if (YarnAccess.dialogueRunner.IsDialogueRunning)
             //     YarnAccess.dialogueRunner.OnViewRequestedInterrupt();
 
-            if (EventSystem.current.currentSelectedGameObject)
+            //optionview is EventSystem.current.currentSelectedGameObject.GetComponent<OptionView>();
+            var a = EventSystem.current.currentSelectedGameObject;
+            if (a)
             {
-                //optionview is EventSystem.current.currentSelectedGameObject.GetComponent<OptionView>();
-                YarnAccess.OptionView.InvokeOptionSelected();
+                var b = a.GetComponent<OptionView>();
+                if (b)
+                    YarnAccess.OptionView.InvokeOptionSelected();
             }
         }
     }
