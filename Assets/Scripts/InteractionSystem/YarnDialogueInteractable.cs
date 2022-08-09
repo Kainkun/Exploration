@@ -30,8 +30,7 @@ public class YarnDialogueInteractable : MonoBehaviour, IInteractable
             YarnAccess.dialogueRunner.StartDialogue(startNode);
             
             // Cursor.lockState = CursorLockMode.None;
-            //playerInput.SwitchCurrentActionMap("UI");
-
+            
             YarnAccess.dialogueRunner.onDialogueComplete.AddListener(EndDialogue);
         }
     }
@@ -39,7 +38,7 @@ public class YarnDialogueInteractable : MonoBehaviour, IInteractable
     private void EndDialogue()
     {
         // Cursor.lockState = CursorLockMode.Locked;
-
+        
         YarnAccess.dialogueRunner.onDialogueComplete.RemoveListener(EndDialogue);
     }
 }

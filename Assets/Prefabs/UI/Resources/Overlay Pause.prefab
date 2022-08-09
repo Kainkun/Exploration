@@ -26,6 +26,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3111880821796950592}
   m_Father: {fileID: 0}
@@ -60,6 +61,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3111880821933761477}
   m_Father: {fileID: 102455950836050539}
@@ -159,6 +161,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3111880821992038529}
   - {fileID: 2091674092700408158}
@@ -239,6 +242,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.83853996, y: 0.83853996, z: 0.83853996}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3111880821933761477}
   m_RootOrder: 0
@@ -652,15 +656,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6834961362705245920, guid: f83adb03c4a8f3e428ceeca412aeb9ba, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6834961362705245920, guid: f83adb03c4a8f3e428ceeca412aeb9ba, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 6
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6834961362705245920, guid: f83adb03c4a8f3e428ceeca412aeb9ba, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6834961362705245920, guid: f83adb03c4a8f3e428ceeca412aeb9ba, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
@@ -692,11 +696,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6834961362705245920, guid: f83adb03c4a8f3e428ceeca412aeb9ba, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: TogglePauseUI
+      value: LoadScene
       objectReference: {fileID: 0}
     - target: {fileID: 6834961362705245920, guid: f83adb03c4a8f3e428ceeca412aeb9ba, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: LoadScene
+      value: UnpauseForMainMenu
       objectReference: {fileID: 0}
     - target: {fileID: 6834961362705245920, guid: f83adb03c4a8f3e428ceeca412aeb9ba, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName

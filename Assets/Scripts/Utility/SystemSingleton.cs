@@ -3,6 +3,7 @@ using UnityEngine;
 public class SystemSingleton<T> : MonoBehaviour where T : SystemSingleton<T>
 {
     static protected T g_instance = null;
+    protected bool isImposter;
     public static T Get()
     {
         Init();
@@ -24,6 +25,7 @@ public class SystemSingleton<T> : MonoBehaviour where T : SystemSingleton<T>
         {
             // If there is already and instance created,
             // Destory this extra instance
+            isImposter = true;
             Destroy(gameObject);
             return;
         }

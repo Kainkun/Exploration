@@ -2,16 +2,21 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.UI;
 using UnityEngine.SceneManagement;
+using Yarn.Unity;
 
 public class InputManager : SystemSingleton<InputManager>
 {
-    private static PlayerInput playerInput;
+    public static PlayerInput playerInput;
+    public static InputSystemUIInputModule inputSystemUIInputModule;
 
     protected override void Awake()
     {
         base.Awake();
+        
         DontDestroyOnLoad(transform.gameObject);
     }
 
@@ -22,59 +27,39 @@ public class InputManager : SystemSingleton<InputManager>
     private void Start()
     {
         playerInput = GetComponent<PlayerInput>();
-
+        inputSystemUIInputModule = GameObject.FindObjectOfType<InputSystemUIInputModule>();
         SceneManager.sceneLoaded += HandleLoadScene;
 
-        // maps = playerInput.actions.actionMaps.ToArray();
-        // print(playerInput.defaultActionMap);
-        // print(playerInput.actions);
-        // foreach (InputActionMap inputActionMap in playerInput.actions.actionMaps)
-        // {
-        //     print(inputActionMap.name);
-        // }
 
+        //EventSystem.current.SetSelectedGameObject();
+        //GameObject.FindObjectOfType<InputSystemUIInputModule>().move;
 
-        // inputslist.IndexOf("Player");
-        //
-        //
-        // inputStack.Add(inputslist.IndexOf("Player"));
-        //
-        // _inputPriority.Add(new Object(), "test4");
-        // _inputPriority.Add(new Object(), "test3");
-        // _inputPriority.Add(new Object(), "test2");
-        // _inputPriority.Add(new Object(), "test222");
-        // _inputPriority.Add(new Object(), "test5");
-        // _inputPriority.Add(new Object(), "test1");
-        // for (int i = 0; i < _inputPriority.Count; i++)
+        // if (Input.GetKeyDown(KeyCode.T))
         // {
-        //     print(_inputPriority.Values[i]);
+        //     print(EventSystem.current.currentSelectedGameObject);
         // }
-        // print(_inputPriority.Remove(new Object()));
+        //
+        // if (Input.GetKeyDown(KeyCode.Y))
+        // {
+        //     print(EventSystem.current.currentSelectedGameObject);
+        //     //EventSystem.current.currentSelectedGameObject.GetComponent<OptionView>().Select();
+        //     EventSystem.current.currentSelectedGameObject.GetComponent<OptionView>().InvokeOptionSelected();;
+        // }
     }
 
-    // public bool AddInput(string actionMapName, int priority)
-    // {
-    //     if (priority < _inputPriority.Keys[_inputPriority.Count])
-    //         return false;
-    //     
-    //     _inputPriority.Add(priority, actionMapName);
-    //     playerInput.SwitchCurrentActionMap(_inputPriority.Values[_inputPriority.Count]);
-    //
-    //     return true;
-    // }
-
-    // public void RemoveInput(string actionMapName)
-    // {
-    //     _inputPriority.IndexOfValue("test4");
-    //     playerInput.SwitchCurrentActionMap(_inputPriority.Values[_inputPriority.Count]);
-    // }
 
     public static void HandleLoadScene(Scene scene, LoadSceneMode loadSceneMode)
     {
         if (scene.buildIndex == 0)
+        {
+            Cursor.lockState = CursorLockMode.None;
             playerInput.SwitchCurrentActionMap("UI");
+        }
         else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
             playerInput.SwitchCurrentActionMap("Player");
+        }
     }
 
     public void OnPlayerPause()
@@ -136,4 +121,40 @@ public class InputManager : SystemSingleton<InputManager>
 
     public Action Tertiary;
     public void OnTertiary() => Tertiary?.Invoke();
+
+    public void OnChangeDialogueOption(InputValue value)
+    {
+        float direction = value.Get<float>();
+
+        // if(EventSystem.current.currentSelectedGameObject == null)
+        // {
+        //     GameObject gameObject = GameObject.FindObjectOfType<OptionView>().gameObject;
+        //     if(gameObject)
+        //         EventSystem.current.SetSelectedGameObject(gameObject);
+        // }
+
+
+        OptionView optionView = YarnAccess.CurrentOptionView;
+        if (optionView && optionView.IsInteractable())
+        {
+            AxisEventData axisEventData = new AxisEventData(EventSystem.current);
+
+            axisEventData.Reset();
+            axisEventData.moveVector = new Vector2(0, direction);
+            axisEventData.moveDir = direction > 0 ? MoveDirection.Up : MoveDirection.Down;
+
+            ExecuteEvents.Execute(optionView.gameObject, axisEventData, ExecuteEvents.moveHandler);
+        }
+    }
+    
+    public void OnChooseDialogueOption()
+    {
+        OptionView optionView = YarnAccess.CurrentOptionView;
+        if (optionView && optionView.IsInteractable())
+            YarnAccess.CurrentOptionView.InvokeOptionSelected();
+        else
+            YarnAccess.lineView.UserRequestedViewAdvancement();
+    }
+
+
 }

@@ -114,7 +114,6 @@ GameObject:
   - component: {fileID: 6565938584081192277}
   - component: {fileID: 6888724787808458050}
   - component: {fileID: 4115270453943963440}
-  - component: {fileID: 4115270453943963446}
   - component: {fileID: 4115270453943963441}
   m_Layer: 0
   m_Name: Dialogue System
@@ -200,18 +199,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textLanguageCode: en-US
---- !u!114 &4115270453943963446
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5513629622615317800}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f297449dc2d8c104a8bc7b2ec1822252, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &4115270453943963441
 MonoBehaviour:
   m_ObjectHideFlags: 0

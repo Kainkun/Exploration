@@ -16,6 +16,7 @@ public class ScriptableObjectUtility : ScriptableObject
     public void ToggleSettingsUI(bool active) => GameManager.ToggleSettingsUI(active);
 
     public void Unpause() => InputManager.Get().OnUnpause();
+    public void UnpauseForMainMenu() => GameManager.UnpauseForMainMenu();
     
     
     public void LoadScene(int index) => GameManager.LoadScene(index);

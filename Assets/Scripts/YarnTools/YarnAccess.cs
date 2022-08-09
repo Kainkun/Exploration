@@ -11,13 +11,30 @@ public class YarnAccess : MonoBehaviour
     [HideInInspector] public static DialogueRunner dialogueRunner;
     [HideInInspector] public static InMemoryVariableStorage inMemoryVariableStorage;
     [HideInInspector] public static LineView lineView;
-    public static OptionView OptionView => EventSystem.current.currentSelectedGameObject.GetComponent<OptionView>();
+    [HideInInspector] public static OptionsListView optionsListView;
+
+    public static OptionView CurrentOptionView
+    {
+        get
+        {
+            GameObject gameObject = EventSystem.current.currentSelectedGameObject;
+            if (gameObject)
+            {
+                OptionView optionView = gameObject.GetComponent<OptionView>();
+                if (optionView)
+                    return optionView;
+            }
+
+            return null;
+        }
+    }
 
     private void Start()
     {
         dialogueRunner = GetComponent<DialogueRunner>();
         inMemoryVariableStorage = GetComponent<InMemoryVariableStorage>();
         lineView = GetComponentInChildren<LineView>();
+        optionsListView = GetComponentInChildren<OptionsListView>();
     }
 
 

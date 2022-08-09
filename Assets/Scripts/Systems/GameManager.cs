@@ -14,62 +14,100 @@ public class GameManager : SystemSingleton<GameManager>
     public static GameObject overlayPause;
     public static GameObject overlaySettings;
     public static GameObject eventSystem;
-    
+
     public static bool applicationIsQuitting = false;
-    
+
     private static readonly GameData GameData = new GameData();
 
-    private void Start()
+    protected override void Awake()
     {
+        base.Awake();
+
+        if (isImposter)
+            return;
+
         DontDestroyOnLoad(transform.gameObject);
-        
+
         Application.quitting += () => applicationIsQuitting = true;
-        
+
         GameData.SetData();
 
         overlayCredits = Instantiate(Resources.Load<GameObject>("Overlay Credits"));
         overlayPause = Instantiate(Resources.Load<GameObject>("Overlay Pause"));
         overlaySettings = Instantiate(Resources.Load<GameObject>("Overlay Settings"));
         eventSystem = Instantiate(Resources.Load<GameObject>("EventSystem"));
-        
-         DontDestroyOnLoad(overlayCredits);
-         DontDestroyOnLoad(overlayPause);
-         DontDestroyOnLoad(overlaySettings);
-         DontDestroyOnLoad(eventSystem);
-        
-         overlayCredits.SetActive(false);
-         overlayPause.SetActive(false);
-         overlaySettings.SetActive(false);
+
+        DontDestroyOnLoad(overlayCredits);
+        DontDestroyOnLoad(overlayPause);
+        DontDestroyOnLoad(overlaySettings);
+        DontDestroyOnLoad(eventSystem);
+
+        overlayCredits.SetActive(false);
+        overlayPause.SetActive(false);
+        overlaySettings.SetActive(false);
     }
 
     public static void ToggleCreditsUI() => overlayCredits.SetActive(!overlayCredits.activeSelf);
-    public static void ToggleCreditsUI(bool active) =>overlayCredits.SetActive(active);
+    public static void ToggleCreditsUI(bool active) => overlayCredits.SetActive(active);
     public static void TogglePauseUI() => overlayPause.SetActive(!overlayPause.activeSelf);
-    public static void TogglePauseUI(bool active) =>overlayPause.SetActive(active);
+
+
+    private static bool _optionsListViewWasInteractableBeforePause;
+    private static GameObject _lastSelectedDialogueOptionBeforePause;
+
+    public static void TogglePauseUI(bool active)
+    {
+        overlayPause.SetActive(active);
+        if (active)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            InputManager.inputSystemUIInputModule.enabled = true;
+            if (YarnAccess.CurrentOptionView)
+                _lastSelectedDialogueOptionBeforePause = YarnAccess.CurrentOptionView.gameObject;
+            _optionsListViewWasInteractableBeforePause =
+                YarnAccess.optionsListView.GetComponent<CanvasGroup>().interactable;
+            YarnAccess.optionsListView.GetComponent<CanvasGroup>().interactable = false;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            InputManager.inputSystemUIInputModule.enabled = false;
+            YarnAccess.optionsListView.GetComponent<CanvasGroup>().interactable =
+                _optionsListViewWasInteractableBeforePause;
+            if (_lastSelectedDialogueOptionBeforePause)
+                EventSystem.current.SetSelectedGameObject(_lastSelectedDialogueOptionBeforePause);
+        }
+    }
+
+    public static void UnpauseForMainMenu()
+    {
+        overlayPause.SetActive(false);
+        Cursor.lockState = CursorLockMode.None;
+        InputManager.inputSystemUIInputModule.enabled = true;
+        Time.timeScale = 1;
+    }
+
     public static void ToggleSettingsUI() => overlaySettings.SetActive(!overlaySettings.activeSelf);
-    public static void ToggleSettingsUI(bool active) =>overlaySettings.SetActive(active);
+    public static void ToggleSettingsUI(bool active) => overlaySettings.SetActive(active);
 
 
-    
     public static bool paused;
     public static Action<bool> OnPauseChange;
+
     public static void TogglePause()
     {
         TogglePause(!paused);
     }
-    
+
     public static void TogglePause(bool pause)
     {
         paused = pause;
         Time.timeScale = pause ? 0 : 1;
         OnPauseChange?.Invoke(pause);
     }
-    
-    
-    public static void LoadScene(int index)
-    {
-        SceneManager.LoadScene(index);
-    }
+
+
+    public static void LoadScene(int index) => SceneManager.LoadScene(index);
 
     public static void QuitGame()
     {
