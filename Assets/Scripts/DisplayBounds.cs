@@ -25,7 +25,8 @@ public class DisplayBounds : MonoBehaviour
 
     private void OnDestroy()
     {
-        Destroy(rectUiTransform.gameObject);
+        if (rectUiTransform)
+            Destroy(rectUiTransform.gameObject);
     }
 
     void FixedUpdate()
@@ -40,7 +41,7 @@ public class DisplayBounds : MonoBehaviour
                         .position - transform.position,
                     out RaycastHit hit,
                     Single.PositiveInfinity,
-                    ~LayerMask.GetMask(new string[] {"Ignore Raycast", "Collectable", "Transparent"}),
+                    ~LayerMask.GetMask(new string[] { "Ignore Raycast", "Collectable", "Transparent" }),
                     QueryTriggerInteraction.Ignore)
                 && hit.collider.CompareTag("Player"))
             {

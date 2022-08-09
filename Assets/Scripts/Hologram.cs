@@ -34,7 +34,13 @@ public class Hologram : MonoBehaviour
     public delegate string TurnOnHandler();
 
     private static List<Hologram> _holograms = new List<Hologram>();
+    private bool isPlayerCameraNull;
     public event TurnOnHandler OnTurnOn;
+
+    private void Start()
+    {
+        isPlayerCameraNull = PlayerManager.playerCamera == null;
+    }
 
     private void Awake()
     {
@@ -55,6 +61,9 @@ public class Hologram : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if(isPlayerCameraNull)
+            return;
+        
         distance = Vector3.Distance(PlayerManager.playerCamera.transform.position, transform.position);
         if (!displaying && distance <= distanceToDisplay)
         {

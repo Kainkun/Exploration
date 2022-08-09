@@ -12,6 +12,12 @@ public class TrashCollectable : YarnCollectable
     private const float boundMinDistance = 20;
     public const float propogationSpeed = 0.6f;
     private static float currentBoundDistance;
+    private bool isplayerMovementNull;
+
+    private void Start()
+    {
+        isplayerMovementNull = PlayerManager.playerMovement == null;
+    }
 
     private void Awake()
     {
@@ -27,6 +33,9 @@ public class TrashCollectable : YarnCollectable
 
     private void Update()
     {
+        if(isplayerMovementNull)
+            return;
+        
         if (isDisplayingBounds)
         {
             if (currentBoundDistance < boundMinDistance)
