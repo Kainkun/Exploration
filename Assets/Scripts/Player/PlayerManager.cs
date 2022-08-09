@@ -28,11 +28,11 @@ public class PlayerManager : MonoBehaviour
 
     public static void ToggleNoclip() => playerMovement.ToggleNoclip();
 
-    public static void UnlockMultiTool() => playerMultiTool.Activate();
+    public static void UnlockMultiTool() => playerMultiTool.ActivateMultiTool();
 
-    public static void UnlockTrashCollector() => playerMultiTool.UnlockTrashCollector();
+    public static void UnlockTrashCollector() => playerMultiTool.UnlockModule(PlayerMultiTool.ModuleType.Trash);
 
-    public static void UnlockEssenceCollector() => playerMultiTool.UnlockEssenceCollector();
+    public static void UnlockEssenceCollector() => playerMultiTool.UnlockModule(PlayerMultiTool.ModuleType.Essence);
 
     public static void UnlockJetpackGlide() => playerMovement.canGlide = true;
 
@@ -41,7 +41,6 @@ public class PlayerManager : MonoBehaviour
     public static void PickUpTrash(float amount) => YarnAccess.AddValue("trashCount", amount);
 
     public static void PickUpEssence(float amount) => YarnAccess.AddValue("essenceCount", amount);
-    
-    public static void GetJobToken(float amount) => YarnAccess.AddValue("jobTokenCount", amount);
 
+    public static void GetJobToken(float amount) => YarnAccess.AddValue("jobTokenCount", amount);
 }

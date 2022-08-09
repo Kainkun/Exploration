@@ -1,10 +1,15 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
 using UnityEngine;
 
 public static class Utility
 {
+    public static float RealModulo(float a, float b)
+    {
+        return a - b * Mathf.Floor(a / b);
+    }
+
     public struct CheckBoxData
     {
         public Vector3 triggerGlobalPosition;

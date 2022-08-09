@@ -1,115 +1,80 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Google.Protobuf.WellKnownTypes;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMultiTool : MonoBehaviour
 {
-    public enum MultiToolMode
-    {
-        TrashCollector,
-        EssenceCollector
-    }
-
-    public LayerMask multiToolRaycast;
-    public MultiToolMode currentMultiToolMode;
-    private int multiToolCount = 0;
+    public GameObject baseMesh;
     public Transform muzzle;
-    public GameObject trashCollector;
-    public GameObject essenceCollector;
-    public GameObject mesh;
+    public LayerMask raycastLayerMask;
 
-    public void Activate()
+    private bool isMultiToolActive;
+    private int currentModuleCount = 0;
+    private ModuleType currentModule = ModuleType.None;
+    private Dictionary<ModuleType, MultiToolModule> moduleDict;
+
+    private void Start()
     {
+        moduleDict = new Dictionary<ModuleType, MultiToolModule>()
+        {
+            { ModuleType.None, new NoneModule(this) },
+            { ModuleType.Trash, new TrashCollectorModule(this) },
+            { ModuleType.Essence, new EssenceCollectorModule(this) }
+        };
+    }
+
+    public enum ModuleType
+    {
+        None,
+        Trash,
+        Essence
+    };
+
+    public void ActivateMultiTool()
+    {
+        if (isMultiToolActive)
+            return;
+
         YarnAccess.SetValue("hasMultiTool", true);
-        mesh.SetActive(true);
-    }
+        baseMesh.SetActive(true);
+        isMultiToolActive = true;
 
-    public void UnlockTrashCollector()
-    {
-        if (YarnAccess.TryGetValue("hasTrashCollector", out bool result) && result)
-            return;
-
-        multiToolCount++;
-        currentMultiToolMode = MultiToolMode.TrashCollector;
-        trashCollector.SetActive(true);
-        YarnAccess.SetValue("hasTrashCollector", true);
-    }
-
-    public void UnlockEssenceCollector()
-    {
-        if (YarnAccess.TryGetValue("hasEssenceCollector", out bool result) && result)
-            return;
-
-        multiToolCount++;
-        currentMultiToolMode = MultiToolMode.EssenceCollector;
-        essenceCollector.SetActive(true);
-        YarnAccess.SetValue("hasEssenceCollector", true);
+        moduleDict[currentModule].Intro();
     }
 
     void Update()
     {
-        if (!YarnAccess.TryGetValue("hasMultiTool", out bool multiToolResult) || multiToolResult == false)
+        if (!isMultiToolActive)
             return;
 
-        if (multiToolCount >= 2)
+        if (currentModuleCount >= 1)
         {
             if (Input.mouseScrollDelta.y > 0)
-                currentMultiToolMode = (MultiToolMode)(((int)currentMultiToolMode + 1) % multiToolCount);
+                SwitchMultiToolMode((ModuleType)Utility.RealModulo((int)currentModule + 1, currentModuleCount + 1));
             else if (Input.mouseScrollDelta.y < 0)
-                currentMultiToolMode = (MultiToolMode)Mathf.Abs(((int)currentMultiToolMode - 1) % multiToolCount);
+                SwitchMultiToolMode((ModuleType)Utility.RealModulo((int)currentModule - 1, currentModuleCount + 1));
         }
 
-        switch (currentMultiToolMode)
-        {
-            case MultiToolMode.TrashCollector:
-                if (YarnAccess.TryGetValue("hasTrashCollector", out bool trashResult) && trashResult == true)
-                    HandleTrashCollector();
-                break;
+        moduleDict[currentModule].Update();
+    }
 
-            case MultiToolMode.EssenceCollector:
-                if (YarnAccess.TryGetValue("hasEssenceCollector", out bool essenceResult) && essenceResult == true)
-                    HandleEssenceCollector();
-                break;
+    public void UnlockModule(ModuleType moduleType)
+    {
+        if (moduleDict[moduleType].Unlock())
+        {
+            currentModuleCount++;
+            if (isMultiToolActive)
+                SwitchMultiToolMode(moduleType);
         }
     }
 
-    T RaycastGet<T>() where T : Component
+    public void SwitchMultiToolMode(ModuleType moduleType)
     {
-        Transform t = PlayerManager.playerCamera.transform;
-        if (Physics.Raycast(t.position, t.forward, out RaycastHit raycastHit, 4f, multiToolRaycast,
-                QueryTriggerInteraction.Ignore))
-        {
-            T component = raycastHit.transform.GetComponent<T>();
-            if (component)
-                return component;
-        }
-
-        return null;
-    }
-
-    void HandleTrashCollector()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            RaycastGet<TrashCollectable>()?.Collect();
-            TrashBin trashBin = RaycastGet<TrashBin>();
-            if (trashBin)
-            {
-                if (YarnAccess.TryGetValue("trashCount", out float trashCount) && trashCount > 0) ;
-                {
-                    TrashBin.DepositStatic(trashCount);
-                    YarnAccess.SetValue("trashCount", 0);
-                }
-            }
-        }
-    }
-
-
-    void HandleEssenceCollector()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            RaycastGet<EssenceCollectable>()?.Collect();
-        }
+        moduleDict[currentModule].Outro();
+        currentModule = moduleType;
+        moduleDict[currentModule].Intro();
     }
 }

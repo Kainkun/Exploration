@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3358337375920355149}
   - component: {fileID: 2681256331577825705}
   - component: {fileID: 959743519828615042}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,7 +96,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e940c66e941f1284e836a238452f9aa2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tryToDisplay: 0
+  isOn: 0
 --- !u!1 &5089089281536849078
 GameObject:
   m_ObjectHideFlags: 0
@@ -108,7 +108,7 @@ GameObject:
   - component: {fileID: 5089089281536849034}
   - component: {fileID: 4030352428531351084}
   - component: {fileID: 2787271462281987865}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Trash
   m_TagString: Untagged
   m_Icon: {fileID: 0}

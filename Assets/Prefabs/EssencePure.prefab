@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7253693513337092091}
   - component: {fileID: 6018631913582703602}
   - component: {fileID: 518038507060846348}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Particle System
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4845,7 +4845,7 @@ GameObject:
   - component: {fileID: 7343921582874947798}
   - component: {fileID: 7343921582874947793}
   - component: {fileID: 373823648249506059}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: EssencePure
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38947,7 +38947,7 @@ GameObject:
   m_Component:
   - component: {fileID: 904547701450153227}
   - component: {fileID: 8565599330853401548}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}

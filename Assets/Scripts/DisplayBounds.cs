@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class DisplayBounds : MonoBehaviour
 {
-    public bool tryToDisplay;
+    public bool isOn;
     private Renderer renderer;
     private MeshFilter meshFilter;
     private Camera camera;
@@ -23,9 +23,14 @@ public class DisplayBounds : MonoBehaviour
         rectUiTransform.SetParent(GameObject.Find("Gameplay UI Canvas").transform);
     }
 
+    private void OnDestroy()
+    {
+        Destroy(rectUiTransform.gameObject);
+    }
+
     void FixedUpdate()
     {
-        if (tryToDisplay)
+        if (isOn)
         {
             Plane[] planes = GeometryUtility.CalculateFrustumPlanes(camera);
             if (GeometryUtility.TestPlanesAABB(planes, renderer.bounds)
@@ -35,7 +40,7 @@ public class DisplayBounds : MonoBehaviour
                         .position - transform.position,
                     out RaycastHit hit,
                     Single.PositiveInfinity,
-                    ~LayerMask.GetMask("Ignore Raycast"),
+                    ~LayerMask.GetMask(new string[] {"Ignore Raycast", "Collectable", "Transparent"}),
                     QueryTriggerInteraction.Ignore)
                 && hit.collider.CompareTag("Player"))
             {
