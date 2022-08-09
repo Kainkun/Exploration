@@ -30,13 +30,42 @@ public class PlayerMovement : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
     }
 
+    private void Start()
+    {
+        InputManager.Get().Move += v => movementInput = v.normalized;
+        InputManager.Get().Look += v => mouseInput = v;
+        InputManager.Get().Sprint += f => sprintButtonDown = f > 0;
+        InputManager.Get().Jump += f => JumpButton(f);
+        InputManager.Get().Crouch += f => crouchButtonDown = f > 0;
+    }
+
+    private void JumpButton(float f)
+    {
+        jumpButtonDown = f > 0;
+
+        if (jumpButtonDown)
+        {
+            if (!climbing)
+                TryClimb();
+
+            if (!climbing)
+                jumpBuffer.Queue();
+
+            //TODO: coyote jump dosnt work well with fuel or boosts
+            //Boost
+            if (canBoost && currentJetpackFuel >= boostFuelCost && !CanJump())
+            {
+                Vector3 v = rb.velocity;
+                v.y = upwardBoostForce;
+                rb.velocity = v;
+                currentJetpackFuel -= boostFuelCost;
+                currentJetpackFuel = Mathf.Clamp(currentJetpackFuel, 0, maxJetpackFuel);
+            }
+        }
+    }
+
     void Update()
     {
-        movementInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
-        mouseInput = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
-
-        sprinting = Input.GetKey(KeyCode.LeftShift);
-
         HandleCamera();
 
         if (noclip)
@@ -48,9 +77,6 @@ public class PlayerMovement : MonoBehaviour
         {
             HandleClimb();
             HandleFuel();
-            HandleBoost();
-            if (!climbing && Input.GetKeyDown(KeyCode.Space))
-                jumpBuffer.Queue();
 
             jumpBuffer.Tick(Time.deltaTime);
         }
@@ -121,6 +147,7 @@ public class PlayerMovement : MonoBehaviour
     #region Noclip
 
     private bool noclip;
+    private bool crouchButtonDown;
 
     public void ToggleNoclip()
     {
@@ -148,13 +175,13 @@ public class PlayerMovement : MonoBehaviour
         float sprint = 20;
         transform.position += ((PlayerManager.playerCamera.transform.forward * movementInput.y) +
                                (PlayerManager.playerCamera.transform.right * movementInput.x)) *
-                              ((sprinting ? sprint : speed) * Time.deltaTime);
-        if (Input.GetKey(KeyCode.Space))
+                              ((sprintButtonDown ? sprint : speed) * Time.deltaTime);
+        if (jumpButtonDown)
             transform.position += (PlayerManager.playerCamera.transform.up) *
-                                  ((sprinting ? sprint : speed) * Time.deltaTime);
-        if (Input.GetKey(KeyCode.LeftControl))
+                                  ((sprintButtonDown ? sprint : speed) * Time.deltaTime);
+        if (crouchButtonDown)
             transform.position += (-PlayerManager.playerCamera.transform.up) *
-                                  ((sprinting ? sprint : speed) * Time.deltaTime);
+                                  ((sprintButtonDown ? sprint : speed) * Time.deltaTime);
     }
 
     #endregion
@@ -169,7 +196,7 @@ public class PlayerMovement : MonoBehaviour
     public float acceleration;
 
     private Rigidbody rb;
-    private bool sprinting;
+    private bool sprintButtonDown;
     private Vector2 movementInput;
 
     Vector2 targetMovementLocalVelocity;
@@ -187,7 +214,7 @@ public class PlayerMovement : MonoBehaviour
         //Input to target velocity
         targetMovementLocalVelocity.y = movementInput.y * (movementInput.y > 0 ? walkForwardSpeed : walkBackwardsSpeed);
         targetMovementLocalVelocity.x = movementInput.x * walkSidewaysSpeed;
-        if (sprinting)
+        if (sprintButtonDown)
             targetMovementLocalVelocity *= sprintMultiplier;
 
         //Move(targetMovementVelocity);
@@ -242,6 +269,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Jump")] public float jumpVelocity;
     public float maxJumpHoldTime = 0.4f;
+    private bool jumpButtonDown;
 
     private float jumpHoldTime;
     private bool grounded;
@@ -287,7 +315,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //Jump hold
-        if (linearJump && Input.GetKey(KeyCode.Space))
+        if (linearJump && jumpButtonDown)
         {
             Vector3 velocity = rb.velocity;
             velocity.y = jumpVelocity;
@@ -296,7 +324,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //Jump peak
-        if (linearJump && (jumpHoldTime >= maxJumpHoldTime || !Input.GetKey(KeyCode.Space)))
+        if (linearJump && (jumpHoldTime >= maxJumpHoldTime || !jumpButtonDown))
         {
             jumpHoldTime = 0;
             linearJump = false;
@@ -418,11 +446,8 @@ public class PlayerMovement : MonoBehaviour
     {
         //TODO: climbing slopes buggy?
 
-        if (!climbing &&
-            (Input.GetKeyDown(KeyCode.Space) || (!grounded && Input.GetKey(KeyCode.Space))))
-        {
+        if ((!grounded && jumpButtonDown))
             TryClimb();
-        }
 
         //Climb animation
         if (climbing)
@@ -641,7 +666,7 @@ public class PlayerMovement : MonoBehaviour
             return;
 
         if (currentJetpackFuel > 0 && rb.velocity.y <= glideFallSpeed &&
-            (Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.LeftControl)))
+            (jumpButtonDown || crouchButtonDown))
         {
             gravity.enabled = false;
             gliding = true;
@@ -657,35 +682,6 @@ public class PlayerMovement : MonoBehaviour
             gravity.enabled = true;
             gliding = false;
         }
-    }
-
-    void HandleBoost()
-    {
-        if (!canBoost)
-            return;
-
-        //TODO: coyote jump dosnt work well with fuel or boosts
-
-        //if (currentJetpackFuel > 0 && !grounded && Input.GetKeyDown(KeyCode.Space))
-        if (currentJetpackFuel >= boostFuelCost && !CanJump() && Input.GetKeyDown(KeyCode.Space))
-        {
-            // rb.AddForce(Vector3.up * upwardBoostForce, ForceMode.Impulse);
-            Vector3 v = rb.velocity;
-            v.y = upwardBoostForce;
-            rb.velocity = v;
-            currentJetpackFuel -= boostFuelCost;
-            currentJetpackFuel = Mathf.Clamp(currentJetpackFuel, 0, maxJetpackFuel);
-            // if (currentJetpackFuel % boostFuelCost == 0)
-            //     currentJetpackFuel -= boostFuelCost;
-            // else
-            //     currentJetpackFuel -= currentJetpackFuel % boostFuelCost;
-        }
-
-        // if (!grounded && Input.GetKeyDown(KeyCode.LeftShift) && currentBoosts > 0)
-        // {
-        //     rb.AddForce(transform.forward * forwardBoostForce, ForceMode.Impulse);
-        //     currentBoosts--;
-        // }
     }
 
     void HandleUi()

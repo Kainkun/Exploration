@@ -18,7 +18,7 @@ public class InputManager : SystemSingleton<InputManager>
 
     // public InputActionMap[] maps;
     // public InputActionAsset actions;
-    
+
     private void Start()
     {
         playerInput = GetComponent<PlayerInput>();
@@ -71,7 +71,7 @@ public class InputManager : SystemSingleton<InputManager>
 
     public static void HandleLoadScene(Scene scene, LoadSceneMode loadSceneMode)
     {
-        if(scene.buildIndex == 0)
+        if (scene.buildIndex == 0)
             playerInput.SwitchCurrentActionMap("UI");
         else
             playerInput.SwitchCurrentActionMap("Player");
@@ -79,7 +79,7 @@ public class InputManager : SystemSingleton<InputManager>
 
     public void OnPlayerPause()
     {
-        if(SceneManager.GetActiveScene().buildIndex != 0)
+        if (SceneManager.GetActiveScene().buildIndex != 0)
         {
             playerInput.SwitchCurrentActionMap("UI");
             GameManager.TogglePauseUI(true);
@@ -89,7 +89,7 @@ public class InputManager : SystemSingleton<InputManager>
 
     public void OnUnpause()
     {
-        if(SceneManager.GetActiveScene().buildIndex != 0)
+        if (SceneManager.GetActiveScene().buildIndex != 0)
         {
             playerInput.SwitchCurrentActionMap("Player");
             GameManager.TogglePauseUI(false);
@@ -103,7 +103,7 @@ public class InputManager : SystemSingleton<InputManager>
         {
             GameManager.ToggleSettingsUI(false);
         }
-        else if(GameManager.overlayPause.activeSelf)
+        else if (GameManager.overlayPause.activeSelf)
         {
             OnUnpause();
         }
@@ -114,35 +114,26 @@ public class InputManager : SystemSingleton<InputManager>
     }
 
     public Action<float> Jump;
-    public void OnJump(InputValue value)
-    {
-        Jump?.Invoke(value.Get<float>());
-    }
+    public void OnJump(InputValue value) => Jump?.Invoke(value.Get<float>());
 
     public Action<float> Crouch;
-    public void OnCrouch(InputValue value)
-    {
-        Crouch?.Invoke(value.Get<float>());
-    }
+    public void OnCrouch(InputValue value) => Crouch?.Invoke(value.Get<float>());
 
     public Action<Vector2> Move;
-    public void OnMove(InputValue value)
-    {
-        Move?.Invoke(value.Get<Vector2>());
-    }
+    public void OnMove(InputValue value) => Move?.Invoke(value.Get<Vector2>());
 
     public Action<Vector2> Look;
-    public void OnLook(InputValue value)
-    {
-        Look?.Invoke(value.Get<Vector2>());
-    }
-    
+    public void OnLook(InputValue value) => Look?.Invoke(value.Get<Vector2>());
+
+    public Action<float> Sprint;
+    public void OnSprint(InputValue value) => Sprint?.Invoke(value.Get<float>());
+
     public Action Primary;
     public void OnPrimary() => Primary?.Invoke();
-    
+
     public Action Secondary;
     public void OnSecondary() => Secondary?.Invoke();
-    
+
     public Action Tertiary;
     public void OnTertiary() => Tertiary?.Invoke();
 }

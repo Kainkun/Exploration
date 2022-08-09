@@ -11,17 +11,17 @@ public class YarnKeyboard : MonoBehaviour
             if (YarnAccess.dialogueRunner.IsDialogueRunning)
                 YarnAccess.lineView.OnContinueClicked();
 
-            // if (YarnAccess.dialogueRunner.IsDialogueRunning)
-            //     YarnAccess.dialogueRunner.OnViewRequestedInterrupt();
-
-            //optionview is EventSystem.current.currentSelectedGameObject.GetComponent<OptionView>();
-            var a = EventSystem.current.currentSelectedGameObject;
-            if (a)
-            {
-                var b = a.GetComponent<OptionView>();
-                if (b)
-                    YarnAccess.OptionView.InvokeOptionSelected();
-            }
+            // // if (YarnAccess.dialogueRunner.IsDialogueRunning)
+            // //     YarnAccess.dialogueRunner.OnViewRequestedInterrupt();
+            //
+            // //optionview is EventSystem.current.currentSelectedGameObject.GetComponent<OptionView>();
+            // var a = EventSystem.current.currentSelectedGameObject;
+            // if (a)
+            // {
+            //     var b = a.GetComponent<OptionView>();
+            //     if (b)
+            //         YarnAccess.OptionView.InvokeOptionSelected();
+            // }
         }
     }
 }

@@ -30,6 +30,7 @@ public class YarnDialogueInteractable : MonoBehaviour, IInteractable
             YarnAccess.dialogueRunner.StartDialogue(startNode);
             
             // Cursor.lockState = CursorLockMode.None;
+            //playerInput.SwitchCurrentActionMap("UI");
 
             YarnAccess.dialogueRunner.onDialogueComplete.AddListener(EndDialogue);
         }
