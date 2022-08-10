@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class YarnDialogueInteractable : MonoBehaviour, IInteractable
 {
+    public bool ignoreInteraction;
     public string startNode;
     public BoxCollider playerInteractionBound;
 
     private Utility.CheckBoxData triggerCheckBoxData;
 
-    private void Start()
+    protected virtual void Awake()
     {
         if (playerInteractionBound)
             triggerCheckBoxData = Utility.GetCheckBoxData(playerInteractionBound);
@@ -17,6 +18,9 @@ public class YarnDialogueInteractable : MonoBehaviour, IInteractable
 
     public virtual void PrimaryInteract()
     {
+        if(ignoreInteraction)
+            return;
+        
         if (playerInteractionBound && !Physics.CheckBox(
                 triggerCheckBoxData.triggerGlobalPosition,
                 triggerCheckBoxData.triggerHalfExtent,
@@ -35,7 +39,7 @@ public class YarnDialogueInteractable : MonoBehaviour, IInteractable
         }
     }
 
-    private void EndDialogue()
+    protected virtual void EndDialogue()
     {
         // Cursor.lockState = CursorLockMode.Locked;
         

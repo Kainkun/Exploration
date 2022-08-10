@@ -52,15 +52,15 @@ public static class Utility
         float maxSpeed,
         float deltaTime)
     {
-        Vector3 directionToPlayerFlat = positionToLookAt - selfTransform.position;
-        directionToPlayerFlat.y = 0;
-        float targetAngle = Vector3.SignedAngle(Vector3.forward, directionToPlayerFlat, Vector3.up);
+        Vector3 directionTowardsFlat = positionToLookAt - selfTransform.position;
+        directionTowardsFlat.y = 0;
+        float targetAngle = Vector3.SignedAngle(Vector3.forward, directionTowardsFlat, Vector3.up);
 
-        Vector3 localEulerAngles = selfTransform.localEulerAngles;
-        float angle = Mathf.SmoothDampAngle(localEulerAngles.y, targetAngle, ref angleVelocity,
+        Vector3 eulerAngles = selfTransform.eulerAngles;
+        float angle = Mathf.SmoothDampAngle(eulerAngles.y, targetAngle, ref angleVelocity,
             smoothTime, maxSpeed, deltaTime);
 
-        selfTransform.localRotation = Quaternion.Euler(localEulerAngles.x, angle, localEulerAngles.z);
+        selfTransform.rotation = Quaternion.Euler(eulerAngles.x, angle, eulerAngles.z);
     }
 
     private static Rect BoundsToScreenSpace(Camera camera, Bounds bounds)

@@ -1,20 +1,57 @@
 ﻿title: Welcome
 ---
+<<declare $welcomeDone to false>>
+
+<<if $welcomeDone is false>>
+    HelloBot: [nomarkup]Hello <color=\#9e9e9e>[Name]</color>! I'm HelloBot! Nice to meet you :)[/nomarkup]
+    -> Nice to meet you too!
+    -> Do you not know my name?
+        HelloBot: ...
+        HelloBot: [nomarkup]Of course I do <color=\#9e9e9e>[Name]</color>, don't be silly![/nomarkup]
+    -> ...
+    HelloBot: [nomarkup]According to our database, you came all the way from <color=\#9e9e9e>[Location]</color> to work for us. Wow![/nomarkup]
+    HelloBot: Anyhow, welcome to The Lab, the most advanced research and development facility of all time!
+    HelloBot: Please head down the stairs to watch our onboarding presentation.
+    <<set $welcomeDone to true>>
+    <<InvokeEvent WelcomeBot_1>>
+<<endif>>
+===
+
+title: Movie
+---
+Movie plays
+Movie explains your contract that you wont leave until the company is satisfied
+Movie explains that your job is to be as creative as possible
+Movie shows map of the place
+Movie explains orientation
+Movie explains promotion
+Movie tells you to start orientation tour
+Movie says some corporate inspirational quotes
+===
+
+title: WelcomeAfterMovie
+---
+<<declare $welcomeAfterMovieDone to false>>
 <<declare $jobTokenCount to 0>>
-<<declare $hasMultiTool to false>>
 
-WelcomeBot: Welcome!
-WelcomeBot: Nice to meet you
-WelcomeBot: how are you
-WelcomeBot: incredible
+<<if $welcomeAfterMovieDone is false>>
+    HelloBot: [nomarkup]Wasn't that just inspiring? :')[/nomarkup]
+    HelloBot: [nomarkup]Now, lets start your orientation tour![/nomarkup]
+    HelloBot: [nomarkup] <color=\#9e9e9e>[InitializeTour]</color><color=\#E72599>z</color><color=\#AF18D9>h</color><color=\#BB5059>v</color><color=\#48AE4C>j</color><color=\#5F6A1E>%</color><color=\#F98DFC>1</color><color=\#EBB431>X</color><color=\#0E3901>Q</color><color=\#95A5AA>R</color><color=\#A5AEDB>h</color><color=\#F48771>t</color><color=\#BE3B36>A</color><color=\#0C4D70>[</color><color=\#B2269B>m</color><color=\#C84016>L</color><color=\#1A8FE4>-</color><color=\#C0AA91>U</color><color=\#E3BE93>u</color><color=\#B16765>G</color><color=\#CE0D5E>\</color><color=\#E72599>U</color><color=\#AF18D9>&</color><color=\#BB5059>b</color><color=\#48AE4C>5</color><color=\#5F6A1E>6</color><color=\#F98DFC>I</color><color=\#EBB431>x</color><color=\#0E3901>/</color><color=\#95A5AA>h</color><color=\#A5AEDB>&</color><color=\#F48771>8</color><color=\#BE3B36>;</color><color=\#0C4D70>m</color><color=\#B2269B>N</color><color=\#C84016>c</color><color=\#1A8FE4>B</color><color=\#C0AA91>]</color><color=\#E3BE93>A</color><color=\#B16765>;</color><color=\#CE0D5E>j</color><color=\#613B89>(</color><color=\#6C9BE4>(</color><color=\#551E8C>j</color><color=\#FD1D94>w</color><color=\#69D4F0>4</color><color=\#BAD6C5>@</color><color=\#260113>+</color><color=\#988DA5>[</color><color=\#A20297>]</color><color=\#645FC0>5</color><color=\#0A0182>b</color><color=\#19449E>8</color><color=\#8DFB7E>"</color><color=\#38FA59>I</color><color=\#F7D138>l</color><color=\#C1D3F8>n</color><color=\#967738>u</color><color=\#38C4BA>;</color><color=\#851E02>K</color><color=\#90027E>q</color><color=\#3134C7>K</color><color=\#AD26DD>G</color><color=\#F41215>M</color><color=\#F0D687>B</color><color=\#FBB1B6>j</color><color=\#CA69E2>&</color><color=\#36B613>;</color><color=\#2272C8>c</color><color=\#4299CD>X</color><color=\#4DC909>J</color><color=\#865F5A>x</color><color=\#6E3203>^</color><color=\#CFDFFB>e</color><color=\#D5020A>E</color><color=\#12E99B>g</color><color=\#6DA2DF>A</color><color=\#19E093>C</color><color=\#DD214F>L</color><color=\#681FDB>c</color><color=\#75AA49>d</color><color=\#7B2625>l</color><color=\#F95016>F</color><color=\#CED569>~</color><color=\#CC30A4>f</color><color=\#611925>-</color><color=\#0FD9C0>;</color><color=\#A150A7>R</color><color=\#C4EE91>:</color><color=\#4956BC>J</color><color=\#E829FF>H</color><color=\#94954D>^</color><color=\#976E42>Y</color><color=\#02B520>j</color><color=\#CC175F>B</color><color=\#26FB30>U</color><color=\#F88570>P</color><color=\#6AECE0>T</color><color=\#D001B0>r</color><color=\#FAD4AD>$</color><color=\#A00C44>9</color><color=\#439784> </color><color=\#8C784B>]</color><color=\#59C9E6>\</color><color=\#9B41BC>q</color><color=\#4005BB>K</color><color=\#DDFBDF>y</color><color=\#F0EA78>Z</color><color=\#C93673>,</color><color=\#DE7DEE>m</color><color=\#DEA7EC>E</color><color=\#22C128>K</color><color=\#68E2C2>T</color><color=\#7F26A4>$</color><color=\#B3E15A>C</color><color=\#E83394>(</color><color=\#F7D9B7>%</color><color=\#96E50C>]</color><color=\#4022FC>%</color><color=\#4FA3C5>,</color><color=\#488AC9>t</color><color=\#A40765>C</color><color=\#9434E6>e</color><color=\#851DBE>Y</color><color=\#6013E5>e</color><color=\#86E259>S</color><color=\#3B02E3>8</color><color=\#B94D94>I</color><color=\#9242BB>7</color><color=\#0A87DF>l</color><color=\#E628B9>p</color><color=\#511E78>N</color><color=\#9A022C>W</color><color=\#40CEC9>.</color><color=\#5B35C4>A</color><color=\#BBE492>Z</color><color=\#D4CDCE>v</color><color=\#0B45FC>Y</color><color=\#6D842E>$</color><color=\#B2D19A>8</color><color=\#29B00A>N</color><color=\#BF0C68>M</color><color=\#1C0A97>T</color><color=\#D7F6FC>$</color><color=\#3C8A41>k</color><color=\#FDFBD4>-</color><color=\#6BA42E>s</color><color=\#953ED2>D</color><color=\#EE3E4A>S</color><color=\#8D1CEE>h</color><color=\#5A4C11>-</color><color=\#221263>)</color><color=\#21E955>f</color><color=\#B949B9>&</color><color=\#A3B55D>?</color><color=\#CA684C>X</color><color=\#D05B99>X</color><color=\#A51B67>k</color><color=\#8507D7>z</color><color=\#DB9CE3>+</color><color=\#F2A481>$</color><color=\#3E084C>l</color><color=\#1BE68E>G</color><color=\#55176F>w</color><color=\#F06AEF>v</color><color=\#65E231>X</color><color=\#5B3D9F>G</color><color=\#61685C>g</color><color=\#A26CB1>H</color><color=\#6BAFDD>j</color><color=\#F6B5D9>0</color><color=\#63AA59>1</color><color=\#B79203>%</color><color=\#D9B17C>O</color><color=\#4B8CCD>s</color><color=\#8DA78C>v</color><color=\#A568FB>/</color><color=\#B4C17A>S</color><color=\#8F7D78>U</color><color=\#9A56D9>6</color><color=\#B65C3B>(</color><color=\#D7ACAD>H</color><color=\#84BF2F>e</color><color=\#1E8A04>;</color><color=\#FCE83B>M</color><color=\#7024D4>E</color><color=\#EAAEDD>Z</color><color=\#1F108C>w</color><color=\#739C66>!</color><color=\#8DFAA2>G</color><color=\#15B395>?</color><color=\#72D38E>H</color><color=\#6DF2D3>&</color><color=\#BF6D43>@</color><color=\#8C459B>5</color><color=\#D1D122>_</color><color=\#02FCA6>O</color><color=\#E9C5FD>1</color><color=\#58207B>)</color><color=\#42C460>B</color><color=\#C21653>,</color><color=\#D8233D>z</color><color=\#3CBDE0>r</color><color=\#5DBBAA>)</color><color=\#A25A6D>9</color><color=\#41963C>T</color><color=\#01CF36>U</color><color=\#156821>9</color><color=\#ECF021>@</color><color=\#8064C1>8</color><color=\#021360>%</color><color=\#8C67D8>v</color><color=\#22B47C>n</color><color=\#D9D669>B</color><color=\#FC5AE1>5</color><color=\#FD1856>G</color><color=\#B38B36>c</color><color=\#29E85B>U</color><color=\#B27754>a</color><color=\#2A54BB>q</color><color=\#41063F>(</color><color=\#601E90>1</color><color=\#C74EF2>3</color><color=\#47D546>2</color><color=\#63DC8F>i</color><color=\#5513BF>L</color><color=\#DF0805>/</color><color=\#DC5E6E>i</color><color=\#A93B76>D</color><color=\#62364E>C</color><color=\#7FA0BC>?</color><color=\#081EDA>O</color><color=\#3636CA>P</color><color=\#2BAAFF>_</color><color=\#2E084E>0</color><color=\#691E2C>9</color><color=\#16F60E>H</color><color=\#61038E>-</color><color=\#1A00BF>a</color><color=\#60F407>a</color><color=\#F054C0>~</color><color=\#80C4FC>v</color><color=\#3F749B>8</color><color=\#94E34A>d</color><color=\#F6A4A7>G</color><color=\#95D903>u</color><color=\#5A299C>j</color><color=\#69D450>R</color><color=\#DEC81C>9</color><color=\#1CE792>*</color><color=\#62B403>t</color><color=\#B12FFC>r</color><color=\#89E023> </color><color=\#EA9825>A</color><color=\#5F8993>/</color><color=\#EEEF19>\</color><color=\#0532FF>U</color><color=\#3C0FF8>t</color><color=\#2C3CDA>q</color><color=\#54A6A7>l</color><color=\#BE8625>p</color><color=\#76E6FB>t</color><color=\#1B902F>p</color><color=\#A96183>U</color><color=\#4A1F6C>0</color><color=\#4810B8>O</color><color=\#4EFC61>u</color><color=\#F1FD24>"</color><color=\#9D6BC8>%</color><color=\#6C5B99>H</color><color=\#9836C9>&</color><color=\#CF91CE>z</color><color=\#36D3B3>Y</color><color=\#2017B3>3</color><color=\#A81089>~</color><color=\#CC9BE2>@</color><color=\#C7FF03>n</color><color=\#6DC9AA>;</color><color=\#29EB32>A</color><color=\#385413>5</color><color=\#51C31F>p</color><color=\#39565C>3</color><color=\#E6B718>~</color><color=\#A35A67>B</color><color=\#B5D6E9>N</color><color=\#219316>W</color><color=\#3C6839>9</color><color=\#727825>G</color><color=\#79D2B0>n</color><color=\#0A1789>v</color><color=\#446B4C>4</color><color=\#8AACA3>a</color><color=\#897F76>T</color><color=\#D8CFAD>k</color><color=\#4909C6>X</color><color=\#A45BBB>u</color><color=\#BA81F9>F</color><color=\#9B7B2A> </color><color=\#A3CF10>N</color><color=\#03B9F3>l</color><color=\#A6B67B>Q</color><color=\#09B11B>!</color><color=\#BE3B5C>O</color><color=\#9BAB84>]</color><color=\#B8866E>p</color><color=\#5BDA84>R</color><color=\#E592DE>\</color><color=\#750493>M</color><color=\#64A8E6>N</color><color=\#7001BD>g</color><color=\#22AE61>D</color><color=\#ADBD8B>m</color><color=\#019875>w</color><color=\#1C1EBE>S</color><color=\#6C0530>^</color><color=\#2A716D>^</color><color=\#13D44B>M</color><color=\#0D44A2>Z</color><color=\#E05D26>%</color><color=\#70F9B6>^</color><color=\#A4DAA9>-</color><color=\#97CD68>o</color><color=\#CB72FB>A</color><color=\#0D33A3>f</color><color=\#217183>&</color><color=\#C2F535>v</color><color=\#015C28>s</color><color=\#A671A9>P</color><color=\#F6181A>-</color><color=\#45053B>0</color><color=\#049589>f</color><color=\#FF6194>n</color><color=\#6E195B>8</color><color=\#EB290C>W</color><color=\#D0F6C8>D</color><color=\#624C99>*</color><color=\#C7E202>R</color><color=\#FF88A2>$</color><color=\#D1ADD4>%</color><color=\#4F2DC7>o</color><color=\#58706E>L</color><color=\#330696>A</color><color=\#C5D9B8>n</color><color=\#84230E>!</color><color=\#17F844>1</color><color=\#C2FAE4>"</color><color=\#A2DCF8>2</color><color=\#E2941A>J</color><color=\#1177C2>6</color><color=\#C58A28>Y</color><color=\#45206C>J</color><color=\#51A0B8>W</color><color=\#9D15D3>9</color><color=\#BF309B>/</color><color=\#1F0C1D>,</color><color=\#CF1B63>S</color><color=\#B07A70>o</color><color=\#8ED90D>"</color><color=\#AC411F>s</color><color=\#A4C09A>S</color><color=\#69A547>t</color><color=\#2AA8A4>\</color><color=\#15DE10>\</color><color=\#820648>\</color><color=\#44F0E3>%</color><color=\#58B9A2>w</color><color=\#F12A01>O</color><color=\#8C06B2>m</color><color=\#AB6B62>(</color>[/nomarkup]
+    HelloBot: [nomarkup]<color=\#9e9e9e>[<color="red">Error</color>... Skipping Routine. Please refer to Vulcan for Error Code: 7458891]</color>[/nomarkup]
+    HelloBot: [nomarkup]Wasn't that great!? You're going to love working here![/nomarkup]
 
-<<if $hasMultiTool is false>>
-    WelcomeBot: Heres a multitool
-    <<SetActiveName WelcomeBot multiTool>>
-    <<SetActiveName WelcomeBot MovieEnteranceInvisibleWall false>>
-    <<InvokeEvent WelcomeBot>>
+    HelloBot: [nomarkup]Before you unleash your full creative potential at the creative labs, complete your orientation to get the <color=\#fcba03>Standard Lab Access Keycard</color>.[/nomarkup]
+    HelloBot: [nomarkup]The <color="red">Vulcan Terminal</color> in your room will print the <color=\#fcba03>Standard Lab Access Keycard</color> for you once you earn your <color=\#fcba03>Work Token</color>.[/nomarkup]
+    HelloBot: [nomarkup]You can find other Bots like me that may require the support of a sentient being. If you help them out, they will reward you with a <color=\#fcba03>Work Token</color>![/nomarkup]
+    
 
-WelcomeBot: complete 1 job to get your keycard in your room. Your room is in the living quarters.
+    HelloBot: [nomarkup]Last but certainly not least, heres your <color=\#fcba03>MultiTool</color>! It has no modules yet but once you find and attach one, it can help you accomplish all kinds of useful tasks![/nomarkup]
+    <<set $welcomeAfterMovieDone to true>>
+    <<SetActiveName WelcomeBot_2 multiTool>>
+    <<InvokeEvent WelcomeBot_2>>
+<<else>>
+    Remember, complete a job to earn a <color=\#fcba03>Work Token</color>. Then head over to the <color="red">Vulcan Terminal</color> in your room to complete orientation and receive your <color=\#fcba03>Standard Lab Access Keycard</color>
 <<endif>>
 ===
 

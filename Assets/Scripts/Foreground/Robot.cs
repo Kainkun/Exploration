@@ -1,8 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Robot : YarnDialogueInteractable
 {
@@ -12,22 +12,34 @@ public class Robot : YarnDialogueInteractable
     private float angleVelocity;
     private bool lookTowardsPlayer;
 
+    private Transform mesh;
+
+    protected void Start()
+    {
+        mesh = transform.GetChild(0);
+    }
+
     private void FixedUpdate()
     {
         if (lookTowardsPlayer)
         {
             Vector3 playerPosition = PlayerManager.playerMovement.transform.position;
-            Vector3 directionToPlayerFlat = playerPosition - transform.position;
-            directionToPlayerFlat.y = 0;
-
-            Utility.YAxisLookTowardsSmoothDamp(transform, playerPosition, ref angleVelocity, smoothTime, maxSpeed, Time.fixedDeltaTime);
-
-            if (Vector3.Angle(transform.forward, directionToPlayerFlat) < 0.1f)
-            {
-                transform.forward = directionToPlayerFlat;
-                lookTowardsPlayer = false;
-            }
+            Utility.YAxisLookTowardsSmoothDamp(mesh, playerPosition, ref angleVelocity, smoothTime, maxSpeed,
+                Time.fixedDeltaTime);
         }
+        else
+        {
+            Vector3 localEulerAngles = mesh.localEulerAngles;
+            float angle = Mathf.SmoothDampAngle(localEulerAngles.y, 0, ref angleVelocity,
+                smoothTime, maxSpeed, Time.deltaTime);
+            localEulerAngles = new Vector3(localEulerAngles.x, angle, localEulerAngles.z);
+            mesh.localEulerAngles = localEulerAngles;
+        }
+    }
+
+    protected override void EndDialogue()
+    {
+        lookTowardsPlayer = false;
     }
 
     public override void PrimaryInteract()

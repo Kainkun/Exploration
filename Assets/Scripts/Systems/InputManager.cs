@@ -25,6 +25,8 @@ public class InputManager : SystemSingleton<InputManager>
         playerInput = GetComponent<PlayerInput>();
         inputSystemUIInputModule = GameObject.FindObjectOfType<InputSystemUIInputModule>();
         SceneManager.sceneLoaded += HandleLoadScene;
+        
+        InputManager.inputSystemUIInputModule.enabled = false;
     }
 
 

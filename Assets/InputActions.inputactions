@@ -523,7 +523,7 @@
                 {
                     "name": "",
                     "id": "45182fc3-e81d-4317-963b-b5a7efa56bd6",
-                    "path": "<Mouse>/leftButton",
+                    "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
@@ -534,7 +534,7 @@
                 {
                     "name": "",
                     "id": "a9aee0d1-8d2d-47e4-b832-91be386931dd",
-                    "path": "<Mouse>/leftButton",
+                    "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",

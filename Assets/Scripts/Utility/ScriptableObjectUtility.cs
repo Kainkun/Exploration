@@ -25,4 +25,6 @@ public class ScriptableObjectUtility : ScriptableObject
     public void PlaySound(AudioClip audioClip, float volume) => AudioManager.Get().PlaySound(audioClip, volume);
 
     public void QuitGame() => GameManager.QuitGame();
+    
+    public void StartDialogue(string s) => YarnAccess.dialogueRunner.StartDialogue(s);
 }
