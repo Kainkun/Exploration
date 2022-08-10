@@ -121,6 +121,9 @@ public class InputManager : SystemSingleton<InputManager>
 
     public Action Tertiary;
     public void OnTertiary() => Tertiary?.Invoke();
+    
+    public Action Use;
+    public void OnUse() => Use?.Invoke();
 
     public void OnChangeDialogueOption(InputValue value)
     {

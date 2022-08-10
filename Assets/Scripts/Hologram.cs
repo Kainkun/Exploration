@@ -47,6 +47,8 @@ public class Hologram : MonoBehaviour
         _holograms.Add(this);
         text = transform.GetChild(0).GetComponent<RectTransform>();
         textMeshPro = text.GetComponent<TextMeshPro>();
+        if(textOverride != "")
+            textMeshPro.text = textOverride;
 
         Color color = textMeshPro.color;
         color.a = 0;
@@ -61,17 +63,15 @@ public class Hologram : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(isPlayerCameraNull)
+        if (isPlayerCameraNull)
             return;
-        
+
         distance = Vector3.Distance(PlayerManager.playerCamera.transform.position, transform.position);
         if (!displaying && distance <= distanceToDisplay)
         {
             displaying = true;
-            string s = textOverride;
             if (OnTurnOn != null)
-                s = OnTurnOn.Invoke();
-            textMeshPro.text = s;
+                SetText(OnTurnOn.Invoke());
             if (coroutine != null)
                 StopCoroutine(coroutine);
             StartCoroutine(TurnOn());
@@ -115,7 +115,8 @@ public class Hologram : MonoBehaviour
 
     public void SetText(string text)
     {
-        textMeshPro.text = text;
+        if (textOverride == "")
+            textMeshPro.text = text;
     }
 
     IEnumerator TurnOn()

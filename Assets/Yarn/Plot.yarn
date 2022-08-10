@@ -11,6 +11,30 @@ WelcomeBot: incredible
 <<if $hasMultiTool is false>>
     WelcomeBot: Heres a multitool
     <<SetActiveName WelcomeBot multiTool>>
-<<endif>>
+    <<SetActiveName WelcomeBot MovieEnteranceInvisibleWall false>>
+    <<InvokeEvent WelcomeBot>>
 
+WelcomeBot: complete jobs to get your keycard in your room. your room 4 in the living quarters.
+<<endif>>
+===
+
+title: MaidBot
+---
+MaidBot: Hey there.
+-> Hi.
+-> How do i leave?
+    MaidBot: You need your keycard.
+    -> Where do i get my keycard?
+        MaidBot: Use the Vulcan terminal in your room
+    -> Thanks
+    
+===
+
+
+title: GetKeycard
+---
+Conglaturation for completing the orientation.
+Here is your keycard. It will give you access to the second floor with a few labs.
+You will need to complete more jobs for your keycard to be granted First-Class access to reach the advanced labs.
+<<set $hasStandardKeycard to true>>
 ===

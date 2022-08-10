@@ -1,11 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using Yarn.Unity;
 
 public class YarnSimpleCommands : MonoBehaviour
 {
     public GameObject[] gameObjects;
-    
+    public UnityEvent unityEvent;
+
     [YarnCommand("SetActive")]
     public void SetActive(bool active = true)
     {
@@ -32,5 +34,11 @@ public class YarnSimpleCommands : MonoBehaviour
     public void SetActive(GameObject g, bool active = true)
     {
         g.SetActive(active);
+    }
+
+    [YarnCommand("InvokeEvent")]
+    public void InvokeEvent()
+    {
+        unityEvent?.Invoke();
     }
 }

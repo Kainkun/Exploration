@@ -1091,7 +1091,7 @@ MonoBehaviour:
   muzzle: {fileID: 4183274582330448993}
   raycastLayerMask:
     serializedVersion: 2
-    m_Bits: 129
+    m_Bits: 385
 --- !u!1 &5626078900550195341
 GameObject:
   m_ObjectHideFlags: 0

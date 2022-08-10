@@ -1,19 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem.iOS;
 
 public class PlayerInteractor : MonoBehaviour
 {
-    void Update()
+    public LayerMask layerMask;
+
+    private void Start()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        InputManager.Get().Use += Interact;
+    }
+
+    void Interact()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, transform.forward, out hit, 5, layerMask,
+                QueryTriggerInteraction.Collide))
         {
-            RaycastHit hit;
-            if (Physics.Raycast(transform.position, transform.forward, out hit, 5, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Collide))
-            {
-                IInteractable interactable = hit.transform.GetComponent<IInteractable>();
-                interactable?.PrimaryInteract();
-            }
+            IInteractable interactable = hit.transform.GetComponent<IInteractable>();
+            interactable?.PrimaryInteract();
         }
     }
 }

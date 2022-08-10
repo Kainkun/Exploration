@@ -7,33 +7,17 @@ using UnityEngine.Events;
 
 public class MovieScreen : MonoBehaviour
 {
-    public BoxCollider playerTrigger;
     private bool movieStarted;
     public UnityEvent explosion;
     public UnityEvent movieEnd;
 
-    private Utility.CheckBoxData triggerCheckBoxData;
-
-    private void Start()
+    public void StartMovieCoroutine()
     {
-        triggerCheckBoxData = Utility.GetCheckBoxData(playerTrigger);
-    }
-
-    void Update()
-    {
-        if (movieStarted)
+        if(movieStarted)
             return;
 
-        if (Physics.CheckBox(
-                triggerCheckBoxData.triggerGlobalPosition,
-                triggerCheckBoxData.triggerHalfExtent,
-                triggerCheckBoxData.triggerRotation,
-                LayerMask.GetMask("Player"),
-                QueryTriggerInteraction.Ignore))
-        {
-            movieStarted = true;
-            StartCoroutine(PlayMovie());
-        }
+        movieStarted = true;
+        StartCoroutine(PlayMovie());
     }
 
     IEnumerator PlayMovie()

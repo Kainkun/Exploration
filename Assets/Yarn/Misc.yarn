@@ -11,15 +11,23 @@ position: -140,-176
 title: LibraryMachineTopFloor
 position: -137,-83
 ---
+<<declare $libraryMachineFixer to false>>
+
 <<if $libraryMachineFixed is false>>
-    Error...<br>\[  \] I am not a Robot
-    -> Press "I am not a Robot" button
-    Loading...
-    Fixed!
-    <<set $libraryMachineFixed to true>>
+    Error...
+    Maintenence requires thing
+    -> Locate Thing <<if $libraryMachineFixer is false>>
+        Locating...
+        Thing is in the Living Quarters
+    -> Use Thing <<if $libraryMachineFixer is true>>
+        Loading...
+        Fixed!
+        <<set $libraryMachineFixed to true>>
+<<else>>
+    <<jump LibraryMachine>>
 <<endif>>
 
-<<jump LibraryMachine>>
+
 ===
 
 title: LibraryMachine

@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerUpgradeCollectable : MonoBehaviour, IInteractable
 {
     public PlayerManager.PlayerUpgradeType playerUpgradeType;
+    public UnityEvent unityEvent;
 
     public void PrimaryInteract()
     {
@@ -30,6 +32,8 @@ public class PlayerUpgradeCollectable : MonoBehaviour, IInteractable
                 PlayerManager.UnlockJetpackBoost();
                 break;
         }
+        
+        unityEvent?.Invoke();
 
         Destroy(gameObject);
     }

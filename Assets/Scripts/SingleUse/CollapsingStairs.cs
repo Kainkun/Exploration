@@ -6,50 +6,40 @@ using UnityEngine;
 public class CollapsingStairs : MonoBehaviour
 {
     public AnimationCurve animationCurve;
-    public BoxCollider playerTrigger;
-    public bool startCollapsed;
-    float t;
     public float timeToCollapse;
     public float timeToRaise;
-    public bool collapse;
+    public float position;
+    public float targetPosition;
+
+    public float TargetPosition
+    {
+        get => targetPosition;
+        set => targetPosition = value;
+    }
 
     private Utility.CheckBoxData triggerCheckBoxData;
 
     private void Start()
     {
-        t = startCollapsed ? 0 : 1;
-
-        if (playerTrigger)
-            triggerCheckBoxData = Utility.GetCheckBoxData(playerTrigger);
+        transform.localScale = new Vector3(1, animationCurve.Evaluate(position), 1);
     }
 
     private void Update()
     {
-        if (playerTrigger && Physics.CheckBox(
-                triggerCheckBoxData.triggerGlobalPosition,
-                triggerCheckBoxData.triggerHalfExtent,
-                triggerCheckBoxData.triggerRotation,
-                LayerMask.GetMask("Player"),
-                QueryTriggerInteraction.Ignore))
+        if (Math.Abs(position - TargetPosition) > 0.01f)
         {
-            collapse = true;
-        }
+            if (position > TargetPosition)
+                position -= Time.deltaTime / timeToCollapse;
 
-        if (collapse)
-        {
-            if (t > 0)
-                t -= Time.deltaTime / timeToCollapse;
-            else
-                t = 0;
+            if (position < TargetPosition)
+                position += Time.deltaTime / timeToRaise;
         }
         else
         {
-            if (t < 1)
-                t += Time.deltaTime / timeToRaise;
-            else
-                t = 1;
+            position = TargetPosition;
         }
 
-        transform.localScale = new Vector3(1, animationCurve.Evaluate(t), 1);
+
+        transform.localScale = new Vector3(1, animationCurve.Evaluate(position), 1);
     }
 }
