@@ -41,8 +41,8 @@ title: WelcomeAfterMovie
     HelloBot: [nomarkup]<color=\#9e9e9e>[<color="red">Error</color>... Skipping Routine. Please refer to Vulcan for Error Code: 7458891]</color>[/nomarkup]
     HelloBot: [nomarkup]Wasn't that great!? You're going to love working here![/nomarkup]
 
-    HelloBot: [nomarkup]Before you unleash your full creative potential at the creative labs, complete your orientation to get the <color=\#fcba03>Standard Lab Access Keycard</color>.[/nomarkup]
-    HelloBot: [nomarkup]The <color="red">Vulcan Terminal</color> in your room will print the <color=\#fcba03>Standard Lab Access Keycard</color> for you once you earn your <color=\#fcba03>Work Token</color>.[/nomarkup]
+    HelloBot: [nomarkup]Before you unleash your full creative potential at the creative labs, complete your orientation to receive your <color=\#fcba03>Standard Lab Access Keycard</color>.[/nomarkup]
+    HelloBot: [nomarkup]The <color="red">Vulcan Terminal</color> in your room will print out the <color=\#fcba03>Standard Lab Access Keycard</color> once you earn your <color=\#fcba03>Work Token</color>.[/nomarkup]
     HelloBot: [nomarkup]You can find other Bots like me that may require the support of a sentient being. If you help them out, they will reward you with a <color=\#fcba03>Work Token</color>![/nomarkup]
     
 

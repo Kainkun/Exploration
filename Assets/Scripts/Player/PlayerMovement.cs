@@ -8,13 +8,15 @@ using UnityEngine;
 using UnityEngine.UI;
 using Cursor = UnityEngine.Cursor;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : SystemSingleton<PlayerMovement>
 {
     public LayerMask environmentLayerMask;
     private Gravity gravity;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
         yawTransform = cameraSystem.GetChild(0);
         pitchTransform = yawTransform.GetChild(0);
         rollTransform = pitchTransform.GetChild(0);
@@ -22,12 +24,10 @@ public class PlayerMovement : MonoBehaviour
         gravity = GetComponent<Gravity>();
         rb = GetComponent<Rigidbody>();
         prev = rb.position;
-
-        currentJetpackFuel = maxJetpackFuel;
-
-        jumpBuffer = new Buffer(StartJump, CanJump, jumpBufferTime);
+        CurrentJetpackFuel = MaxJetpackFuel;
 
         Cursor.lockState = CursorLockMode.Locked;
+        jumpBuffer = new Buffer(StartJump, CanJump, jumpBufferTime);
     }
 
     private void Start()
@@ -53,13 +53,20 @@ public class PlayerMovement : MonoBehaviour
 
             //TODO: coyote jump dosnt work well with fuel or boosts
             //Boost
-            if (canBoost && currentJetpackFuel >= boostFuelCost && !CanJump())
+            if (canBoost && CurrentJetpackFuel >= boostFuelCost - boostFuelCostCheat && !CanJump())
             {
                 Vector3 v = rb.velocity;
                 v.y = upwardBoostForce;
                 rb.velocity = v;
-                currentJetpackFuel -= boostFuelCost;
-                currentJetpackFuel = Mathf.Clamp(currentJetpackFuel, 0, maxJetpackFuel);
+                
+                float currentCell = Mathf.CeilToInt(CurrentJetpackFuel / boostFuelCost) * boostFuelCost;
+                float min = currentCell - boostFuelCostCheat;
+                if (CurrentJetpackFuel >= min && CurrentJetpackFuel < currentCell)
+                    currentJetpackFuel = Mathf.FloorToInt((CurrentJetpackFuel / boostFuelCost)) * boostFuelCost;
+                else
+                    currentJetpackFuel -= boostFuelCost;
+
+                CurrentJetpackFuel = Mathf.Clamp(currentJetpackFuel, 0, MaxJetpackFuel);
             }
         }
     }
@@ -81,46 +88,44 @@ public class PlayerMovement : MonoBehaviour
             jumpBuffer.Tick(Time.deltaTime);
         }
 
-        HandleUi();
-
         //GameObject.Find("GraphVelocityY").GetComponent<Graph>().SetValue(transform.position.y);
 
         #region Dev Tools
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            maxJetpackFuel = 0;
-            currentJetpackFuel = maxJetpackFuel;
+            MaxJetpackFuel = 0;
+            CurrentJetpackFuel = MaxJetpackFuel;
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            maxJetpackFuel = 1;
-            currentJetpackFuel = maxJetpackFuel;
+            MaxJetpackFuel = 1;
+            CurrentJetpackFuel = MaxJetpackFuel;
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            maxJetpackFuel = 2;
-            currentJetpackFuel = maxJetpackFuel;
+            MaxJetpackFuel = 2;
+            CurrentJetpackFuel = MaxJetpackFuel;
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha4))
         {
-            maxJetpackFuel = 3;
-            currentJetpackFuel = maxJetpackFuel;
+            MaxJetpackFuel = 3;
+            CurrentJetpackFuel = MaxJetpackFuel;
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha5))
         {
-            maxJetpackFuel = 4;
-            currentJetpackFuel = maxJetpackFuel;
+            MaxJetpackFuel = 4;
+            CurrentJetpackFuel = MaxJetpackFuel;
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha6))
         {
-            maxJetpackFuel = 5;
-            currentJetpackFuel = maxJetpackFuel;
+            MaxJetpackFuel = 5;
+            CurrentJetpackFuel = MaxJetpackFuel;
         }
 
         #endregion
@@ -629,10 +634,33 @@ public class PlayerMovement : MonoBehaviour
 
     #region Jetpack Variables
 
-    [Header("Jetpack")] public float maxJetpackFuel;
+    [Header("Jetpack")] private float maxJetpackFuel;
+
+    public float MaxJetpackFuel
+    {
+        get => maxJetpackFuel;
+        set
+        {
+            maxJetpackFuel = value;
+            PlayerHUD.Get().OnJetpackMaxFuelChange();
+        }
+    }
+
     private float currentJetpackFuel;
+
+    public float CurrentJetpackFuel
+    {
+        get => currentJetpackFuel;
+        set
+        {
+            currentJetpackFuel = value;
+            PlayerHUD.Get().OnJetpackCurrentFuelChange();
+        }
+    }
+
     private float glideFuelCost = 1;
     public float boostFuelCost;
+    const float boostFuelCostCheat = 0.1f;
     public float FuelRechargeRate;
     public bool canGlide;
     public bool canBoost;
@@ -641,22 +669,14 @@ public class PlayerMovement : MonoBehaviour
     public float glideFallSpeed;
     public float upwardBoostForce;
 
-    public Image imageLeft;
-    public Image imageRight;
-    public Image imageCenter;
-    public Image imageDot1;
-    public Image imageDot2;
-    public Image imageDot3;
-    public Image imageCenterMini;
-
     #endregion
 
     void HandleFuel()
     {
         if (grounded)
         {
-            currentJetpackFuel += FuelRechargeRate * Time.deltaTime;
-            currentJetpackFuel = Mathf.Clamp(currentJetpackFuel, 0, maxJetpackFuel);
+            CurrentJetpackFuel += FuelRechargeRate * Time.deltaTime;
+            CurrentJetpackFuel = Mathf.Clamp(CurrentJetpackFuel, 0, MaxJetpackFuel);
         }
     }
 
@@ -665,7 +685,7 @@ public class PlayerMovement : MonoBehaviour
         if (!canGlide)
             return;
 
-        if (currentJetpackFuel > 0 && rb.velocity.y <= glideFallSpeed &&
+        if (CurrentJetpackFuel > 0 && rb.velocity.y <= glideFallSpeed &&
             (jumpButtonDown || crouchButtonDown))
         {
             gravity.enabled = false;
@@ -674,47 +694,13 @@ public class PlayerMovement : MonoBehaviour
             v.y = glideFallSpeed;
             rb.velocity = v;
 
-            currentJetpackFuel -= glideFuelCost * Time.deltaTime;
-            currentJetpackFuel = Mathf.Clamp(currentJetpackFuel, 0, maxJetpackFuel);
+            CurrentJetpackFuel -= glideFuelCost * Time.deltaTime;
+            CurrentJetpackFuel = Mathf.Clamp(CurrentJetpackFuel, 0, MaxJetpackFuel);
         }
         else
         {
             gravity.enabled = true;
             gliding = false;
-        }
-    }
-
-    void HandleUi()
-    {
-        //UI
-        if (imageCenter)
-        {
-            imageLeft.fillAmount = currentJetpackFuel / maxJetpackFuel;
-            imageRight.fillAmount = currentJetpackFuel / maxJetpackFuel;
-
-            if (currentJetpackFuel == 0)
-                imageCenter.fillAmount = 0;
-            else if (currentJetpackFuel % boostFuelCost == 0)
-                imageCenter.fillAmount = 1;
-            else
-                imageCenter.fillAmount = (currentJetpackFuel % boostFuelCost) / boostFuelCost;
-
-            if (Mathf.CeilToInt(currentJetpackFuel / boostFuelCost) >= 1)
-                imageDot1.enabled = true;
-            else
-                imageDot1.enabled = false;
-
-            if (Mathf.CeilToInt(currentJetpackFuel / boostFuelCost) >= 2)
-                imageDot2.enabled = true;
-            else
-                imageDot2.enabled = false;
-
-            if (Mathf.CeilToInt(currentJetpackFuel / boostFuelCost) >= 3)
-                imageDot3.enabled = true;
-            else
-                imageDot3.enabled = false;
-
-            imageCenterMini.fillAmount = currentJetpackFuel / maxJetpackFuel;
         }
     }
 
