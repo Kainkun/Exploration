@@ -20,31 +20,11 @@ public class InputManager : SystemSingleton<InputManager>
         DontDestroyOnLoad(transform.gameObject);
     }
 
-
-    // public InputActionMap[] maps;
-    // public InputActionAsset actions;
-
     private void Start()
     {
         playerInput = GetComponent<PlayerInput>();
         inputSystemUIInputModule = GameObject.FindObjectOfType<InputSystemUIInputModule>();
         SceneManager.sceneLoaded += HandleLoadScene;
-
-
-        //EventSystem.current.SetSelectedGameObject();
-        //GameObject.FindObjectOfType<InputSystemUIInputModule>().move;
-
-        // if (Input.GetKeyDown(KeyCode.T))
-        // {
-        //     print(EventSystem.current.currentSelectedGameObject);
-        // }
-        //
-        // if (Input.GetKeyDown(KeyCode.Y))
-        // {
-        //     print(EventSystem.current.currentSelectedGameObject);
-        //     //EventSystem.current.currentSelectedGameObject.GetComponent<OptionView>().Select();
-        //     EventSystem.current.currentSelectedGameObject.GetComponent<OptionView>().InvokeOptionSelected();;
-        // }
     }
 
 
@@ -128,15 +108,7 @@ public class InputManager : SystemSingleton<InputManager>
     public void OnChangeDialogueOption(InputValue value)
     {
         float direction = value.Get<float>();
-
-        // if(EventSystem.current.currentSelectedGameObject == null)
-        // {
-        //     GameObject gameObject = GameObject.FindObjectOfType<OptionView>().gameObject;
-        //     if(gameObject)
-        //         EventSystem.current.SetSelectedGameObject(gameObject);
-        // }
-
-
+        
         OptionView optionView = YarnAccess.CurrentOptionView;
         if (optionView && optionView.IsInteractable())
         {
