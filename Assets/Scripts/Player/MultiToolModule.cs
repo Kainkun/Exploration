@@ -18,7 +18,7 @@ public abstract class MultiToolModule
     {
         if (PrefabName == null)
             return false;
-        
+
         if (YarnAccess.TryGetValue(YarnName, out bool result) && result)
             return false;
         YarnAccess.SetValue(YarnName, true);
@@ -30,6 +30,7 @@ public abstract class MultiToolModule
     public abstract void Intro();
     public abstract void Outro();
     public abstract void Update();
+    public abstract void UsePrimary();
 
     protected T RaycastGet<T>() where T : Component
     {
@@ -55,10 +56,11 @@ public class NoneModule : MultiToolModule
 
     protected override string YarnName => null;
     protected override string PrefabName => null;
+
     public override void Intro()
     {
-        parentMultiTool.baseMesh.transform.localPosition = new Vector3(0,0.1f,0);
-        parentMultiTool.baseMesh.transform.localEulerAngles = new Vector3(-20,0,0);
+        parentMultiTool.baseMesh.transform.localPosition = new Vector3(0, 0.1f, 0);
+        parentMultiTool.baseMesh.transform.localEulerAngles = new Vector3(-20, 0, 0);
     }
 
     public override void Outro()
@@ -69,7 +71,10 @@ public class NoneModule : MultiToolModule
 
     public override void Update()
     {
-        
+    }
+
+    public override void UsePrimary()
+    {
     }
 }
 
@@ -94,17 +99,18 @@ public class TrashCollectorModule : MultiToolModule
 
     public override void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+    }
+
+    public override void UsePrimary()
+    {
+        RaycastGet<TrashCollectable>()?.Collect();
+        TrashBin trashBin = RaycastGet<TrashBin>();
+        if (trashBin)
         {
-            RaycastGet<TrashCollectable>()?.Collect();
-            TrashBin trashBin = RaycastGet<TrashBin>();
-            if (trashBin)
+            if (YarnAccess.TryGetValue("trashCount", out float trashCount) && trashCount > 0) ;
             {
-                if (YarnAccess.TryGetValue("trashCount", out float trashCount) && trashCount > 0) ;
-                {
-                    TrashBin.DepositStatic(trashCount);
-                    YarnAccess.SetValue("trashCount", 0);
-                }
+                TrashBin.DepositStatic(trashCount);
+                YarnAccess.SetValue("trashCount", 0);
             }
         }
     }
@@ -132,10 +138,11 @@ public class EssenceCollectorModule : MultiToolModule
 
     public override void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            RaycastGet<EssenceCollectable>()?.Collect();
-        }
+    }
+
+    public override void UsePrimary()
+    {
+        RaycastGet<EssenceCollectable>()?.Collect();
     }
 
     public EssenceCollectorModule(PlayerMultiTool parentMultiTool) : base(parentMultiTool)

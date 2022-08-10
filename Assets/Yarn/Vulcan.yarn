@@ -25,7 +25,7 @@ position: 187,313
 ---
 <<declare $hasStandardKeycard to false>>
 
-<<if $hasStandardKeycard is false and $jobTokenCount >= 3>>
+<<if $hasStandardKeycard is false and $jobTokenCount >= 1>>
     <<jump GetKeycard>>
 <<endif>>
 

@@ -14,7 +14,7 @@ WelcomeBot: incredible
     <<SetActiveName WelcomeBot MovieEnteranceInvisibleWall false>>
     <<InvokeEvent WelcomeBot>>
 
-WelcomeBot: complete jobs to get your keycard in your room. your room 4 in the living quarters.
+WelcomeBot: complete 1 job to get your keycard in your room. Your room is in the living quarters.
 <<endif>>
 ===
 

@@ -1,8 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Google.Protobuf.WellKnownTypes;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class PlayerMultiTool : MonoBehaviour
@@ -24,6 +24,8 @@ public class PlayerMultiTool : MonoBehaviour
             { ModuleType.Trash, new TrashCollectorModule(this) },
             { ModuleType.Essence, new EssenceCollectorModule(this) }
         };
+        
+        InputManager.Get().Primary += () => moduleDict[currentModule].UsePrimary();
     }
 
     public enum ModuleType
@@ -52,7 +54,7 @@ public class PlayerMultiTool : MonoBehaviour
 
         if (currentModuleCount >= 1)
         {
-            if (Input.mouseScrollDelta.y > 0)
+            if (Mouse.current.scroll.ReadValue().y > 0)
                 SwitchMultiToolMode((ModuleType)Utility.RealModulo((int)currentModule + 1, currentModuleCount + 1));
             else if (Input.mouseScrollDelta.y < 0)
                 SwitchMultiToolMode((ModuleType)Utility.RealModulo((int)currentModule - 1, currentModuleCount + 1));
