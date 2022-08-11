@@ -25,7 +25,7 @@ public class PlayerMultiTool : MonoBehaviour
             { ModuleType.Essence, new EssenceCollectorModule(this) }
         };
         
-        InputManager.Get().Primary += () => moduleDict[currentModule].UsePrimary();
+        InputManager.primary += () => moduleDict[currentModule].UsePrimary();
     }
 
     public enum ModuleType

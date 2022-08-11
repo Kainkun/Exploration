@@ -80,32 +80,35 @@ public class InputManager : SystemSingleton<InputManager>
         }
     }
 
-    public Action<float> Jump;
-    public void OnJump(InputValue value) => Jump?.Invoke(value.Get<float>());
+    public static Action<float> jump;
+    public void OnJump(InputValue value) => jump?.Invoke(value.Get<float>());
 
-    public Action<float> Crouch;
-    public void OnCrouch(InputValue value) => Crouch?.Invoke(value.Get<float>());
+    public static Action<float> crouch;
+    public void OnCrouch(InputValue value) => crouch?.Invoke(value.Get<float>());
 
-    public Action<Vector2> Move;
-    public void OnMove(InputValue value) => Move?.Invoke(value.Get<Vector2>());
+    public static Action<Vector2> move;
+    public void OnMove(InputValue value) => move?.Invoke(value.Get<Vector2>());
 
-    public Action<Vector2> Look;
-    public void OnLook(InputValue value) => Look?.Invoke(value.Get<Vector2>());
+    public static Action<Vector2> look;
+    public void OnLook(InputValue value) => look?.Invoke(value.Get<Vector2>());
 
-    public Action<float> Sprint;
-    public void OnSprint(InputValue value) => Sprint?.Invoke(value.Get<float>());
+    public static Action<float> sprint;
+    public void OnSprint(InputValue value) => sprint?.Invoke(value.Get<float>());
 
-    public Action Primary;
-    public void OnPrimary() => Primary?.Invoke();
+    public static Action primary;
+    public void OnPrimary() => primary?.Invoke();
 
-    public Action Secondary;
-    public void OnSecondary() => Secondary?.Invoke();
+    public static Action secondary;
+    public void OnSecondary() => secondary?.Invoke();
 
-    public Action Tertiary;
-    public void OnTertiary() => Tertiary?.Invoke();
+    public static Action tertiary;
+    public void OnTertiary() => tertiary?.Invoke();
     
-    public Action Use;
-    public void OnUse() => Use?.Invoke();
+    public static Action use;
+    public void OnUse() => use?.Invoke();
+
+    public static Action<float> showInventory;
+    public void OnShowInventory(InputValue value) => showInventory?.Invoke(value.Get<float>());
 
     public void OnChangeDialogueOption(InputValue value)
     {

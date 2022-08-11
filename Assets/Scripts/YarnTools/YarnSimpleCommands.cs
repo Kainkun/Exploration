@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -28,12 +29,6 @@ public class YarnSimpleCommands : MonoBehaviour
             if (g.name == name)
                 g.SetActive(active);
         }
-    }
-
-    [YarnCommand("SetActiveFind")]
-    public void SetActive(GameObject g, bool active = true)
-    {
-        g.SetActive(active);
     }
 
     [YarnCommand("InvokeEvent")]

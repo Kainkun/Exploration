@@ -6,7 +6,7 @@ using Yarn.Unity;
 using UnityEngine.EventSystems;
 using Yarn;
 
-public class YarnAccess : MonoBehaviour
+public class YarnAccess : SystemSingleton<YarnAccess>
 {
     [HideInInspector] public static DialogueRunner dialogueRunner;
     [HideInInspector] public static InMemoryVariableStorage inMemoryVariableStorage;

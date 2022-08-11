@@ -19,13 +19,17 @@ public class DisplayBounds : MonoBehaviour
 
     void Start()
     {
+        Transform hudTransform = GameObject.FindObjectOfType<PlayerHUD>().transform;
+        if(!hudTransform)
+            Destroy(gameObject);
+        
         camera = Camera.main;
         renderer = GetComponent<Renderer>();
         meshFilter = GetComponent<MeshFilter>();
 
         GameObject g = Instantiate(Resources.Load<GameObject>("TrashBoundsUI"));
         rectUiTransform = g.GetComponent<RectTransform>();
-        rectUiTransform.SetParent(GameObject.FindObjectOfType<PlayerHUD>().transform);
+        rectUiTransform.SetParent(hudTransform);
 
         image = g.GetComponentInChildren<Image>();
         text = g.GetComponentInChildren<TextMeshProUGUI>();

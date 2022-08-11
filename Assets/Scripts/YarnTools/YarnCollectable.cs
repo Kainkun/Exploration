@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,6 +17,7 @@ public class YarnCollectable : MonoBehaviour
     public float amount;
     public string dialogueTitle;
     private bool collected;
+    public static Action<float> onCollect;
 
     private void OnValidate()
     {
@@ -37,6 +39,7 @@ public class YarnCollectable : MonoBehaviour
         {
             case Type.Unique:
                 YarnAccess.SetValue(collectableIdentifier, true);
+                onCollect?.Invoke(1);
                 break;
 
             case Type.Stacking:
@@ -46,13 +49,14 @@ public class YarnCollectable : MonoBehaviour
                 else
                     newAmount = amount;
                 YarnAccess.SetValue(collectableIdentifier, newAmount);
+                onCollect?.Invoke(newAmount);
                 break;
         }
 
         collected = true;
 
         Hologram.RefreshHolograms();
-
+        
         if (!dontDestroy)
             Destroy(gameObject);
     }

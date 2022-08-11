@@ -13,7 +13,7 @@ public class PlayerInteractor : MonoBehaviour
 
     private void Start()
     {
-        InputManager.Get().Use += Interact;
+        InputManager.use += Interact;
     }
 
     private void Update()

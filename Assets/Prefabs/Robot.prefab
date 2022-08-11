@@ -78,6 +78,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 949ead675dc52924e90f798a30ae27a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ignoreInteraction: 0
   startNode: 
   playerInteractionBound: {fileID: 0}
   smoothTime: 0.3

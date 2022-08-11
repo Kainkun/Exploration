@@ -1,9 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Windows.WebCam;
 
 public class PlayerHUD : MonoBehaviour
 {
@@ -11,9 +11,18 @@ public class PlayerHUD : MonoBehaviour
     private float dim;
     private float bright = 255;
 
+    public CanvasGroup inventoryGroup;
+    public TextMeshProUGUI trashCount;
+    public TextMeshProUGUI essenceCount;
+    public TextMeshProUGUI jobTokenCount;
+    private bool showInventory;
+    private float inventoryAlpha;
+    private float inventoryFadeTime = 0.25f;
+
+    PlayerMovement pm;
     public RectTransform fuelBar;
     public RectTransform currentFuelBar;
-    public CanvasGroup fuelBarCanvasGroup;
+    public CanvasGroup fuelBarGroup;
     public GameObject fuelBarBigLine;
     public GameObject fuelBarSmallLine;
     private const float FuelBoostCostWidth = 100;
@@ -21,14 +30,27 @@ public class PlayerHUD : MonoBehaviour
     private float fuelBarFadeWait = 1f;
     private float fuelBarFadeTime = 0.25f;
 
-    PlayerMovement pm;
-
     private void Start()
     {
         pm = PlayerMovement.Get();
         pm.onCurrentFuelChange += OnJetpackCurrentFuelChange;
         pm.onMaxFuelChange += OnJetpackMaxFuelChange;
         OnJetpackMaxFuelChange();
+
+        TrashCollectable.onCollect += f =>
+        {
+            trashCount.enabled = true;
+            trashCount.text = "Trash: " + f;
+        };
+        EssenceCollectable.onCollect += f =>
+        {
+            essenceCount.enabled = true;
+            essenceCount.text = "Essence: " + f;
+        };
+        InputManager.showInventory += (f) =>
+        {
+            showInventory = f > 0 ? true : false;
+        };
 
         dim = crossHair.color.a;
     }
@@ -40,15 +62,23 @@ public class PlayerHUD : MonoBehaviour
         else
             CrossHairDim();
 
+        if (showInventory)
+            inventoryAlpha += Time.deltaTime / inventoryFadeTime;
+        else
+            inventoryAlpha -= Time.deltaTime / inventoryFadeTime;
+        inventoryAlpha = Mathf.Clamp01(inventoryAlpha);
+        inventoryGroup.alpha = inventoryAlpha;
+        
+
         if (pm.CurrentJetpackFuel < pm.MaxJetpackFuel)
         {
             fuelBarAlpha = fuelBarFadeWait / fuelBarFadeTime;
-            fuelBarCanvasGroup.alpha = fuelBarAlpha;
+            fuelBarGroup.alpha = fuelBarAlpha;
         }
         else
         {
             fuelBarAlpha -= Time.deltaTime / fuelBarFadeTime;
-            fuelBarCanvasGroup.alpha = fuelBarAlpha;
+            fuelBarGroup.alpha = fuelBarAlpha;
         }
     }
 

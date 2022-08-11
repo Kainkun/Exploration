@@ -33,5 +33,6 @@ public class SystemSingleton<T> : MonoBehaviour where T : SystemSingleton<T>
         {
             g_instance = (T)this;
         }
+        
     }
 }

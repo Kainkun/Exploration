@@ -135,7 +135,7 @@ position: 773,724
 ---
 <<if $libraryMachineFixed is true>>
     RepairBot: Thanks for fixing the library machine. Heres the jobToken.
-    <<set $jobTokenCount += 1>>
+    <<EarnJobToken YarnSimpleCommands 1>>
     <<set $libraryFixMachineJobCompleted to true>>
     <<jump LibraryFixVulcanJob>>
 <<else>>
