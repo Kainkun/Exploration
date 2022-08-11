@@ -242,6 +242,7 @@ GameObject:
   - component: {fileID: 2852214775928221045}
   - component: {fileID: 2852214775928221051}
   - component: {fileID: 2852214775928221050}
+  - component: {fileID: 3628266714878018682}
   m_Layer: 5
   m_Name: FuelBar
   m_TagString: Untagged
@@ -308,6 +309,18 @@ MonoBehaviour:
   m_FillOrigin: 1
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!225 &3628266714878018682
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2852214775928221044}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &2852214776734701798
 GameObject:
   m_ObjectHideFlags: 0
@@ -427,6 +440,7 @@ MonoBehaviour:
   crossHair: {fileID: 4908252698601576789}
   fuelBar: {fileID: 2852214775928221045}
   currentFuelBar: {fileID: 9068530023764315589}
+  fuelBarCanvasGroup: {fileID: 3628266714878018682}
   fuelBarBigLine: {fileID: 7276725765238611663, guid: 7d23ff70330be6644b81966951a8a8f0, type: 3}
   fuelBarSmallLine: {fileID: 3163216398871806182, guid: 42f2f7e0cec107740839ec227ab28fc7, type: 3}
 --- !u!1 &3103641156739187152

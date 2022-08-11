@@ -3,19 +3,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Windows.WebCam;
 
 public class PlayerHUD : MonoBehaviour
 {
     public Image crossHair;
     private float dim;
     private float bright = 255;
-    
+
     public RectTransform fuelBar;
     public RectTransform currentFuelBar;
+    public CanvasGroup fuelBarCanvasGroup;
     public GameObject fuelBarBigLine;
     public GameObject fuelBarSmallLine;
     private const float FuelBoostCostWidth = 100;
-    
+    private float fuelBarAlpha;
+    private float fuelBarFadeWait = 1f;
+    private float fuelBarFadeTime = 0.25f;
+
     PlayerMovement pm;
 
     private void Start()
@@ -24,7 +29,7 @@ public class PlayerHUD : MonoBehaviour
         pm.onCurrentFuelChange += OnJetpackCurrentFuelChange;
         pm.onMaxFuelChange += OnJetpackMaxFuelChange;
         OnJetpackMaxFuelChange();
-        
+
         dim = crossHair.color.a;
     }
 
@@ -34,6 +39,17 @@ public class PlayerHUD : MonoBehaviour
             CrossHairBright();
         else
             CrossHairDim();
+
+        if (pm.CurrentJetpackFuel < pm.MaxJetpackFuel)
+        {
+            fuelBarAlpha = fuelBarFadeWait / fuelBarFadeTime;
+            fuelBarCanvasGroup.alpha = fuelBarAlpha;
+        }
+        else
+        {
+            fuelBarAlpha -= Time.deltaTime / fuelBarFadeTime;
+            fuelBarCanvasGroup.alpha = fuelBarAlpha;
+        }
     }
 
     public void CrossHairBright()
@@ -42,7 +58,7 @@ public class PlayerHUD : MonoBehaviour
         color.a = bright;
         crossHair.color = color;
     }
-    
+
     public void CrossHairDim()
     {
         Color color = crossHair.color;
@@ -85,7 +101,7 @@ public class PlayerHUD : MonoBehaviour
                     Instantiate(fuelBarSmallLine, currentFuelBar).GetComponent<RectTransform>();
                 RectTransform smallLineRight =
                     Instantiate(fuelBarSmallLine, currentFuelBar).GetComponent<RectTransform>();
-            
+
                 smallLineLeft.anchoredPosition = new Vector2(-FuelBoostCostWidth * i / 2, 0);
                 smallLineRight.anchoredPosition = new Vector2(FuelBoostCostWidth * i / 2, 0);
             }
