@@ -138,11 +138,9 @@ namespace ConsoleUtility
         {
             Transform t = GameObject.Find(args[0]).transform;
 
-            PlayerManager.playerMovement.transform.position = t.position;
-            Vector3 rotation = t.eulerAngles;
-            rotation.x = 0;
-            rotation.z = 0;
-            PlayerManager.playerMovement.transform.eulerAngles = rotation;
+            var transform = PlayerManager.playerMovement.transform;
+            transform.position = t.position;
+            transform.eulerAngles = new Vector3(0, t.eulerAngles.y, 0);
         }
 
         public string name => "tp";

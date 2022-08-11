@@ -17,7 +17,25 @@ public class GameManager : SystemSingleton<GameManager>
 
     public static bool applicationIsQuitting = false;
 
-    private static readonly GameData GameData = new GameData();
+    [RuntimeInitializeOnLoadMethod]
+    public static void Spawn()
+    {
+        DontDestroyOnLoad(Instantiate(Resources.Load<GameObject>("InitializeOnLoad/Game Manager")));
+        DontDestroyOnLoad(Instantiate(Resources.Load<GameObject>("InitializeOnLoad/Input Manager")));
+        DontDestroyOnLoad(Instantiate(Resources.Load<GameObject>("InitializeOnLoad/Dialogue System")));
+
+        eventSystem = Instantiate(Resources.Load<GameObject>("InitializeOnLoad/Event System"));
+        overlayCredits = Instantiate(Resources.Load<GameObject>("InitializeOnLoad/Overlay Credits"));
+        overlayPause = Instantiate(Resources.Load<GameObject>("InitializeOnLoad/Overlay Pause"));
+        overlaySettings = Instantiate(Resources.Load<GameObject>("InitializeOnLoad/Overlay Settings"));
+        DontDestroyOnLoad(eventSystem);
+        DontDestroyOnLoad(overlayCredits);
+        DontDestroyOnLoad(overlayPause);
+        DontDestroyOnLoad(overlaySettings);
+        overlayCredits.SetActive(false);
+        overlayPause.SetActive(false);
+        overlaySettings.SetActive(false);
+    }
 
     protected override void Awake()
     {
@@ -26,25 +44,8 @@ public class GameManager : SystemSingleton<GameManager>
         if (isImposter)
             return;
 
-        DontDestroyOnLoad(transform.gameObject);
 
         Application.quitting += () => applicationIsQuitting = true;
-
-        GameData.SetData();
-
-        overlayCredits = Instantiate(Resources.Load<GameObject>("Overlay Credits"));
-        overlayPause = Instantiate(Resources.Load<GameObject>("Overlay Pause"));
-        overlaySettings = Instantiate(Resources.Load<GameObject>("Overlay Settings"));
-        eventSystem = Instantiate(Resources.Load<GameObject>("EventSystem"));
-
-        DontDestroyOnLoad(overlayCredits);
-        DontDestroyOnLoad(overlayPause);
-        DontDestroyOnLoad(overlaySettings);
-        DontDestroyOnLoad(eventSystem);
-
-        overlayCredits.SetActive(false);
-        overlayPause.SetActive(false);
-        overlaySettings.SetActive(false);
     }
 
     public static void ToggleCreditsUI() => overlayCredits.SetActive(!overlayCredits.activeSelf);
