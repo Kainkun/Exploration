@@ -29,6 +29,10 @@ public class PlayerManager : MonoBehaviour
         playerCamera = GetComponentInChildren<CinemachineVirtualCamera>();
         playerMovement = GetComponent<PlayerMovement>();
         playerMultiTool = GetComponentInChildren<PlayerMultiTool>();
+
+        Instantiate(Resources.Load<GameObject>("Player HUD Canvas"));
+        if(!GameObject.FindGameObjectWithTag("MainCamera"))
+            Instantiate(Resources.Load<GameObject>("Main Camera"));
     }
 
     public static void ToggleNoclip() => playerMovement.ToggleNoclip();
