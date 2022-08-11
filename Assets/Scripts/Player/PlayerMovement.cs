@@ -32,11 +32,11 @@ public class PlayerMovement : SystemSingleton<PlayerMovement>
 
     private void Start()
     {
-        InputManager.Get().Move += v => movementInput = v.normalized;
-        InputManager.Get().Look += v => mouseInput = v;
-        InputManager.Get().Sprint += f => sprintButtonDown = f > 0;
-        InputManager.Get().Jump += f => JumpButton(f);
-        InputManager.Get().Crouch += f => crouchButtonDown = f > 0;
+        InputManager.move += v => movementInput = v.normalized;
+        InputManager.look += v => mouseInput = v;
+        InputManager.sprint += f => sprintButtonDown = f > 0;
+        InputManager.jump += JumpButton;
+        InputManager.crouch += f => crouchButtonDown = f > 0;
     }
 
     private void JumpButton(float f)
@@ -497,7 +497,6 @@ public class PlayerMovement : SystemSingleton<PlayerMovement>
     void TryClimb()
     {
         capsuleDistance = playerHeight - (playerRadius * 2);
-
         climbRaycastForwardStartBottom = transform.position + (Vector3.up * playerRadius);
         climbRaycastForwardStartTop = climbRaycastForwardStartBottom + (Vector3.up * capsuleDistance);
         climbRaycastForwardRadius = playerRadius - 0.05f;
