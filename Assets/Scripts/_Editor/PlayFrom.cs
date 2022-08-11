@@ -2,41 +2,62 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.InputSystem.Interactions;
 
 public class PlayFrom : EditorWindow
 {
-    private static bool _startedWithMenuItem;
-    private const float CameraHeight = 1.5f;
+    private static Transform playFromTransform;
 
     [InitializeOnLoadMethod]
-    public static void Startup()
+    private static void Startup()
     {
         EditorApplication.playModeStateChanged += state =>
         {
-            if (state == PlayModeStateChange.EnteredPlayMode && _startedWithMenuItem)
+            Debug.Log(playFromTransform);
+            if (state == PlayModeStateChange.EnteredPlayMode && playFromTransform)
             {
-                MovePlayerToSceneView();
-                _startedWithMenuItem = false;
+                MovePlayerToTransform(playFromTransform);
+                playFromTransform = null;
             }
         };
     }
 
+
     [MenuItem("Play/Play from scene view")]
     public static void PlayFromSceneView()
     {
-        if(EditorApplication.isPlaying)
+        if (EditorApplication.isPlaying)
+        {
+            MovePlayerToSceneView();
             return;
-        
-        _startedWithMenuItem = true;
+        }
+
+        playFromTransform = SceneView.lastActiveSceneView.camera.transform;
         EditorApplication.EnterPlaymode();
     }
 
+    public static void PlayFromTransform(Transform transform)
+    {
+        if (EditorApplication.isPlaying)
+        {
+            MovePlayerToTransform(transform);
+            return;
+        }
+
+        playFromTransform = transform;
+        EditorApplication.EnterPlaymode();
+    }
+
+
     public static void MovePlayerToSceneView()
     {
-        var cameraTransform = SceneView.lastActiveSceneView.camera.transform;
-        Vector3 position = cameraTransform.position;
-        position.y -= CameraHeight;
-        float yRotation = cameraTransform.eulerAngles.y;
+        MovePlayerToTransform(SceneView.lastActiveSceneView.camera.transform);
+    }
+
+    public static void MovePlayerToTransform(Transform transform)
+    {
+        Vector3 position = transform.position;
+        float yRotation = transform.eulerAngles.y;
 
         PlayerManager playerManager = FindObjectOfType<PlayerManager>();
         Transform playerTransform;
