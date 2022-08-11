@@ -2,12 +2,39 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Object = System.Object;
 
 public static class Utility
 {
     public static float RealModulo(float a, float b)
     {
         return a - b * Mathf.Floor(a / b);
+    }
+
+    public static void BoolDelta(Object before, Object after, Action ifTurnedTrue, Action ifTurnedFalse)
+    {
+        if (before == null && after != null)
+            ifTurnedTrue?.Invoke();
+        else if (before != null && after == null)
+            ifTurnedFalse?.Invoke();
+    }
+    
+    public static void BoolDelta(bool before, bool after, Action ifTurnedTrue, Action ifTurnedFalse)
+    {
+        if (before == false && after == true)
+            ifTurnedTrue?.Invoke();
+        else if (before == true && after == false)
+            ifTurnedFalse?.Invoke();
+    }
+
+    public static int BoolDelta(bool before, bool after)
+    {
+        if (before == false && after == true)
+            return 1;
+        else if (before == true && after == false)
+            return -1;
+        else
+            return 0;
     }
 
     public struct CheckBoxData

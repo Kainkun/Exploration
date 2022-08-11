@@ -8,7 +8,7 @@ using UnityEngine;
 public class TrashCollectable : YarnCollectable
 {
     public static bool isDisplayingBounds;
-    private DisplayBounds displayBounds;
+    public DisplayBounds displayBounds;
     private const float boundMinDistance = 20;
     public const float propogationSpeed = 0.6f;
     private static float currentBoundDistance;

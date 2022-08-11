@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 public abstract class MultiToolModule
 {
@@ -84,6 +86,10 @@ public class TrashCollectorModule : MultiToolModule
     protected override string YarnName => "hasTrashCollector";
     protected override string PrefabName => "TrashCollectorModule";
 
+    private TrashCollectable currentTrash;
+    private TrashBin currentTrashBin;
+
+    public static bool hoveringTrashBin;
 
     public override void Intro()
     {
@@ -95,21 +101,33 @@ public class TrashCollectorModule : MultiToolModule
     {
         TrashCollectable.isDisplayingBounds = false;
         moduleGameObject.transform.GetChild(0).localScale = new Vector3(0.66f, 0.66f, 0.66f);
+        hoveringTrashBin = false;
     }
 
     public override void Update()
     {
+        TrashCollectable previousTrash = currentTrash;
+        currentTrash = RaycastGet<TrashCollectable>();
+        if (previousTrash != currentTrash && previousTrash != null)
+            previousTrash.displayBounds.Unhighlight();
+        if (currentTrash != null)
+            currentTrash.displayBounds.Highlight();
+
+
+        currentTrashBin = RaycastGet<TrashBin>();
+        hoveringTrashBin = currentTrashBin != null;
     }
 
     public override void UsePrimary()
     {
-        RaycastGet<TrashCollectable>()?.Collect();
-        TrashBin trashBin = RaycastGet<TrashBin>();
-        if (trashBin)
+        if (currentTrash != null)
+            currentTrash.Collect();
+        
+        if (currentTrashBin)
         {
             if (YarnAccess.TryGetValue("trashCount", out float trashCount) && trashCount > 0) ;
             {
-                TrashBin.DepositStatic(trashCount);
+                TrashBin.Deposit(trashCount);
                 YarnAccess.SetValue("trashCount", 0);
             }
         }

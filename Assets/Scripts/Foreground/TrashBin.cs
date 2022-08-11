@@ -30,7 +30,7 @@ public class TrashBin : MonoBehaviour
         return currentDepositedTrashCount + " total trash deposited\n";
     }
 
-    public static void DepositStatic(float trashCount)
+    public static void Deposit(float trashCount)
     {
         if (trashCount <= 0)
             return;

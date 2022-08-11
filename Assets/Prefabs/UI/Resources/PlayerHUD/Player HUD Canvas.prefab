@@ -424,6 +424,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04943fb41c8d3e04a942b58c48af6547, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  crossHair: {fileID: 4908252698601576789}
   fuelBar: {fileID: 2852214775928221045}
   currentFuelBar: {fileID: 9068530023764315589}
   fuelBarBigLine: {fileID: 7276725765238611663, guid: 7d23ff70330be6644b81966951a8a8f0, type: 3}

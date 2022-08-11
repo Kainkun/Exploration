@@ -642,7 +642,7 @@ public class PlayerMovement : SystemSingleton<PlayerMovement>
         set
         {
             maxJetpackFuel = value;
-            PlayerHUD.Get().OnJetpackMaxFuelChange();
+            onMaxFuelChange?.Invoke();
         }
     }
 
@@ -654,7 +654,7 @@ public class PlayerMovement : SystemSingleton<PlayerMovement>
         set
         {
             currentJetpackFuel = value;
-            PlayerHUD.Get().OnJetpackCurrentFuelChange();
+            onCurrentFuelChange?.Invoke();
         }
     }
 
@@ -668,6 +668,9 @@ public class PlayerMovement : SystemSingleton<PlayerMovement>
     private bool gliding;
     public float glideFallSpeed;
     public float upwardBoostForce;
+
+    public Action onCurrentFuelChange;
+    public Action onMaxFuelChange;
 
     #endregion
 

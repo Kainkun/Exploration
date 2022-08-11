@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DisplayBounds : MonoBehaviour
 {
@@ -12,15 +14,21 @@ public class DisplayBounds : MonoBehaviour
     private RectTransform rectUiTransform;
     const float NearestDistance = 0.6f;
 
+    private Image image;
+    private TextMeshProUGUI text;
+
     void Start()
     {
         camera = Camera.main;
         renderer = GetComponent<Renderer>();
         meshFilter = GetComponent<MeshFilter>();
 
-        GameObject g = Instantiate(Resources.Load<GameObject>("BoundsUI"));
+        GameObject g = Instantiate(Resources.Load<GameObject>("TrashBoundsUI"));
         rectUiTransform = g.GetComponent<RectTransform>();
-        rectUiTransform.SetParent(GameObject.Find("Gameplay UI Canvas").transform);
+        rectUiTransform.SetParent(GameObject.FindObjectOfType<PlayerHUD>().transform);
+
+        image = g.GetComponentInChildren<Image>();
+        text = g.GetComponentInChildren<TextMeshProUGUI>();
     }
 
     private void OnDestroy()
@@ -57,5 +65,17 @@ public class DisplayBounds : MonoBehaviour
         }
 
         rectUiTransform.gameObject.SetActive(false);
+    }
+
+    public void Highlight()
+    {
+        image.color = Color.green;
+        text.color = Color.green;
+    }
+    
+    public void Unhighlight()
+    {
+        image.color = Color.white;
+        text.color = Color.white;
     }
 }
