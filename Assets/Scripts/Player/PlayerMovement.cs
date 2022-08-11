@@ -32,11 +32,11 @@ public class PlayerMovement : SystemSingleton<PlayerMovement>
 
     private void Start()
     {
-        InputManager.move += v => movementInput = v.normalized;
-        InputManager.look += v => mouseInput = v;
-        InputManager.sprint += f => sprintButtonDown = f > 0;
-        InputManager.jump += JumpButton;
-        InputManager.crouch += f => crouchButtonDown = f > 0;
+        InputManager.Singleton.move += v => movementInput = v.normalized;
+        InputManager.Singleton.look += v => mouseInput = v;
+        InputManager.Singleton.sprint += f => sprintButtonDown = f > 0;
+        InputManager.Singleton.crouch += f => crouchButtonDown = f > 0;
+        InputManager.Singleton.jump += JumpButton;
     }
 
     private void JumpButton(float f)
@@ -58,7 +58,7 @@ public class PlayerMovement : SystemSingleton<PlayerMovement>
                 Vector3 v = rb.velocity;
                 v.y = upwardBoostForce;
                 rb.velocity = v;
-                
+
                 float currentCell = Mathf.CeilToInt(CurrentJetpackFuel / boostFuelCost) * boostFuelCost;
                 float min = currentCell - boostFuelCostCheat;
                 if (CurrentJetpackFuel >= min && CurrentJetpackFuel < currentCell)

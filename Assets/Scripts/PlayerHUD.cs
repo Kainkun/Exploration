@@ -32,7 +32,7 @@ public class PlayerHUD : MonoBehaviour
 
     private void Start()
     {
-        pm = PlayerMovement.Get();
+        pm = PlayerMovement.Singleton;
         pm.onCurrentFuelChange += OnJetpackCurrentFuelChange;
         pm.onMaxFuelChange += OnJetpackMaxFuelChange;
         OnJetpackMaxFuelChange();
@@ -47,7 +47,7 @@ public class PlayerHUD : MonoBehaviour
             essenceCount.enabled = true;
             essenceCount.text = "Essence: " + f;
         };
-        InputManager.showInventory += (f) =>
+        InputManager.Singleton.showInventory += (f) =>
         {
             showInventory = f > 0 ? true : false;
         };

@@ -15,14 +15,14 @@ public class ScriptableObjectUtility : ScriptableObject
     public void ToggleSettingsUI() => GameManager.ToggleSettingsUI();
     public void ToggleSettingsUI(bool active) => GameManager.ToggleSettingsUI(active);
 
-    public void Unpause() => InputManager.Get().OnUnpause();
+    public void Unpause() => InputManager.Singleton.OnUnpause();
     public void UnpauseForMainMenu() => GameManager.UnpauseForMainMenu();
     
     
     public void LoadScene(int index) => GameManager.LoadScene(index);
 
-    public void PlaySound(AudioClip audioClip) => AudioManager.Get().PlaySound(audioClip);
-    public void PlaySound(AudioClip audioClip, float volume) => AudioManager.Get().PlaySound(audioClip, volume);
+    public void PlaySound(AudioClip audioClip) => AudioManager.Singleton.PlaySound(audioClip);
+    public void PlaySound(AudioClip audioClip, float volume) => AudioManager.Singleton.PlaySound(audioClip, volume);
 
     public void QuitGame() => GameManager.QuitGame();
     

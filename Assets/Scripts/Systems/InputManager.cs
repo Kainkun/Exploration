@@ -30,7 +30,7 @@ public class InputManager : SystemSingleton<InputManager>
     }
 
 
-    public static void HandleLoadScene(Scene scene, LoadSceneMode loadSceneMode)
+    public void HandleLoadScene(Scene scene, LoadSceneMode loadSceneMode)
     {
         if (scene.buildIndex == 0)
         {
@@ -79,35 +79,36 @@ public class InputManager : SystemSingleton<InputManager>
             GameManager.ToggleCreditsUI(false);
         }
     }
+    
 
-    public static Action<float> jump;
+    public  Action<float> jump;
     public void OnJump(InputValue value) => jump?.Invoke(value.Get<float>());
 
-    public static Action<float> crouch;
+    public  Action<float> crouch;
     public void OnCrouch(InputValue value) => crouch?.Invoke(value.Get<float>());
 
-    public static Action<Vector2> move;
+    public  Action<Vector2> move;
     public void OnMove(InputValue value) => move?.Invoke(value.Get<Vector2>());
 
-    public static Action<Vector2> look;
+    public  Action<Vector2> look;
     public void OnLook(InputValue value) => look?.Invoke(value.Get<Vector2>());
 
-    public static Action<float> sprint;
+    public  Action<float> sprint;
     public void OnSprint(InputValue value) => sprint?.Invoke(value.Get<float>());
 
-    public static Action primary;
+    public  Action primary;
     public void OnPrimary() => primary?.Invoke();
 
-    public static Action secondary;
+    public  Action secondary;
     public void OnSecondary() => secondary?.Invoke();
 
-    public static Action tertiary;
+    public  Action tertiary;
     public void OnTertiary() => tertiary?.Invoke();
     
-    public static Action use;
+    public  Action use;
     public void OnUse() => use?.Invoke();
 
-    public static Action<float> showInventory;
+    public  Action<float> showInventory;
     public void OnShowInventory(InputValue value) => showInventory?.Invoke(value.Get<float>());
 
     public void OnChangeDialogueOption(InputValue value)

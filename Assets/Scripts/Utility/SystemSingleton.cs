@@ -4,10 +4,13 @@ public class SystemSingleton<T> : MonoBehaviour where T : SystemSingleton<T>
 {
     static protected T g_instance = null;
     protected bool isImposter;
-    public static T Get()
+    public static T Singleton
     {
-        Init();
-        return g_instance;
+        get
+        {
+            Init();
+            return g_instance;
+        }
     }
 
     public static void Init()

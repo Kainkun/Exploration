@@ -15,25 +15,25 @@ public class ButtonSounds : MonoBehaviour, IPointerEnterHandler, ISelectHandler,
     public void OnPointerEnter(PointerEventData eventData)
     {
         if(onPointerEnter)
-            AudioManager.Get().PlaySound(onPointerEnter);
+            AudioManager.Singleton.PlaySound(onPointerEnter);
     }
 
     public void OnSelect(BaseEventData eventData)
     {
         if(onPointerSelect)
-            AudioManager.Get().PlaySound(onPointerSelect);
+            AudioManager.Singleton.PlaySound(onPointerSelect);
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
         if(onPointerDown)
-            AudioManager.Get().PlaySound(onPointerDown);
+            AudioManager.Singleton.PlaySound(onPointerDown);
     }
 
     private void PlayClickedSound()
     {
         if(onPointerUp)
-            AudioManager.Get().PlaySound(onPointerUp);
+            AudioManager.Singleton.PlaySound(onPointerUp);
     }
 
     private void Start()
