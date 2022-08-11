@@ -13,7 +13,6 @@ public class PlayFrom : EditorWindow
     {
         EditorApplication.playModeStateChanged += state =>
         {
-            Debug.Log(playFromTransform);
             if (state == PlayModeStateChange.EnteredPlayMode && playFromTransform)
             {
                 MovePlayerToTransform(playFromTransform);
