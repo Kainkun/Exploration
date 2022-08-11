@@ -73,5 +73,5 @@ title: GetKeycard
 Conglaturation for completing the orientation.
 Here is your keycard. It will give you access to the second floor with a few labs.
 You will need to complete more jobs for your keycard to be granted First-Class access to reach the advanced labs.
-<<set $hasStandardKeycard to true>>
+<<SetBool hasStandardKeycard true>>
 ===

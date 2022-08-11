@@ -22,7 +22,7 @@ public class GameManager : SystemSingleton<GameManager>
     {
         DontDestroyOnLoad(Instantiate(Resources.Load<GameObject>("InitializeOnLoad/Game Manager")));
         DontDestroyOnLoad(Instantiate(Resources.Load<GameObject>("InitializeOnLoad/Input Manager")));
-        DontDestroyOnLoad(Instantiate(Resources.Load<GameObject>("InitializeOnLoad/Dialogue System")));
+        DontDestroyOnLoad(Instantiate(Resources.Load<GameObject>("InitializeOnLoad/Yarn")));
 
         eventSystem = Instantiate(Resources.Load<GameObject>("InitializeOnLoad/Event System"));
         overlayCredits = Instantiate(Resources.Load<GameObject>("InitializeOnLoad/Overlay Credits"));
@@ -35,6 +35,9 @@ public class GameManager : SystemSingleton<GameManager>
         overlayCredits.SetActive(false);
         overlayPause.SetActive(false);
         overlaySettings.SetActive(false);
+
+        if (PlayerCamera.Singleton)
+            Instantiate(Resources.Load<GameObject>("InitializeOnLoad/Player HUD Canvas"));
     }
 
     protected override void Awake()

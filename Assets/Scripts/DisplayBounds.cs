@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,10 +20,19 @@ public class DisplayBounds : MonoBehaviour
 
     void Start()
     {
-        Transform hudTransform = GameObject.FindObjectOfType<PlayerHUD>().transform;
-        if(!hudTransform)
+        PlayerHUD playerHUD = GameObject.FindObjectOfType<PlayerHUD>();
+        if (!playerHUD)
+        {
             Destroy(gameObject);
-        
+            return;
+        }
+        Transform hudTransform = playerHUD.transform;
+        if (!hudTransform)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         camera = Camera.main;
         renderer = GetComponent<Renderer>();
         meshFilter = GetComponent<MeshFilter>();
@@ -49,7 +59,7 @@ public class DisplayBounds : MonoBehaviour
             if (GeometryUtility.TestPlanesAABB(planes, renderer.bounds)
                 && Physics.Raycast(
                     transform.position,
-                    PlayerManager.playerCamera.transform
+                    PlayerCamera.Singleton.virtualCamera.transform
                         .position - transform.position,
                     out RaycastHit hit,
                     Single.PositiveInfinity,
@@ -76,7 +86,7 @@ public class DisplayBounds : MonoBehaviour
         image.color = Color.green;
         text.color = Color.green;
     }
-    
+
     public void Unhighlight()
     {
         image.color = Color.white;

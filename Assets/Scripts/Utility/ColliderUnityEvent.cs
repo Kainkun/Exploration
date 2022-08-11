@@ -9,6 +9,7 @@ using UnityEngine.LowLevel;
 public class ColliderUnityEvent : MonoBehaviour
 {
     public bool oneShot;
+    private bool triggeredOnce;
 
     public LayerMask layerMask;
 
@@ -19,37 +20,57 @@ public class ColliderUnityEvent : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (oneShot && triggeredOnce)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         if (layerMask == (layerMask | (1 << other.gameObject.layer)))
             onTriggerEnter?.Invoke();
-        
-        if(oneShot)
-            Destroy(gameObject);
+
+        triggeredOnce = true;
     }
 
     private void OnTriggerExit(Collider other)
     {
+        if (oneShot && triggeredOnce)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         if (layerMask == (layerMask | (1 << other.gameObject.layer)))
             onTriggerExit?.Invoke();
-        
-        if(oneShot)
-            Destroy(gameObject);
+
+        triggeredOnce = true;
     }
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (oneShot && triggeredOnce)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         if (layerMask == (layerMask | (1 << collision.gameObject.layer)))
             onCollisionEnter.Invoke();
-        
-        if(oneShot)
-            Destroy(gameObject);
+
+        triggeredOnce = true;
     }
 
     private void OnCollisionExit(Collision other)
     {
+        if (oneShot && triggeredOnce)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         if (layerMask == (layerMask | (1 << other.gameObject.layer)))
             onCollisionExit.Invoke();
-        
-        if(oneShot)
-            Destroy(gameObject);
+
+        triggeredOnce = true;
     }
 }

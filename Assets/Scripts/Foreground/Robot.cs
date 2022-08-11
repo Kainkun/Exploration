@@ -23,7 +23,7 @@ public class Robot : YarnDialogueInteractable
     {
         if (lookTowardsPlayer)
         {
-            Vector3 playerPosition = PlayerManager.playerMovement.transform.position;
+            Vector3 playerPosition = PlayerMovement.Singleton.transform.position;
             Utility.YAxisLookTowardsSmoothDamp(mesh, playerPosition, ref angleVelocity, smoothTime, maxSpeed,
                 Time.fixedDeltaTime);
         }

@@ -56,30 +56,30 @@ namespace ConsoleUtility
         {
             if (args.Length == 0)
             {
-                PlayerManager.UnlockMultiTool();
-                PlayerManager.UnlockTrashCollector();
-                PlayerManager.UnlockEssenceCollector();
-                PlayerManager.UnlockJetpackGlide();
-                PlayerManager.UnlockJetpackBoost();
+                PlayerMultiTool.Singleton.ActivateMultiTool();
+                PlayerMultiTool.Singleton.UnlockModule(PlayerMultiTool.ModuleType.Trash);
+                PlayerMultiTool.Singleton.UnlockModule(PlayerMultiTool.ModuleType.Essence);
+                PlayerMovement.Singleton.UnlockGlide();
+                PlayerMovement.Singleton.UnlockBoost();
                 return;
             }
 
             switch (args[0])
             {
                 case "mt":
-                    PlayerManager.UnlockMultiTool();
+                    PlayerMultiTool.Singleton.ActivateMultiTool();
                     break;
                 case "tc":
-                    PlayerManager.UnlockTrashCollector();
+                    PlayerMultiTool.Singleton.UnlockModule(PlayerMultiTool.ModuleType.Trash);
                     break;
                 case "ec":
-                    PlayerManager.UnlockEssenceCollector();
+                    PlayerMultiTool.Singleton.UnlockModule(PlayerMultiTool.ModuleType.Essence);
                     break;
                 case "gl":
-                    PlayerManager.UnlockJetpackGlide();
+                    PlayerMovement.Singleton.UnlockGlide();
                     break;
                 case "bo":
-                    PlayerManager.UnlockJetpackBoost();
+                    PlayerMovement.Singleton.UnlockBoost();
                     break;
             }
         }
@@ -98,22 +98,22 @@ namespace ConsoleUtility
         {
             if (args.Length == 0)
             {
-                PlayerManager.PickUpTrash(1000);
-                PlayerManager.PickUpEssence(1000);
-                PlayerManager.GetJobToken(1000);
+                YarnAccess.AddValue("trashCount", 1000);
+                YarnAccess.AddValue("essenceCount", 1000);
+                YarnAccess.AddValue("jobTokenCount", 1000);
                 return;
             }
 
             switch (args[0])
             {
                 case "tr":
-                    PlayerManager.PickUpTrash(int.Parse(args[1]));
+                    YarnAccess.AddValue("trashCount", float.Parse(args[1]));
                     break;
                 case "es":
-                    PlayerManager.PickUpEssence(int.Parse(args[1]));
+                    YarnAccess.AddValue("essenceCount", float.Parse(args[1]));
                     break;
                 case "jt":
-                    PlayerManager.GetJobToken(int.Parse(args[1]));
+                    YarnAccess.AddValue("jobTokenCount", float.Parse(args[1]));
                     break;
                 default:
                     if (args.Length == 1)
@@ -138,7 +138,7 @@ namespace ConsoleUtility
         {
             Transform t = GameObject.Find(args[0]).transform;
 
-            var transform = PlayerManager.playerMovement.transform;
+            var transform = PlayerMovement.Singleton.transform;
             transform.position = t.position;
             transform.eulerAngles = new Vector3(0, t.eulerAngles.y, 0);
         }
@@ -167,7 +167,7 @@ namespace ConsoleUtility
     {
         public void Execute(string[] args)
         {
-            PlayerManager.ToggleNoclip();
+            PlayerMovement.Singleton.ToggleNoclip();
         }
 
         public string name => "noclip";

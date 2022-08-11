@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class SystemSingleton<T> : MonoBehaviour where T : SystemSingleton<T>
@@ -8,9 +9,14 @@ public class SystemSingleton<T> : MonoBehaviour where T : SystemSingleton<T>
     {
         get
         {
-            Init();
+            //Init();
             return g_instance;
         }
+    }
+
+    private void OnApplicationQuit()
+    {
+        g_instance = null;
     }
 
     public static void Init()
@@ -20,6 +26,7 @@ public class SystemSingleton<T> : MonoBehaviour where T : SystemSingleton<T>
         System.Type singletonType = typeof(T);
         GameObject singletonObject = new GameObject(singletonType.ToString(), singletonType);
         g_instance = singletonObject.GetComponent<T>();
+        
     }
 
     protected virtual void Awake()
@@ -28,6 +35,7 @@ public class SystemSingleton<T> : MonoBehaviour where T : SystemSingleton<T>
         {
             // If there is already and instance created,
             // Destory this extra instance
+            print("AAAAAAAAAAAA" + this.name);
             isImposter = true;
             Destroy(gameObject);
             return;

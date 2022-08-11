@@ -14,8 +14,8 @@ public class AudioManager : SystemSingleton<AudioManager>
         base.Awake();
         DontDestroyOnLoad(transform.gameObject);
         
-        main = Resources.Load<AudioMixer>("Main");
-        master = Resources.Load<AudioMixerGroup>("Main");
+        main = Resources.Load<AudioMixer>("Audio/Main");
+        master = Resources.Load<AudioMixerGroup>("Audio/Main");
         
         if(!PlayerPrefs.HasKey("MasterVolume"))
             PlayerPrefs.SetFloat("MasterVolume", 0.5f);

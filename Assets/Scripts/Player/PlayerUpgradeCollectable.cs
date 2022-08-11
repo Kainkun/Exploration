@@ -5,31 +5,40 @@ using UnityEngine.Events;
 
 public class PlayerUpgradeCollectable : MonoBehaviour, IInteractable
 {
-    public PlayerManager.PlayerUpgradeType playerUpgradeType;
+    public PlayerUpgradeType playerUpgradeType;
     public UnityEvent unityEvent;
+    
+    public enum PlayerUpgradeType
+    {
+        UnlockMultiTool,
+        UnlockTrashCollector,
+        UnlockEssenceCollector,
+        UnlockJetpack,
+        UnlockJetpackBoost
+    }
 
     public void PrimaryInteract()
     {
         switch (playerUpgradeType)
         {
-            case PlayerManager.PlayerUpgradeType.UnlockMultiTool:
-                PlayerManager.UnlockMultiTool();
+            case PlayerUpgradeType.UnlockMultiTool:
+                PlayerMultiTool.Singleton.ActivateMultiTool();
                 break;
 
-            case PlayerManager.PlayerUpgradeType.UnlockTrashCollector:
-                PlayerManager.UnlockTrashCollector();
+            case PlayerUpgradeType.UnlockTrashCollector:
+                PlayerMultiTool.Singleton.UnlockModule(PlayerMultiTool.ModuleType.Trash);
                 break;
 
-            case PlayerManager.PlayerUpgradeType.UnlockEssenceCollector:
-                PlayerManager.UnlockEssenceCollector();
+            case PlayerUpgradeType.UnlockEssenceCollector:
+                PlayerMultiTool.Singleton.UnlockModule(PlayerMultiTool.ModuleType.Essence);
                 break;
 
-            case PlayerManager.PlayerUpgradeType.UnlockJetpack:
-                PlayerManager.UnlockJetpackGlide();
+            case PlayerUpgradeType.UnlockJetpack:
+                PlayerMovement.Singleton.UnlockGlide();
                 break;
 
-            case PlayerManager.PlayerUpgradeType.UnlockJetpackBoost:
-                PlayerManager.UnlockJetpackBoost();
+            case PlayerUpgradeType.UnlockJetpackBoost:
+                PlayerMovement.Singleton.UnlockBoost();
                 break;
         }
         

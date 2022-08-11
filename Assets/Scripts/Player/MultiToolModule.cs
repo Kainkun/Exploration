@@ -36,7 +36,7 @@ public abstract class MultiToolModule
 
     protected T RaycastGet<T>() where T : Component
     {
-        Transform t = PlayerManager.playerCamera.transform;
+        Transform t = PlayerCamera.Singleton.virtualCamera.transform;
         if (Physics.Raycast(t.position, t.forward, out RaycastHit raycastHit, 4f, parentMultiTool.raycastLayerMask,
                 QueryTriggerInteraction.Ignore))
         {

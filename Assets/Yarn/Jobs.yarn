@@ -115,7 +115,7 @@ RepairBot: Your first job is to fix the library machine.
 RepairBot: Oh. you already did? Well you deserve a jobToken for that. Here.
 <<set $libraryFixMachineJobStarted to true>>
 <<set $libraryFixMachineJobCompleted to true>>
-<<set $jobTokenCount += 1>>
+<<AddFloat jobTokenCount 1>>
 <<jump LibraryFixVulcanJob>>
 ===
 
@@ -135,7 +135,7 @@ position: 773,724
 ---
 <<if $libraryMachineFixed is true>>
     RepairBot: Thanks for fixing the library machine. Heres the jobToken.
-    <<EarnJobToken YarnSimpleCommands 1>>
+    <<AddFloat jobTokenCount 1>>
     <<set $libraryFixMachineJobCompleted to true>>
     <<jump LibraryFixVulcanJob>>
 <<else>>
@@ -178,7 +178,7 @@ RepairBot: And for your next job, fix the vulcan thingy.
 RepairBot: Oh, you already did? We'll heres your jobToken for that.
 <<set $LibraryFixVulcanJobStarted to true>>
 <<set $LibraryFixVulcanJobCompleted to true>>
-<<set $jobTokenCount += 1>>
+<<AddFloat jobTokenCount 1>>
 ===
 
 title: LibraryFixVulcanJobStart
@@ -193,7 +193,7 @@ position: 773,194
 ---
 <<if $libraryVulcanFixed is true>>
     RepairBot: Thanks! Here's a jobToken
-    <<set $jobTokenCount += 1>>
+    <<AddFloat jobTokenCount 1>>
     <<set $LibraryFixVulcanJobCompleted to true>>
 <<else>>
     RepairBot: Hey, did you fix the vulcan thingy yet?

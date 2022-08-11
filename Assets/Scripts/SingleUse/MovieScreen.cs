@@ -10,7 +10,7 @@ public class MovieScreen : MonoBehaviour
     private bool movieStarted;
     public UnityEvent explosion;
     public UnityEvent movieEnd;
-
+    
     public void StartMovieCoroutine()
     {
         if(movieStarted)

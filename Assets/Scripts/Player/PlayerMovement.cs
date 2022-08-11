@@ -17,10 +17,6 @@ public class PlayerMovement : SystemSingleton<PlayerMovement>
     {
         base.Awake();
 
-        yawTransform = cameraSystem.GetChild(0);
-        pitchTransform = yawTransform.GetChild(0);
-        rollTransform = pitchTransform.GetChild(0);
-
         gravity = GetComponent<Gravity>();
         rb = GetComponent<Rigidbody>();
         prev = rb.position;
@@ -33,7 +29,6 @@ public class PlayerMovement : SystemSingleton<PlayerMovement>
     private void Start()
     {
         InputManager.Singleton.move += v => movementInput = v.normalized;
-        InputManager.Singleton.look += v => mouseInput = v;
         InputManager.Singleton.sprint += f => sprintButtonDown = f > 0;
         InputManager.Singleton.crouch += f => crouchButtonDown = f > 0;
         InputManager.Singleton.jump += JumpButton;
@@ -73,8 +68,6 @@ public class PlayerMovement : SystemSingleton<PlayerMovement>
 
     void Update()
     {
-        HandleCamera();
-
         if (noclip)
         {
             HandleNoclip();
@@ -178,14 +171,14 @@ public class PlayerMovement : SystemSingleton<PlayerMovement>
     {
         float speed = 5;
         float sprint = 20;
-        transform.position += ((PlayerManager.playerCamera.transform.forward * movementInput.y) +
-                               (PlayerManager.playerCamera.transform.right * movementInput.x)) *
+        transform.position += ((PlayerCamera.Singleton.virtualCamera.transform.forward * movementInput.y) +
+                               (PlayerCamera.Singleton.virtualCamera.transform.right * movementInput.x)) *
                               ((sprintButtonDown ? sprint : speed) * Time.deltaTime);
         if (jumpButtonDown)
-            transform.position += (PlayerManager.playerCamera.transform.up) *
+            transform.position += (PlayerCamera.Singleton.virtualCamera.transform.up) *
                                   ((sprintButtonDown ? sprint : speed) * Time.deltaTime);
         if (crouchButtonDown)
-            transform.position += (-PlayerManager.playerCamera.transform.up) *
+            transform.position += (-PlayerCamera.Singleton.virtualCamera.transform.up) *
                                   ((sprintButtonDown ? sprint : speed) * Time.deltaTime);
     }
 
@@ -357,54 +350,6 @@ public class PlayerMovement : SystemSingleton<PlayerMovement>
         // rb.velocity = velocity;
     }
 
-    #region Camera Variables
-
-    [Header("Camera")] public float mouseSensitivity;
-    public float mouseSmoothing;
-    private Vector2 mouseInput;
-
-    [Range(0f, 90f)] public float cameraLookUpLimit = 90f;
-    [Range(0f, 90f)] public float cameraLookDownLimit = 90f;
-
-    public Transform cameraSystem;
-
-    private Transform yawTransform;
-    private Transform pitchTransform;
-    private Transform rollTransform;
-    private float currentPitch;
-
-    #endregion
-
-    void HandleCamera()
-    {
-        BodyYaw(mouseInput.x * mouseSensitivity * Time.deltaTime);
-
-        CameraRotate(
-            0,
-            mouseInput.y * mouseSensitivity * Time.deltaTime,
-            0);
-    }
-
-    public void CameraRotate(float yaw, float pitch, float roll)
-    {
-        currentPitch += pitch;
-        currentPitch = Mathf.Clamp(currentPitch, -cameraLookDownLimit, cameraLookUpLimit);
-        pitchTransform.localEulerAngles = new Vector3(-currentPitch, 0, 0);
-
-        yawTransform.Rotate(Vector3.up, yaw);
-
-        rollTransform.localEulerAngles += new Vector3(0, 0, -roll);
-    }
-
-    public void HeadRotate()
-    {
-    }
-
-    public void BodyYaw(float yaw)
-    {
-        transform.Rotate(Vector3.up, yaw);
-    }
-
 
     #region Climb Variables
 
@@ -467,7 +412,7 @@ public class PlayerMovement : SystemSingleton<PlayerMovement>
                 positionDelta.y = 0;
 
                 if (Physics.SphereCast(
-                        PlayerManager.playerCamera.transform.position,
+                        PlayerCamera.Singleton.virtualCamera.transform.position,
                         0.075f,
                         positionDelta,
                         out RaycastHit h,
@@ -672,6 +617,18 @@ public class PlayerMovement : SystemSingleton<PlayerMovement>
     public Action onMaxFuelChange;
 
     #endregion
+
+    public void UnlockGlide()
+    {
+        canGlide = true;
+        YarnAccess.SetValue("hasJetpackGlide", true);
+    }
+
+    public void UnlockBoost()
+    {
+        canBoost = true;
+        YarnAccess.SetValue("hasJetpackBoost", true);
+    }
 
     void HandleFuel()
     {

@@ -11,10 +11,18 @@ public class PlayerHUD : MonoBehaviour
     private float dim;
     private float bright = 255;
 
+    public GameObject inventoryItem;
+
+
+
     public CanvasGroup inventoryGroup;
-    public TextMeshProUGUI trashCount;
-    public TextMeshProUGUI essenceCount;
-    public TextMeshProUGUI jobTokenCount;
+    public Transform stackingInventoryList;
+
+    public Transform uniqueInventoryList;
+
+    // public TextMeshProUGUI trashCount;
+    // public TextMeshProUGUI essenceCount;
+    // public TextMeshProUGUI jobTokenCount;
     private bool showInventory;
     private float inventoryAlpha;
     private float inventoryFadeTime = 0.25f;
@@ -32,28 +40,82 @@ public class PlayerHUD : MonoBehaviour
 
     private void Start()
     {
+        var a = (1, 2);
         pm = PlayerMovement.Singleton;
         pm.onCurrentFuelChange += OnJetpackCurrentFuelChange;
         pm.onMaxFuelChange += OnJetpackMaxFuelChange;
         OnJetpackMaxFuelChange();
 
-        TrashCollectable.onCollect += f =>
-        {
-            trashCount.enabled = true;
-            trashCount.text = "Trash: " + f;
-        };
-        EssenceCollectable.onCollect += f =>
-        {
-            essenceCount.enabled = true;
-            essenceCount.text = "Essence: " + f;
-        };
-        InputManager.Singleton.showInventory += (f) =>
-        {
-            showInventory = f > 0 ? true : false;
-        };
+        YarnAccess.onSetFloat += CollectStackable;
+        YarnAccess.onSetBool += CollectUnique;
+
+        InputManager.Singleton.showInventory += (f) => { showInventory = f > 0 ? true : false; };
 
         dim = crossHair.color.a;
     }
+
+    void CollectStackable(string s, float f)
+    {
+        var dict = YarnAccess.Singleton.stackingInventoryDict;
+        
+        if (dict.ContainsKey(s))
+        {
+            if (dict[s].textMeshPro == null)
+                dict[s].CreateGui(inventoryItem, stackingInventoryList);
+            dict[s].SetGuiText(f);
+        }
+    }
+
+    void CollectUnique(string s, bool b)
+    {
+        var dict = YarnAccess.Singleton.uniqueInventoryDict;
+
+        if (dict.ContainsKey(s))
+        {
+            if (b == true && dict[s].textMeshPro == null)
+                dict[s].CreateGui(inventoryItem, uniqueInventoryList);
+            else if (b == false && dict[s].textMeshPro != null)
+                dict[s].RemoveGui();
+        }
+    }
+
+    // switch (s)
+    // {
+    //     case "trashCount":
+    //         trashCount.gameObject.SetActive(true);
+    //         trashCount.text = "Trash: " + f;
+    //         break;
+    //     case "essenceCount":
+    //         essenceCount.gameObject.SetActive(true);
+    //         essenceCount.text = "Essence: " + f;
+    //         break;
+    //
+    //     case "hasJetpackKey":
+    //
+    //         break;
+    //     case "libraryMachineFixer":
+    //
+    //         break;
+    //     case "hasJohnRoomKey":
+    //
+    //         break;
+    // }
+
+    // TrashCollectable.onCollect += f =>
+    // {
+    //     trashCount.gameObject.SetActive(true);
+    //     trashCount.text = "Trash: " + f;
+    // };
+    // EssenceCollectable.onCollect += f =>
+    // {
+    //     essenceCount.gameObject.SetActive(true);
+    //     essenceCount.text = "Essence: " + f;
+    // };
+    // YarnSingletonCommands.onEarnJobToken += f =>
+    // {
+    //     jobTokenCount.gameObject.SetActive(true);
+    //     jobTokenCount.text = "Work Tokens: " + f;
+    // };
 
     private void LateUpdate()
     {
@@ -68,7 +130,7 @@ public class PlayerHUD : MonoBehaviour
             inventoryAlpha -= Time.deltaTime / inventoryFadeTime;
         inventoryAlpha = Mathf.Clamp01(inventoryAlpha);
         inventoryGroup.alpha = inventoryAlpha;
-        
+
 
         if (pm.CurrentJetpackFuel < pm.MaxJetpackFuel)
         {

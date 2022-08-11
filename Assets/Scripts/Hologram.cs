@@ -39,7 +39,7 @@ public class Hologram : MonoBehaviour
 
     private void Start()
     {
-        isPlayerCameraNull = PlayerManager.playerCamera == null;
+        isPlayerCameraNull = PlayerCamera.Singleton == null;
     }
 
     private void Awake()
@@ -66,7 +66,7 @@ public class Hologram : MonoBehaviour
         if (isPlayerCameraNull)
             return;
 
-        distance = Vector3.Distance(PlayerManager.playerCamera.transform.position, transform.position);
+        distance = Vector3.Distance(PlayerCamera.Singleton.virtualCamera.transform.position, transform.position);
         if (!displaying && distance <= distanceToDisplay)
         {
             displaying = true;
@@ -87,13 +87,13 @@ public class Hologram : MonoBehaviour
 
         if (followDirection)
         {
-            Utility.YAxisLookTowardsSmoothDamp(transform, PlayerManager.playerCamera.transform.position,
+            Utility.YAxisLookTowardsSmoothDamp(transform, PlayerCamera.Singleton.virtualCamera.transform.position,
                 ref angleVelocity, directionSmoothTime, directionMaxSpeed, Time.fixedDeltaTime);
         }
 
         if (followDistance)
         {
-            Vector3 playerFlatPosition = PlayerManager.playerCamera.transform.position;
+            Vector3 playerFlatPosition = PlayerCamera.Singleton.virtualCamera.transform.position;
             playerFlatPosition.y = 0;
 
             Vector3 flatPosition = transform.position;

@@ -113,8 +113,8 @@ public class SlidingDoor : MonoBehaviour
             for (int i = 0; i < requiredUniqueCollectables.Length; i++)
             {
                 string name = requiredUniqueCollectables[i];
-                if (YarnUtils.variableNameToStringDict.ContainsKey(name))
-                    name = YarnUtils.variableNameToStringDict[name];
+                if (YarnAccess.Singleton.uniqueInventoryDict.ContainsKey(name))
+                    name = YarnAccess.Singleton.uniqueInventoryDict[name].displayText;
                 s += name + " required\n";
             }
 
@@ -123,13 +123,18 @@ public class SlidingDoor : MonoBehaviour
             for (int i = 0; i < requiredStackingCollectables.Length; i++)
             {
                 string name = requiredStackingCollectables[i].collectableName;
-                if (YarnUtils.variableNameToStringDict.ContainsKey(name))
-                    name = YarnUtils.variableNameToStringDict[name];
+                if (YarnAccess.Singleton.stackingInventoryDict.ContainsKey(name))
+                {
+                    float amount = requiredStackingCollectables[i].collectableAmount;
 
-                float amount = requiredStackingCollectables[i].collectableAmount;
-                s += "<size=100%>" + amount + " " + name + (amount > 1 ? "s" : "") +
-                     " required\n";
-
+                    if (Math.Abs(amount - 1) < 0.01f)
+                        name = YarnAccess.Singleton.stackingInventoryDict[name].displayTextSingular;
+                    else
+                        name = YarnAccess.Singleton.stackingInventoryDict[name].displayTextPlural;
+                    
+                    s += "<size=100%>" + amount + " " + name + " required\n";              
+                }
+                
                 YarnAccess.TryGetValue(requiredStackingCollectables[i].collectableName, out float result);
                 s += "<size=50%>You currently have " + result + "\n";
             }

@@ -12,11 +12,11 @@ public class TrashCollectable : YarnCollectable
     private const float boundMinDistance = 20;
     public const float propogationSpeed = 0.6f;
     private static float currentBoundDistance;
-    private bool isplayerMovementNull;
 
     private void Start()
     {
-        isplayerMovementNull = PlayerManager.playerMovement == null;
+        if( PlayerMovement.Singleton == null)
+            Destroy(gameObject);
     }
 
     private void Awake()
@@ -33,9 +33,6 @@ public class TrashCollectable : YarnCollectable
 
     private void Update()
     {
-        if(isplayerMovementNull)
-            return;
-        
         if (isDisplayingBounds)
         {
             if (currentBoundDistance < boundMinDistance)
@@ -52,7 +49,7 @@ public class TrashCollectable : YarnCollectable
         }
 
 
-        displayBounds.isOn = Vector3.Distance(PlayerManager.playerMovement.transform.position, transform.position) <
+        displayBounds.isOn = Vector3.Distance(PlayerMovement.Singleton.transform.position, transform.position) <
                              currentBoundDistance;
     }
 

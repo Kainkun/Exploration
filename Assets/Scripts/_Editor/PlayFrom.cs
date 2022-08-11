@@ -58,12 +58,11 @@ public class PlayFrom : EditorWindow
         Vector3 position = transform.position;
         float yRotation = transform.eulerAngles.y;
 
-        PlayerManager playerManager = FindObjectOfType<PlayerManager>();
         Transform playerTransform;
-        if (!playerManager || (playerManager && !playerManager.gameObject.activeSelf))
+        if (!PlayerMovement.Singleton || (PlayerMovement.Singleton && !PlayerMovement.Singleton.gameObject.activeSelf))
             playerTransform = Instantiate(Resources.Load<GameObject>("Player")).transform;
         else
-            playerTransform = playerManager.transform;
+            playerTransform = PlayerMovement.Singleton.transform;
 
         playerTransform.position = position;
         playerTransform.eulerAngles = new Vector3(0, yRotation, 0);

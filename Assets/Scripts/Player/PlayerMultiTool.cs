@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-public class PlayerMultiTool : MonoBehaviour
+public class PlayerMultiTool : SystemSingleton<PlayerMultiTool>
 {
     public GameObject baseMesh;
     public Transform muzzle;
