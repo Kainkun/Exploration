@@ -151,9 +151,13 @@ namespace ConsoleUtility
         {
             get
             {
-                Transform[] children = GameObject.Find("DebugPositions").GetComponentsInChildren<Transform>();
-                foreach (Transform child in children)
-                    yield return Console.Alias.Get("tp" + child.name, "tp " + child.name);
+                GameObject g = GameObject.Find("DebugPositions");
+                if(g)
+                {
+                    Transform[] children = g.GetComponentsInChildren<Transform>();
+                    foreach (Transform child in children)
+                        yield return Console.Alias.Get("tp" + child.name, "tp " + child.name);
+                }
             }
         }
     }
