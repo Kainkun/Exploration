@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -8,6 +9,7 @@ public abstract class MultiToolModule
 {
     protected readonly PlayerMultiTool parentMultiTool;
     protected GameObject moduleGameObject;
+    protected Animator animator;
     protected abstract string YarnName { get; }
     protected abstract string PrefabName { get; }
 
@@ -26,6 +28,9 @@ public abstract class MultiToolModule
         YarnAccess.SetValue(YarnName, true);
         moduleGameObject = Object.Instantiate(Resources.Load<GameObject>("MultiToolModules/" + PrefabName),
             parentMultiTool.baseMesh.transform);
+        moduleGameObject.transform.localPosition = Vector3.zero;
+        moduleGameObject.transform.localRotation = Quaternion.identity;
+        animator = moduleGameObject.GetComponent<Animator>();
         return true;
     }
 
@@ -52,8 +57,11 @@ public abstract class MultiToolModule
 
 public class NoneModule : MultiToolModule
 {
+    private static readonly int IsUp = Animator.StringToHash("isUp");
+
     public NoneModule(PlayerMultiTool parentMultiTool) : base(parentMultiTool)
     {
+        animator = parentMultiTool.animator;
     }
 
     protected override string YarnName => null;
@@ -61,14 +69,16 @@ public class NoneModule : MultiToolModule
 
     public override void Intro()
     {
-        parentMultiTool.baseMesh.transform.localPosition = new Vector3(0, 0.1f, 0);
-        parentMultiTool.baseMesh.transform.localEulerAngles = new Vector3(-20, 0, 0);
+        animator.SetBool(IsUp, false);
+        // parentMultiTool.baseMesh.transform.localPosition = new Vector3(0, 0.1f, 0);
+        // parentMultiTool.baseMesh.transform.localEulerAngles = new Vector3(-20, 0, 0);
     }
 
     public override void Outro()
     {
-        parentMultiTool.baseMesh.transform.localPosition = Vector3.zero;
-        parentMultiTool.baseMesh.transform.localEulerAngles = Vector3.zero;
+        animator.SetBool(IsUp, true);
+        // parentMultiTool.baseMesh.transform.localPosition = Vector3.zero;
+        // parentMultiTool.baseMesh.transform.localEulerAngles = Vector3.zero;
     }
 
     public override void Update()
@@ -90,18 +100,22 @@ public class TrashCollectorModule : MultiToolModule
     private TrashBin currentTrashBin;
 
     public static bool hoveringTrashBin;
+    private static readonly int Use = Animator.StringToHash("use");
+    private static readonly int IsOpen = Animator.StringToHash("isOpen");
 
     public override void Intro()
     {
         TrashCollectable.isDisplayingBounds = true;
-        moduleGameObject.transform.GetChild(0).localScale = new Vector3(0.66f, 2f, 0.66f);
+        //moduleGameObject.transform.GetChild(0).localScale = new Vector3(0.66f, 2f, 0.66f);
+        animator.SetBool(IsOpen, true);
     }
 
     public override void Outro()
     {
         TrashCollectable.isDisplayingBounds = false;
-        moduleGameObject.transform.GetChild(0).localScale = new Vector3(0.66f, 0.66f, 0.66f);
+        //moduleGameObject.transform.GetChild(0).localScale = new Vector3(0.66f, 0.66f, 0.66f);
         hoveringTrashBin = false;
+        animator.SetBool(IsOpen, false);
     }
 
     public override void Update()
@@ -120,9 +134,11 @@ public class TrashCollectorModule : MultiToolModule
 
     public override void UsePrimary()
     {
+        animator.SetTrigger(Use);
+
         if (currentTrash != null)
             currentTrash.Collect();
-        
+
         if (currentTrashBin)
         {
             if (YarnAccess.TryGetValue("trashCount", out float trashCount) && trashCount > 0) ;

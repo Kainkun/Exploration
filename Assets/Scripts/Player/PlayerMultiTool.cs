@@ -10,22 +10,26 @@ public class PlayerMultiTool : SystemSingleton<PlayerMultiTool>
     public GameObject baseMesh;
     public Transform muzzle;
     public LayerMask raycastLayerMask;
+    [HideInInspector] public Animator animator;
 
     private bool isMultiToolActive;
     private int currentModuleCount = 0;
     private ModuleType currentModule = ModuleType.None;
     private Dictionary<ModuleType, MultiToolModule> moduleDict;
+    private static readonly int PickUp = Animator.StringToHash("pickUp");
 
     private void Start()
     {
+        animator = GetComponent<Animator>();
+            
+        InputManager.Singleton.primary += () => moduleDict[currentModule].UsePrimary();
+        
         moduleDict = new Dictionary<ModuleType, MultiToolModule>()
         {
             { ModuleType.None, new NoneModule(this) },
             { ModuleType.Trash, new TrashCollectorModule(this) },
             { ModuleType.Essence, new EssenceCollectorModule(this) }
         };
-        
-        InputManager.Singleton.primary += () => moduleDict[currentModule].UsePrimary();
     }
 
     public enum ModuleType
@@ -44,7 +48,7 @@ public class PlayerMultiTool : SystemSingleton<PlayerMultiTool>
         baseMesh.SetActive(true);
         isMultiToolActive = true;
 
-        moduleDict[currentModule].Intro();
+        animator.SetTrigger(PickUp);
     }
 
     void Update()

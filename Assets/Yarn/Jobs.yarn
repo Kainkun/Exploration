@@ -36,7 +36,7 @@ position: 773,-396
 ---
 BruhBot: Bruh its dirty here, go pick up 10 pieces of trash. I'll give you a jobToken for it.
 BruhBot: Heres a trash collector module for your multi tool.
-<<SetActiveName BruhBot trashCollector>>
+<<InvokeEvent BruhBot>>
 <<if $hasMultiTool is false>>
     BruhBot: Bruh you dont have a MultiTool? WelcomeBot should have one for you. Once you get that, youll be able to use the trash collector
 <<endif>>
