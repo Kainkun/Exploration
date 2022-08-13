@@ -36,7 +36,19 @@ public abstract class MultiToolModule
 
     public abstract void Intro();
     public abstract void Outro();
-    public abstract void Update();
+
+    public virtual void UpdateDuringActive()
+    {
+    }
+
+    public virtual void UpdateDuringInactive()
+    {
+    }
+
+    public virtual void Update()
+    {
+    }
+
     public abstract void UsePrimary();
 
     protected T RaycastGet<T>() where T : Component
@@ -81,6 +93,10 @@ public class NoneModule : MultiToolModule
         // parentMultiTool.baseMesh.transform.localEulerAngles = Vector3.zero;
     }
 
+    public override void UpdateDuringActive()
+    {
+    }
+
     public override void Update()
     {
     }
@@ -118,7 +134,7 @@ public class TrashCollectorModule : MultiToolModule
         animator.SetBool(IsOpen, false);
     }
 
-    public override void Update()
+    public override void UpdateDuringActive()
     {
         TrashCollectable previousTrash = currentTrash;
         currentTrash = RaycastGet<TrashCollectable>();
@@ -130,6 +146,10 @@ public class TrashCollectorModule : MultiToolModule
 
         currentTrashBin = RaycastGet<TrashBin>();
         hoveringTrashBin = currentTrashBin != null;
+    }
+
+    public override void Update()
+    {
     }
 
     public override void UsePrimary()
@@ -160,18 +180,31 @@ public class EssenceCollectorModule : MultiToolModule
     protected override string YarnName => "hasEssenceCollector";
     protected override string PrefabName => "EssenceCollectorModule";
 
+    private Transform fan;
+    private float speed;
+
     public override void Intro()
     {
-        moduleGameObject.transform.GetChild(0).localScale = new Vector3(0.66f, 2f, 0.66f);
+        fan = moduleGameObject.transform.GetChild(0).GetChild(0).GetChild(0);
     }
 
     public override void Outro()
     {
-        moduleGameObject.transform.GetChild(0).localScale = new Vector3(0.66f, 0.66f, 0.66f);
+    }
+
+    public override void UpdateDuringActive()
+    {
+        speed = Mathf.Clamp(speed + Time.deltaTime, 0.25f, 1.5f);
+    }
+
+    public override void UpdateDuringInactive()
+    {
+        speed = Mathf.Clamp(speed - (Time.deltaTime * 0.2f), 0.25f, 1.5f);
     }
 
     public override void Update()
     {
+        fan.localEulerAngles += new Vector3(0, 0, -Time.deltaTime * 360 * speed);
     }
 
     public override void UsePrimary()

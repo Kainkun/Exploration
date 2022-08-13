@@ -21,9 +21,9 @@ public class PlayerMultiTool : SystemSingleton<PlayerMultiTool>
     private void Start()
     {
         animator = GetComponent<Animator>();
-            
+
         InputManager.Singleton.primary += () => moduleDict[currentModule].UsePrimary();
-        
+
         moduleDict = new Dictionary<ModuleType, MultiToolModule>()
         {
             { ModuleType.None, new NoneModule(this) },
@@ -64,7 +64,14 @@ public class PlayerMultiTool : SystemSingleton<PlayerMultiTool>
                 SwitchMultiToolMode((ModuleType)Utility.RealModulo((int)currentModule - 1, currentModuleCount + 1));
         }
 
-        moduleDict[currentModule].Update();
+        foreach (var multiToolModule in moduleDict)
+        {
+            if (multiToolModule.Key != currentModule)
+                multiToolModule.Value.UpdateDuringInactive();
+            multiToolModule.Value.Update();
+        }
+
+        moduleDict[currentModule].UpdateDuringActive();
     }
 
     public void UnlockModule(ModuleType moduleType)
