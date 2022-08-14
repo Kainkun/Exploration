@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using Object = UnityEngine.Object;
 
 public class PlayerMultiTool : SystemSingleton<PlayerMultiTool>
 {
@@ -20,9 +21,11 @@ public class PlayerMultiTool : SystemSingleton<PlayerMultiTool>
 
     private void Start()
     {
-        animator = GetComponent<Animator>();
-
         InputManager.Singleton.primary += () => moduleDict[currentModule].UsePrimary();
+
+        baseMesh = Object.Instantiate(Resources.Load<GameObject>("MultiToolModules/" + "MultiToolBase"), transform);
+        baseMesh.SetActive(false);
+        animator = baseMesh.GetComponent<Animator>();
 
         moduleDict = new Dictionary<ModuleType, MultiToolModule>()
         {
@@ -46,9 +49,8 @@ public class PlayerMultiTool : SystemSingleton<PlayerMultiTool>
 
         YarnAccess.SetValue("hasMultiTool", true);
         baseMesh.SetActive(true);
-        isMultiToolActive = true;
-
         animator.SetTrigger(PickUp);
+        isMultiToolActive = true;
     }
 
     void Update()
@@ -66,6 +68,9 @@ public class PlayerMultiTool : SystemSingleton<PlayerMultiTool>
 
         foreach (var multiToolModule in moduleDict)
         {
+            if (!multiToolModule.Value.isUnlocked)
+                continue;
+
             if (multiToolModule.Key != currentModule)
                 multiToolModule.Value.UpdateDuringInactive();
             multiToolModule.Value.Update();

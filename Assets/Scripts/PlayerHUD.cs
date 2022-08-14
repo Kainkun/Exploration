@@ -19,10 +19,7 @@ public class PlayerHUD : MonoBehaviour
     public Transform stackingInventoryList;
 
     public Transform uniqueInventoryList;
-
-    // public TextMeshProUGUI trashCount;
-    // public TextMeshProUGUI essenceCount;
-    // public TextMeshProUGUI jobTokenCount;
+    
     private bool showInventory;
     private float inventoryAlpha;
     private float inventoryFadeTime = 0.25f;
@@ -78,44 +75,6 @@ public class PlayerHUD : MonoBehaviour
                 dict[s].RemoveGui();
         }
     }
-
-    // switch (s)
-    // {
-    //     case "trashCount":
-    //         trashCount.gameObject.SetActive(true);
-    //         trashCount.text = "Trash: " + f;
-    //         break;
-    //     case "essenceCount":
-    //         essenceCount.gameObject.SetActive(true);
-    //         essenceCount.text = "Essence: " + f;
-    //         break;
-    //
-    //     case "hasJetpackKey":
-    //
-    //         break;
-    //     case "libraryMachineFixer":
-    //
-    //         break;
-    //     case "hasJohnRoomKey":
-    //
-    //         break;
-    // }
-
-    // TrashCollectable.onCollect += f =>
-    // {
-    //     trashCount.gameObject.SetActive(true);
-    //     trashCount.text = "Trash: " + f;
-    // };
-    // EssenceCollectable.onCollect += f =>
-    // {
-    //     essenceCount.gameObject.SetActive(true);
-    //     essenceCount.text = "Essence: " + f;
-    // };
-    // YarnSingletonCommands.onEarnJobToken += f =>
-    // {
-    //     jobTokenCount.gameObject.SetActive(true);
-    //     jobTokenCount.text = "Work Tokens: " + f;
-    // };
 
     private void LateUpdate()
     {

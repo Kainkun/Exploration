@@ -55,7 +55,6 @@ public class YarnAccess : SystemSingleton<YarnAccess>
         uniqueInventoryDict.Add("hasJetpackKey", new UniqueYarnData("Jetpack Key"));
         uniqueInventoryDict.Add("hasJetpackGlide", new UniqueYarnData("Jetpack"));
         uniqueInventoryDict.Add("hasJetpackBoost", new UniqueYarnData("Jetpack Boost Upgrade"));
-        uniqueInventoryDict.Add("libraryMachineFixer", new UniqueYarnData("Library Machine Fixer"));
         uniqueInventoryDict.Add("hasJohnRoomKey", new UniqueYarnData("John's Room Key"));
         uniqueInventoryDict.Add("hasStandardKeycard", new UniqueYarnData("Standard Access KeyCard"));
     }

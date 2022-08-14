@@ -1,14 +1,17 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using ConsoleUtility;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.InputSystem.Interactions;
 using Object = UnityEngine.Object;
 
 public abstract class MultiToolModule
 {
     protected readonly PlayerMultiTool parentMultiTool;
     protected GameObject moduleGameObject;
+    public bool isUnlocked = false;
     protected Animator animator;
     protected abstract string YarnName { get; }
     protected abstract string PrefabName { get; }
@@ -18,7 +21,7 @@ public abstract class MultiToolModule
         this.parentMultiTool = parentMultiTool;
     }
 
-    public bool Unlock()
+    public virtual bool Unlock()
     {
         if (PrefabName == null)
             return false;
@@ -27,10 +30,11 @@ public abstract class MultiToolModule
             return false;
         YarnAccess.SetValue(YarnName, true);
         moduleGameObject = Object.Instantiate(Resources.Load<GameObject>("MultiToolModules/" + PrefabName),
-            parentMultiTool.baseMesh.transform);
+            parentMultiTool.baseMesh.transform.GetChild(0));
         moduleGameObject.transform.localPosition = Vector3.zero;
         moduleGameObject.transform.localRotation = Quaternion.identity;
         animator = moduleGameObject.GetComponent<Animator>();
+        isUnlocked = true;
         return true;
     }
 
@@ -73,7 +77,6 @@ public class NoneModule : MultiToolModule
 
     public NoneModule(PlayerMultiTool parentMultiTool) : base(parentMultiTool)
     {
-        animator = parentMultiTool.animator;
     }
 
     protected override string YarnName => null;
@@ -81,14 +84,14 @@ public class NoneModule : MultiToolModule
 
     public override void Intro()
     {
-        animator.SetBool(IsUp, false);
+        parentMultiTool.animator.SetBool(IsUp, false);
         // parentMultiTool.baseMesh.transform.localPosition = new Vector3(0, 0.1f, 0);
         // parentMultiTool.baseMesh.transform.localEulerAngles = new Vector3(-20, 0, 0);
     }
 
     public override void Outro()
     {
-        animator.SetBool(IsUp, true);
+        parentMultiTool.animator.SetBool(IsUp, true);
         // parentMultiTool.baseMesh.transform.localPosition = Vector3.zero;
         // parentMultiTool.baseMesh.transform.localEulerAngles = Vector3.zero;
     }
@@ -118,6 +121,10 @@ public class TrashCollectorModule : MultiToolModule
     public static bool hoveringTrashBin;
     private static readonly int Use = Animator.StringToHash("use");
     private static readonly int IsOpen = Animator.StringToHash("isOpen");
+
+    public TrashCollectorModule(PlayerMultiTool parentMultiTool) : base(parentMultiTool)
+    {
+    }
 
     public override void Intro()
     {
@@ -168,10 +175,6 @@ public class TrashCollectorModule : MultiToolModule
             }
         }
     }
-
-    public TrashCollectorModule(PlayerMultiTool parentMultiTool) : base(parentMultiTool)
-    {
-    }
 }
 
 
@@ -182,14 +185,29 @@ public class EssenceCollectorModule : MultiToolModule
 
     private Transform fan;
     private float speed;
+    private static readonly int IsOpen = Animator.StringToHash("isOpen");
+
+    public EssenceCollectorModule(PlayerMultiTool parentMultiTool) : base(parentMultiTool)
+    {
+    }
+
+    public override bool Unlock()
+    {
+        bool b = base.Unlock();
+        fan = moduleGameObject.transform.GetChild(0).GetChild(0).Find("fan");
+        Debug.Log(moduleGameObject);
+
+        return b;
+    }
 
     public override void Intro()
     {
-        fan = moduleGameObject.transform.GetChild(0).GetChild(0).GetChild(0);
+        animator.SetBool(IsOpen, true);
     }
 
     public override void Outro()
     {
+        animator.SetBool(IsOpen, false);
     }
 
     public override void UpdateDuringActive()
@@ -210,9 +228,5 @@ public class EssenceCollectorModule : MultiToolModule
     public override void UsePrimary()
     {
         RaycastGet<EssenceCollectable>()?.Collect();
-    }
-
-    public EssenceCollectorModule(PlayerMultiTool parentMultiTool) : base(parentMultiTool)
-    {
     }
 }

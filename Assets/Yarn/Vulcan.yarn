@@ -9,15 +9,22 @@ position: 186,181
     <<set $libraryVulcanFixed to true>>
 <<endif>>
 
-<<jump LibraryVulcanFixed>>
-===
-
-title:LibraryVulcanFixed
-position: 427,169
----
 Interface to talk with Vulcan
 Mitoshi exoses John
 Mitoshi later reaction to John's murder
+===
+
+title:LibraryBackVulcan
+---
+<<if $libraryMachineFixed is false>>
+    Error...<br>\[  \] I am not a Robot
+    -> Press "I am not a Robot" button
+    Loading...
+    Fixed!
+    <<set $libraryMachineFixed to true>>
+<<endif>>
+
+Introduce Leon here
 ===
 
 title: PlayerRoomVulcan

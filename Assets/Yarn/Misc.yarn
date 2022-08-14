@@ -1,28 +1,9 @@
-﻿title: LibraryMachineBottomFloor
-position: -140,-176
----
-<<if $libraryMachineFixed is true>>
-    <<jump LibraryMachine>>
-<<else>>
-    Error... Please fix at main control panel on the second floor.
-<<endif>>
-===
-
-title: LibraryMachineTopFloor
+﻿title: LibraryMachineMain
 position: -137,-83
 ---
-<<declare $libraryMachineFixer to false>>
-
 <<if $libraryMachineFixed is false>>
     Error...
-    Maintenence requires thing
-    -> Locate Thing <<if $libraryMachineFixer is false>>
-        Locating...
-        Thing is in the Living Quarters
-    -> Use Thing <<if $libraryMachineFixer is true>>
-        Loading...
-        Fixed!
-        <<set $libraryMachineFixed to true>>
+    Maintenence requires interaction with thing
 <<else>>
     <<jump LibraryMachine>>
 <<endif>>
