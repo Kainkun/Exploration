@@ -9,45 +9,17 @@ ScriptedImporter:
   assetBundleVariant: 
   script: {fileID: 11500000, guid: 053561912b1654d80a424bb0696a74ae, type: 3}
   sourceScripts:
-  - {fileID: 6391573757903218779, guid: a3be71390f3702d42a03d87410144fda, type: 3}
-  - {fileID: 6391573757903218779, guid: 75fed78f2e0cd9b4aa2fef30f873cc2b, type: 3}
-  - {fileID: 6391573757903218779, guid: aee6a8df013713948bf4c9c0d5bef572, type: 3}
-  - {fileID: 6391573757903218779, guid: f1c917311d391ce46b74a56c6c2df52f, type: 3}
   - {fileID: 6391573757903218779, guid: 03cdeae630fa7624188f270720b12829, type: 3}
+  - {fileID: 6391573757903218779, guid: aee6a8df013713948bf4c9c0d5bef572, type: 3}
+  - {fileID: 6391573757903218779, guid: 734504ffb92ce634aa51b1cb3b1ee47d, type: 3}
+  - {fileID: 6391573757903218779, guid: 212952c64a7d47249b67f97900cda86a, type: 3}
+  - {fileID: 6391573757903218779, guid: 2fbbf420514e43c4482d7517668ebe82, type: 3}
+  - {fileID: 6391573757903218779, guid: c30410c36822814428a355a4dd230203, type: 3}
+  - {fileID: 6391573757903218779, guid: 75fed78f2e0cd9b4aa2fef30f873cc2b, type: 3}
+  - {fileID: 6391573757903218779, guid: 5be9399d479d97c4099232e2f23146de, type: 3}
+  - {fileID: 6391573757903218779, guid: 777c333c995a43a479e48110d6346a9a, type: 3}
   compileErrors: []
-  serializedDeclarations:
-  - name: $trashJobStart
-    typeName: Bool
-    defaultValueBool: 0
-    defaultValueNumber: 0
-    defaultValueString: 
-    description: 
-    isImplicit: 0
-    sourceYarnAsset: {fileID: 6391573757903218779, guid: f1c917311d391ce46b74a56c6c2df52f, type: 3}
-  - name: $trashJobComplete
-    typeName: Bool
-    defaultValueBool: 0
-    defaultValueNumber: 0
-    defaultValueString: 
-    description: 
-    isImplicit: 0
-    sourceYarnAsset: {fileID: 6391573757903218779, guid: f1c917311d391ce46b74a56c6c2df52f, type: 3}
-  - name: $trash
-    typeName: Number
-    defaultValueBool: 0
-    defaultValueNumber: 0
-    defaultValueString: 
-    description: 
-    isImplicit: 0
-    sourceYarnAsset: {fileID: 6391573757903218779, guid: f1c917311d391ce46b74a56c6c2df52f, type: 3}
-  - name: $jobToken
-    typeName: Number
-    defaultValueBool: 0
-    defaultValueNumber: 0
-    defaultValueString: 
-    description: Implicitly declared in Vulcan.yarn, node LibraryVulcan
-    isImplicit: 1
-    sourceYarnAsset: {fileID: 6391573757903218779, guid: aee6a8df013713948bf4c9c0d5bef572, type: 3}
+  serializedDeclarations: []
   defaultLanguage: en-US
   languagesToSourceAssets: []
   useAddressableAssets: 0

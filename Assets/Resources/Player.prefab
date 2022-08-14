@@ -191,7 +191,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7773279, y: 1}
+    m_SensorSize: {x: 1.7776573, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -364,7 +364,7 @@ MonoBehaviour:
   maxClimbableForwardDistance: 1
   maxClimbReachAboveHead: 1
   minClimbableHeight: 0.5
-  climbSpeed: 7
+  climbSpeed: 3
   maxClimbTimeBeforeSnapping: 3
   boostFuelCost: 1
   FuelRechargeRate: 1

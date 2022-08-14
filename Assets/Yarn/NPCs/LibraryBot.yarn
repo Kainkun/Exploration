@@ -1,0 +1,148 @@
+﻿title: LibraryJobs
+position: 501,410
+---
+
+<<if $libraryFixMachineJobStarted is false>>
+    RepairBot: I got a couple of jobs for you.
+<<endif>>
+
+<<if $libraryFixMachineJobCompleted is false>>
+    <<jump LibraryFixMachineJob>>
+<<endif>>
+
+<<if $LibraryFixVulcanJobCompleted is false>>
+    <<jump LibraryFixVulcanJob>>
+<<endif>>
+
+RepairBot: Thanks for doing both of these Jobs
+===
+
+
+
+title: LibraryFixMachineJob
+tags: 
+colorID: 8
+position: 501,676
+---
+<<declare $libraryFixMachineJobStarted to false>>
+<<declare $libraryFixMachineJobCompleted to false>>
+<<declare $libraryMachineFixed to false>>
+
+<<if $libraryFixMachineJobStarted is false>>
+    <<if $libraryMachineFixed is true>>
+        <<jump LibraryFixMachineJobCompletedEarly>>
+    <<else>>
+        <<jump LibraryFixMachineJobStart>>
+    <<endif>>
+<<endif>>
+
+<<if $libraryFixMachineJobCompleted is false>>
+    <<jump LibraryFixMachineJobDuring>>
+<<endif>>
+
+//<<jump LibraryFixMachineJobAfter>>
+===
+
+title: LibraryFixMachineJobCompletedEarly
+tags: 
+colorID: 8
+position: 773,517
+---
+RepairBot: Your first job is to fix the library machine.
+RepairBot: Oh. you already did? Well you deserve a jobToken for that. Here.
+<<set $libraryFixMachineJobStarted to true>>
+<<set $libraryFixMachineJobCompleted to true>>
+<<AddFloat jobTokenCount 1>>
+<<jump LibraryFixVulcanJob>>
+===
+
+title: LibraryFixMachineJobStart
+tags: 
+colorID: 8
+position: 773,620
+---
+RepairBot: Your first job is to fix the library machine. Come back here after and ill give you a jobToken.
+<<set $libraryFixMachineJobStarted to true>>
+===
+
+title: LibraryFixMachineJobDuring
+tags: 
+colorID: 8
+position: 773,724
+---
+<<if $libraryMachineFixed is true>>
+    RepairBot: Thanks for fixing the library machine. Heres the jobToken.
+    <<AddFloat jobTokenCount 1>>
+    <<set $libraryFixMachineJobCompleted to true>>
+    <<jump LibraryFixVulcanJob>>
+<<else>>
+    RepairBot: Hey, did you fix the library machine yet?
+    -> I'm still working on it.
+        RepairBot: Alright, come back when you're done.
+    -> Can you help me out?
+        RepairBot: The library machine's main control panel is on the second floor.
+<<endif>>
+===
+
+
+
+title: LibraryFixVulcanJob
+position: 501,139
+---
+<<declare $LibraryFixVulcanJobStarted to false>>
+<<declare $LibraryFixVulcanJobCompleted to false>>
+<<declare $libraryVulcanFixed to false>>
+
+<<if $LibraryFixVulcanJobStarted is false>>
+    <<if $libraryVulcanFixed is true>>
+        <<jump LibraryFixVulcanJobCompletedEarly>>
+    <<else>>
+        <<jump LibraryFixVulcanJobStart>>
+    <<endif>>
+<<endif>>
+
+<<if $LibraryFixVulcanJobCompleted is false>>
+    <<jump LibraryFixVulcanJobDuring>>
+<<endif>>
+
+<<jump LibraryFixVulcanJobAfter>>
+===
+
+title: LibraryFixVulcanJobCompletedEarly
+position: 773,-15
+---
+RepairBot: And for your next job, fix the vulcan thingy.
+RepairBot: Oh, you already did? We'll heres your jobToken for that.
+<<set $LibraryFixVulcanJobStarted to true>>
+<<set $LibraryFixVulcanJobCompleted to true>>
+<<AddFloat jobTokenCount 1>>
+===
+
+title: LibraryFixVulcanJobStart
+position: 773,93
+---
+RepairBot: For your next job, can you go fix the Vulcan thingy? It's in the presentation room.
+<<set $LibraryFixVulcanJobStarted to true>>
+===
+
+title: LibraryFixVulcanJobDuring
+position: 773,194
+---
+<<if $libraryVulcanFixed is true>>
+    RepairBot: Thanks! Here's a jobToken
+    <<AddFloat jobTokenCount 1>>
+    <<set $LibraryFixVulcanJobCompleted to true>>
+<<else>>
+    RepairBot: Hey, did you fix the vulcan thingy yet?
+    -> I'm still working on it.
+        RepairBot: Alright, come back when you're done.
+    -> Can you help me out?
+        RepairBot: The vulcan thingy is in the presentation room. If its currently being used by someone the door will be locked. Of course then the only way in is from the stairs on the roof but there is absolutely clearly no way to the roof of the presentation room I positively guarantee it...
+<<endif>>
+===
+
+title: LibraryFixVulcanJobAfter
+position: 773,302
+---
+If you're reading this, something went wrong.
+===

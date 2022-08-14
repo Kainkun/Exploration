@@ -1,0 +1,36 @@
+﻿title: LibraryMachineMain
+position: -137,-83
+---
+<<if $libraryMachineFixed is false>>
+    Error...
+    Maintenence requires interaction with thing
+<<else>>
+    <<jump LibraryMachine>>
+<<endif>>
+
+
+===
+
+title: LibraryMachine
+position: 123,-115
+---
+<<declare $hasRailingFell to false>>
+
+-> Display Science Books
+    <<SetActiveName LibraryMachineTopFloor LibraryReset false>>
+    <<SetActiveName LibraryMachineTopFloor LibraryMessy true>>
+-> Display Art Books
+    <<SetActiveName LibraryMachineTopFloor LibraryReset false>>
+    <<SetActiveName LibraryMachineTopFloor LibraryMessy true>>
+-> Display Mislanious Books
+    <<SetActiveName LibraryMachineTopFloor LibraryReset false>>
+    <<SetActiveName LibraryMachineTopFloor LibraryMessy true>>
+-> Reset Books
+    <<if $hasRailingFell is false>>
+        <<SetActiveName LibraryMachineTopFloor RailingLoose false>>
+        <<SetActiveName LibraryMachineTopFloor RailingFallen true>>
+        <<set $hasRailingFell to true>>
+    <<endif>>
+    <<SetActiveName LibraryMachineTopFloor LibraryMessy false>>
+    <<SetActiveName LibraryMachineTopFloor LibraryReset true>>
+===
