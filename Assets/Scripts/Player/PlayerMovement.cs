@@ -193,7 +193,7 @@ public class PlayerMovement : SystemSingleton<PlayerMovement>
     public float sprintMultiplier = 1.7f;
     public float acceleration;
 
-    private Rigidbody rb;
+    [HideInInspector] public Rigidbody rb;
     private bool sprintButtonDown;
     private Vector2 movementInput;
 

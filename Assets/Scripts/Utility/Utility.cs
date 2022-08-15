@@ -2,10 +2,18 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem.Interactions;
 using Object = System.Object;
 
 public static class Utility
 {
+    public static float Remap(float inMin, float inMax, float outMin, float outMax, float value)
+    {
+        float rel = Mathf.InverseLerp(inMin, inMax, value);
+        float f = Mathf.LerpUnclamped(outMin, outMax, rel);
+        return f;
+    }
+
     public static float RealModulo(float a, float b)
     {
         return a - b * Mathf.Floor(a / b);
@@ -18,7 +26,7 @@ public static class Utility
         else if (before != null && after == null)
             ifTurnedFalse?.Invoke();
     }
-    
+
     public static void BoolDelta(bool before, bool after, Action ifTurnedTrue, Action ifTurnedFalse)
     {
         if (before == false && after == true)
@@ -73,15 +81,14 @@ public static class Utility
 
     public static void YAxisLookTowardsSmoothDamp(
         Transform selfTransform,
-        Vector3 positionToLookAt,
+        Vector3 direction,
         ref float angleVelocity,
         float smoothTime,
         float maxSpeed,
         float deltaTime)
     {
-        Vector3 directionTowardsFlat = positionToLookAt - selfTransform.position;
-        directionTowardsFlat.y = 0;
-        float targetAngle = Vector3.SignedAngle(Vector3.forward, directionTowardsFlat, Vector3.up);
+        direction.y = 0;
+        float targetAngle = Vector3.SignedAngle(Vector3.forward, direction, Vector3.up);
 
         Vector3 eulerAngles = selfTransform.eulerAngles;
         float angle = Mathf.SmoothDampAngle(eulerAngles.y, targetAngle, ref angleVelocity,

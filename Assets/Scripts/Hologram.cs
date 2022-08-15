@@ -47,7 +47,7 @@ public class Hologram : MonoBehaviour
         _holograms.Add(this);
         text = transform.GetChild(0).GetComponent<RectTransform>();
         textMeshPro = text.GetComponent<TextMeshPro>();
-        if(textOverride != "")
+        if (textOverride != "")
             textMeshPro.text = textOverride;
 
         Color color = textMeshPro.color;
@@ -87,8 +87,9 @@ public class Hologram : MonoBehaviour
 
         if (followDirection)
         {
-            Utility.YAxisLookTowardsSmoothDamp(transform, PlayerCamera.Singleton.virtualCamera.transform.position,
-                ref angleVelocity, directionSmoothTime, directionMaxSpeed, Time.fixedDeltaTime);
+            Vector3 direction = PlayerCamera.Singleton.virtualCamera.transform.position - transform.position;
+            Utility.YAxisLookTowardsSmoothDamp(transform, direction, ref angleVelocity, directionSmoothTime,
+                directionMaxSpeed, Time.fixedDeltaTime);
         }
 
         if (followDistance)

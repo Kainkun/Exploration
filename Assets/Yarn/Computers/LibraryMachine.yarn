@@ -14,23 +14,16 @@ position: -137,-83
 title: LibraryMachine
 position: 123,-115
 ---
-<<declare $hasRailingFell to false>>
-
 -> Display Science Books
-    <<SetActiveName LibraryMachineTopFloor LibraryReset false>>
-    <<SetActiveName LibraryMachineTopFloor LibraryMessy true>>
+    <<SetPreset LibraryMachineBooksPillar climbable>>
 -> Display Art Books
-    <<SetActiveName LibraryMachineTopFloor LibraryReset false>>
-    <<SetActiveName LibraryMachineTopFloor LibraryMessy true>>
--> Display Mislanious Books
-    <<SetActiveName LibraryMachineTopFloor LibraryReset false>>
-    <<SetActiveName LibraryMachineTopFloor LibraryMessy true>>
--> Reset Books
-    <<if $hasRailingFell is false>>
-        <<SetActiveName LibraryMachineTopFloor RailingLoose false>>
-        <<SetActiveName LibraryMachineTopFloor RailingFallen true>>
-        <<set $hasRailingFell to true>>
-    <<endif>>
-    <<SetActiveName LibraryMachineTopFloor LibraryMessy false>>
-    <<SetActiveName LibraryMachineTopFloor LibraryReset true>>
+    <<SetPreset LibraryMachineBooksPillar pretty>>
+-> Settings
+    ->All Up
+        <<SetPreset LibraryMachineBooksPillar allUp>>
+    ->All Down
+        <<SetPreset LibraryMachineBooksPillar allDown>>
+    ->Reset
+        <<SetPreset LibraryMachineBooksPillar wave>>
+
 ===

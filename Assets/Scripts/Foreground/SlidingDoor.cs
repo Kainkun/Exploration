@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class SlidingDoor : MonoBehaviour
 {
-    private DoorState doorState = DoorState.Close;
+    public DoorState doorState = DoorState.Close;
 
     public Transform rightDoor;
     public Transform leftDoor;
@@ -16,6 +16,8 @@ public class SlidingDoor : MonoBehaviour
     public float timeToClose;
 
     public AnimationCurve animationCurve;
+
+    public bool disablePlayerDetection;
 
     public string[] frontSideRequiredUniqueCollectables;
     public YarnUtils.CollectableAmountPair[] frontSideRequiredStackingCollectables;
@@ -69,9 +71,9 @@ public class SlidingDoor : MonoBehaviour
         backTriggerCheckBoxData = Utility.GetCheckBoxData(backSideTrigger);
 
         if (rightDoor)
-            rightStartPosition = rightDoor.position;
+            rightStartPosition = rightDoor.localPosition;
         if (leftDoor)
-            leftStartPosition = leftDoor.position;
+            leftStartPosition = leftDoor.localPosition;
 
 
         if (frontHologram)
@@ -90,7 +92,8 @@ public class SlidingDoor : MonoBehaviour
 
     private void Update()
     {
-        CheckDoorState();
+        if (!disablePlayerDetection)
+            CheckDoorState();
         AnimateDoor();
     }
 
@@ -107,7 +110,7 @@ public class SlidingDoor : MonoBehaviour
     {
         if (YarnUtils.HasRequiredCollectables(requiredUniqueCollectables, requiredStackingCollectables))
             return "";
-        
+
         string s = "";
         if (requiredUniqueCollectables.Length > 0)
             for (int i = 0; i < requiredUniqueCollectables.Length; i++)
@@ -131,10 +134,10 @@ public class SlidingDoor : MonoBehaviour
                         name = YarnAccess.Singleton.stackingInventoryDict[name].displayTextSingular;
                     else
                         name = YarnAccess.Singleton.stackingInventoryDict[name].displayTextPlural;
-                    
-                    s += "<size=100%>" + amount + " " + name + " required\n";              
+
+                    s += "<size=100%>" + amount + " " + name + " required\n";
                 }
-                
+
                 YarnAccess.TryGetValue(requiredStackingCollectables[i].collectableName, out float result);
                 s += "<size=50%>You currently have " + result + "\n";
             }
@@ -173,8 +176,17 @@ public class SlidingDoor : MonoBehaviour
         }
 
         if (rightDoor)
-            rightDoor.position = rightStartPosition + (transform.right * (slideDistance * animationCurve.Evaluate(t)));
+        {
+            Vector3 v = rightDoor.localPosition;
+            v.x = rightStartPosition.x + (slideDistance * animationCurve.Evaluate(t));
+            rightDoor.localPosition = v;
+        }
+
         if (leftDoor)
-            leftDoor.position = leftStartPosition + (-transform.right * (slideDistance * animationCurve.Evaluate(t)));
+        {
+            Vector3 v = leftDoor.localPosition;
+            v.x = leftStartPosition.x + (-slideDistance * animationCurve.Evaluate(t));
+            leftDoor.localPosition = v;
+        }
     }
 }
