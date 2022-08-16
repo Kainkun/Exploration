@@ -21,7 +21,7 @@ public class TrashCollectable : YarnCollectable
 
     private void Awake()
     {
-        displayBounds = GetComponentInChildren<DisplayBounds>();
+        //displayBounds = GetComponentInChildren<DisplayBounds>();
         isDisplayingBounds = false;
         currentBoundDistance = 0;
     }
