@@ -139,6 +139,7 @@ GameObject:
   - component: {fileID: 8757194483896081224}
   - component: {fileID: 8587759548819826993}
   - component: {fileID: 3161468883107514583}
+  - component: {fileID: 8313438383814607253}
   m_Layer: 31
   m_Name: CM vcam1
   m_TagString: Untagged
@@ -191,7 +192,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7776573, y: 1}
+    m_SensorSize: {x: 1.7774259, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -215,6 +216,19 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 257
+--- !u!114 &8313438383814607253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1559778782205556859}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1697a0132719bae458729c9e99c0c716, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  addToGlobalShakers: 1
 --- !u!1 &3415351567359512095
 GameObject:
   m_ObjectHideFlags: 0
@@ -357,6 +371,7 @@ MonoBehaviour:
   walkBackwardsSpeed: 1.8
   sprintMultiplier: 1.7
   acceleration: 20
+  rb: {fileID: 0}
   jumpVelocity: 3.2
   maxJumpHoldTime: 0.3
   jumpBufferTime: 0.3

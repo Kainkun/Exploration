@@ -12,3 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c21ae08f9bfa69f4aaaee0fd519da879, type: 3}
   m_Name: ScriptableObjectUtility
   m_EditorClassIdentifier: 
+  shakePreset: {fileID: 11400000, guid: d7a93a3c6c2182b4ab29c6ca2f5c77d3, type: 2}

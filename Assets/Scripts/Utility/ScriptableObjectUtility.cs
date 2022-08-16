@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using MilkShake;
 using UnityEngine;
 
 
@@ -27,4 +28,7 @@ public class ScriptableObjectUtility : ScriptableObject
     public void QuitGame() => GameManager.QuitGame();
     
     public void StartDialogue(string s) => YarnAccess.dialogueRunner.StartDialogue(s);
+
+    public ShakePreset shakePreset;
+    public void CameraShake() => Shaker.ShakeAll(shakePreset);
 }

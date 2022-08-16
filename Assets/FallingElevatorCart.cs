@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using MilkShake;
 using UnityEngine;
 
 public class FallingElevatorCart : MonoBehaviour
@@ -32,5 +33,25 @@ public class FallingElevatorCart : MonoBehaviour
         {
             other.transform.parent = null;
         }
+    }
+
+
+    public ShakePreset shake;
+    private ShakeInstance shakeInstance;
+    public void StartShake()
+    {
+        shakeInstance = Shaker.ShakeAll(shake);
+    }
+
+    private void EndShake()
+    {
+        shakeInstance.Stop(0, true);
+    }
+
+    public ShakePreset explosion;
+    public void Crash()
+    {
+        EndShake();
+        Shaker.ShakeAll(explosion);
     }
 }
