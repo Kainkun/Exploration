@@ -3,7 +3,7 @@ position: 501,410
 ---
 
 <<if $libraryFixMachineJobStarted is false>>
-    RepairBot: I got a couple of jobs for you.
+    RepairBot: Hi, I'm just fixing all of these stairs here. Looks like someone got lazy with the welding. Here, I got a couple of jobs for you.
 <<endif>>
 
 <<if $libraryFixMachineJobCompleted is false>>

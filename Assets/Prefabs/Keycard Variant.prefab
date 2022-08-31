@@ -93,6 +93,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 0
   dontDestroy: 0
-  collectableIdentifier: hasJohnRoomKey
+  collectableIdentifier: 
   amount: 0
   dialogueTitle: 

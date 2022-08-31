@@ -85,7 +85,6 @@ public class LibraryMachine : MonoBehaviour
 
                 index++;
 
-                print("hei" + y + ":" + height);
                 rings[x].shelveStacks[y].SetHeight(int.Parse(height));
             }
         }
