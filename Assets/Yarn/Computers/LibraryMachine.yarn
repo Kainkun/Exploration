@@ -1,4 +1,4 @@
-﻿title: LibraryMachineMain
+title: LibraryMachineMain
 position: -137,-83
 ---
 <<if $libraryMachineFixed is false>>

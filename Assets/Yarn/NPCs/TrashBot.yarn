@@ -1,4 +1,4 @@
-﻿title: TrashJob
+title: TrashJob
 position: 501,-339
 ---
 <<declare $trashJobStarted to false>>
