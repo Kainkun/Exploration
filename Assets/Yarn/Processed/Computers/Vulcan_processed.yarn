@@ -9,7 +9,7 @@ position: 186,181
     <<set $libraryVulcanFixed to true>>
 <<endif>>
 
-Interface to talk with Vulcan
+Interface to talk with <color=\#ff0000>Vulcan</color>
 Mitoshi exoses John
 Mitoshi later reaction to John's murder
 ===

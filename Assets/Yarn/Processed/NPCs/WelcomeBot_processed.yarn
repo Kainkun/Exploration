@@ -3,16 +3,16 @@ title: Welcome
 <<declare $welcomeStage to 0>>
 
 <<if $welcomeStage is 0>>
-    HelloBot: Hello \[Name\]! I'm HelloBot! Nice to meet you :)
+    HelloBot: Hello <color=\#9e9e9e>\[Name\]</color>! I'm HelloBot! Nice to meet you :)
     -> Nice to meet you too!
         HelloBot: :)
     -> Do you not know my name?
         HelloBot: ...
-        HelloBot: Of course I do \[Name\], don't be silly!
+        HelloBot: Of course I do <color=\#9e9e9e>\[Name\]</color>, don't be silly!
     -> ...
-    HelloBot: According to our database, you came all the way from \[Location\] to work for us. Incredible!
+    HelloBot: According to our database, you came all the way from <color=\#9e9e9e>\[Location\]</color> to work for us. Incredible!
     HelloBot: Anyhow, welcome to The Lab, the most advanced research and development facility of all time!
-    HelloBot: Before you start your onboarding, I will give you your very own MultiTool! It has no modules yet but once you find one, it can help you accomplish all kinds of useful tasks!
+    HelloBot: Before you start your onboarding, I will give you your very own <color=\#fcba03>Multi-Tool</color>! It has no modules yet but once you find one, it can help you accomplish all kinds of useful tasks!
     <<SetActiveName WelcomeBot_1 MultiToolCollectable>>
     <<set $welcomeStage to 1>>
 
@@ -27,7 +27,7 @@ title: Welcome
         <<InvokeEvent WelcomeBot_1>>
         <<set $welcomeStage to 2>>
     <<else>>
-        HelloBot: Please pick up your multitool.
+        HelloBot: Please pick up your <color=\#fcba03>Multi-Tool</color>.
     <<endif>>
 <<endif>>
 ===
@@ -40,14 +40,14 @@ title: WelcomeAfterMovie
 <<if $welcomeDone is false>>
     HelloBot: Wasn't that just inspiring? :')
     HelloBot: Now, lets start your orientation tour!
-    HelloBot: \[InitializeTour\] $GLITCH10$
-    HelloBot: \[Error... Skipping Routine. Please refer to Vulcan for Error Code: 7458891\]
+    HelloBot: <color=\#9e9e9e>\[InitializeTour\]</color> <color=\#1781C5>7</color><color=\#BE07AB>y</color><color=\#5EDEE3>!</color><color=\#4DA94D>!</color><color=\#5659CF>k</color><color=\#B9BA1F>e</color><color=\#A9C402>J</color><color=\#42FF52>y</color><color=\#EB6AD4>Q</color><color=\#3D47A6>d</color><color=\#C4F566>2</color><color=\#B7DF38>w</color><color=\#47FB58>8</color><color=\#D30337>7</color><color=\#B24FB6>U</color><color=\#4201D5>V</color><color=\#38AA9E>I</color><color=\#673BB5>C</color><color=\#38818D>Q</color><color=\#E658C0>v</color><color=\#38D3BD>N</color><color=\#03977C>o</color><color=\#A47314>-</color><color=\#3EC07D>f</color><color=\#7FC308>x</color><color=\#C5D54B>d</color><color=\#04A264>e</color><color=\#A14305>i</color><color=\#D86D57>0</color><color=\#35DC27>v</color><color=\#9EEC3D>F</color><color=\#F61258>g</color><color=\#6BD61F>-</color><color=\#8E1306>1</color><color=\#A52114>r</color><color=\#983DFD>=</color><color=\#13DF9D>~</color><color=\#278396>@</color><color=\#812BA3>m</color><color=\#B92104>0</color><color=\#7145CA>Y</color><color=\#3C5FB9>G</color><color=\#3B8E42>+</color><color=\#5C9847>Q</color><color=\#60CF72>M</color><color=\#B02856>W</color><color=\#D5612A>s</color><color=\#873F1C>C</color><color=\#C46271>B</color><color=\#0E72BB>~</color><color=\#7D3FF9>s</color><color=\#DA60AE>0</color><color=\#6EE36D>R</color><color=\#A93643>b</color><color=\#96751E>0</color><color=\#2D9480>S</color><color=\#270CDF>F</color><color=\#1B4E8C>8</color><color=\#5BD8C4>c</color><color=\#6A50E0>H</color><color=\#070A89>x</color><color=\#EC9149>H</color><color=\#AA190B>-</color><color=\#B39758>A</color><color=\#3E8D96>J</color><color=\#BBED39>d</color><color=\#5C8AD6>V</color><color=\#8C1C5E>B</color><color=\#BA4D61>@</color><color=\#E54F17>j</color><color=\#2DA328>%</color><color=\#8A4A3B>n</color><color=\#882893>0</color><color=\#0458F5>%</color><color=\#8C379D>t</color><color=\#59B515>c</color><color=\#39AB6C>v</color><color=\#69DD88>n</color><color=\#840D90>U</color><color=\#FBC104>J</color><color=\#D8384D>l</color><color=\#0CC040>I</color><color=\#7031FE>q</color><color=\#3D3BDF>8</color><color=\#334CBA>I</color><color=\#10F369>v</color><color=\#28DDDF>P</color><color=\#FBF21A>w</color><color=\#07820D>2</color><color=\#5B04D8>k</color><color=\#D1F546>t</color><color=\#031AAE>L</color><color=\#914772>H</color><color=\#081A88>K</color><color=\#460AC0>d</color><color=\#C26643>d</color><color=\#0E9D78>J</color><color=\#9B5E3C>&</color><color=\#114D95>T</color><color=\#729727>6</color><color=\#46F2FA>V</color><color=\#BB6727>V</color><color=\#8C4059>C</color><color=\#6B54B4>D</color><color=\#428095>%</color><color=\#BE4193>9</color><color=\#5CC07C>Y</color><color=\#5D963D>^</color><color=\#03748F>x</color><color=\#8CD84A>2</color><color=\#2D8C03>l</color><color=\#643899>T</color><color=\#A923B0>V</color><color=\#854D38>E</color><color=\#A403C2>b</color><color=\#77FDA0>d</color><color=\#67994A>b</color><color=\#0A529F>A</color><color=\#FC2A87>B</color><color=\#971A62>9</color><color=\#C910D0>j</color><color=\#B1C354>x</color><color=\#398A56>^</color><color=\#8672E3>H</color><color=\#7E0488>L</color><color=\#42ADD7>j</color><color=\#079773>D</color><color=\#C72225>r</color><color=\#9411F0>O</color><color=\#282F86>Q</color><color=\#97324A>8</color><color=\#A14E37>@</color><color=\#3A9375>A</color><color=\#C43B8B>W</color><color=\#FBDF01>3</color><color=\#4EDC83>v</color><color=\#875412>k</color><color=\#72408B>H</color><color=\#5AE040>L</color><color=\#C24C5C>G</color><color=\#C011B7>8</color><color=\#FD5157>!</color><color=\#EE70EC>a</color><color=\#B940CD>i</color><color=\#C25D02>f</color><color=\#54B4B4>6</color><color=\#160BC9>z</color><color=\#D32871>U</color><color=\#793981>A</color><color=\#EFF515>6</color>
+    HelloBot: <color=\#9e9e9e>\[Error... Skipping Routine. Please refer to <color=\#ff0000>Vulcan</color> for Error Code: 7458891\]</color>
     HelloBot: Wasn't that great!? You're going to love working here!
-    HelloBot: Before you unleash your full creative potential, use the Vulcan Terminal in your room to complete your orientation and receive your Standard Lab Access Keycard.
+    HelloBot: Before you unleash your full creative potential, use the <color=\#ff0000>Vulcan</color> Terminal in your room to complete your orientation and receive your <color=\#fcba03>Standard Lab Access Keycard</color>.
     HelloBot: Welcome to The Lab! :)
     <<set $welcomeDone to true>>
 
 <<else>>
-    Remember, $GLITCH5$ Then head over to the Vulcan Terminal in your room to complete orientation and receive your Standard Lab Access Keycard.
+    Remember, <color=\#A83CE0>Z</color><color=\#C5311D>l</color><color=\#564FD3>F</color><color=\#C2368B>F</color><color=\#C1AC24>z</color><color=\#8C5424>2</color><color=\#917445>m</color><color=\#95AD35>B</color><color=\#C11273>C</color><color=\#58D9AF>z</color><color=\#965C42>*</color><color=\#278FB0>O</color><color=\#9E2FEF>p</color><color=\#2954B8>G</color><color=\#3ADF9C>S</color> Then head over to the <color=\#ff0000>Vulcan</color> Terminal in your room to complete orientation and receive your <color=\#fcba03>Standard Lab Access Keycard</color>.
 <<endif>>
 ===

@@ -12,7 +12,7 @@ title: Welcome
     -> ...
     HelloBot: According to our database, you came all the way from \[Location\] to work for us. Incredible!
     HelloBot: Anyhow, welcome to The Lab, the most advanced research and development facility of all time!
-    HelloBot: Before you start your onboarding, I will give you your very own MultiTool! It has no modules yet but once you find one, it can help you accomplish all kinds of useful tasks!
+    HelloBot: Before you start your onboarding, I will give you your very own Multi-Tool! It has no modules yet but once you find one, it can help you accomplish all kinds of useful tasks!
     <<SetActiveName WelcomeBot_1 MultiToolCollectable>>
     <<set $welcomeStage to 1>>
 
@@ -27,7 +27,7 @@ title: Welcome
         <<InvokeEvent WelcomeBot_1>>
         <<set $welcomeStage to 2>>
     <<else>>
-        HelloBot: Please pick up your multitool.
+        HelloBot: Please pick up your Multi-Tool.
     <<endif>>
 <<endif>>
 ===
@@ -40,7 +40,7 @@ title: WelcomeAfterMovie
 <<if $welcomeDone is false>>
     HelloBot: Wasn't that just inspiring? :')
     HelloBot: Now, lets start your orientation tour!
-    HelloBot: \[InitializeTour\] $GLITCH10$
+    HelloBot: \[InitializeTour\] \\GLITCH150\\
     HelloBot: \[Error... Skipping Routine. Please refer to Vulcan for Error Code: 7458891\]
     HelloBot: Wasn't that great!? You're going to love working here!
     HelloBot: Before you unleash your full creative potential, use the Vulcan Terminal in your room to complete your orientation and receive your Standard Lab Access Keycard.
@@ -48,6 +48,6 @@ title: WelcomeAfterMovie
     <<set $welcomeDone to true>>
 
 <<else>>
-    Remember, $GLITCH5$ Then head over to the Vulcan Terminal in your room to complete orientation and receive your Standard Lab Access Keycard.
+    Remember, \\GLITCH15\\ Then head over to the Vulcan Terminal in your room to complete orientation and receive your Standard Lab Access Keycard.
 <<endif>>
 ===

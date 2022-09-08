@@ -24,9 +24,9 @@ position: 501,-339
 title: TrashJobCompletedEarly
 position: 773,-496
 ---
-BruhBot: Hey can you pick up 10 pieces of trash?
+BruhBot: Hey can you pick up 10 pieces of <color=\#fcba03>trash</color>?
 BruhBot: Oh wtf you already did that?
-BruhBot: Well put the trash in the bin. It will give you a jobToken for every 10 trash you turn in.
+BruhBot: Well put the <color=\#fcba03>trash</color> in the bin. It will give you a <color=\#fcba03>Job-Token</color> for every 10 <color=\#fcba03>trash</color> you turn in.
 <<set $trashJobStarted to true>>
 <<set $trashJobCompleted to true>>
 ===
@@ -34,11 +34,11 @@ BruhBot: Well put the trash in the bin. It will give you a jobToken for every 10
 title: TrashJobStart
 position: 773,-396
 ---
-BruhBot: Bruh its dirty here, go pick up 10 pieces of trash. I'll give you a jobToken for it.
-BruhBot: Heres a trash collector module for your multi tool.
+BruhBot: Bruh its dirty here, go pick up 10 pieces of <color=\#fcba03>trash</color>. I'll give you a <color=\#fcba03>Job-Token</color> for it.
+BruhBot: Heres a <color=\#fcba03>trash</color> collector module for your <color=\#fcba03>Multi-Tool</color>.
 <<InvokeEvent BruhBot>>
 <<if $hasMultiTool is false>>
-    BruhBot: Bruh you dont have a MultiTool? WelcomeBot should have one for you. Once you get that, youll be able to use the trash collector
+    BruhBot: Bruh you dont have a <color=\#fcba03>Multi-Tool</color>? WelcomeBot should have one for you. Once you get that, youll be able to use the <color=\#fcba03>trash</color> collector
 <<endif>>
 <<set $trashJobStarted to true>>
 ===
@@ -47,10 +47,10 @@ title: TrashJobDuring
 position: 773,-311
 ---
 <<if ($trashCount + $depositedTrashCount) >= 10>>
-    BruhBot: Good job bruh. Put the trash in the bin. It will give you a jobToken for every 10 trash you turn in.
+    BruhBot: Good job bruh. Put the <color=\#fcba03>trash</color> in the bin. It will give you a <color=\#fcba03>Job-Token</color> for every 10 <color=\#fcba03>trash</color> you turn in.
     <<set $trashJobCompleted to true>>
 <<else>>
-    BruhBot: Bruh, you only collected {($trashCount + $depositedTrashCount)} trash, go get at least 10 then come back here.
+    BruhBot: Bruh, you only collected {($trashCount + $depositedTrashCount)} <color=\#fcba03>trash</color>, go get at least 10 then come back here.
 <<endif>>
 ===
 

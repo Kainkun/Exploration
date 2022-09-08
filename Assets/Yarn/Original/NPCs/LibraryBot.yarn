@@ -49,7 +49,7 @@ colorID: 8
 position: 773,517
 ---
 RepairBot: Your first job is to fix the library machine.
-RepairBot: Oh. you already did? Well you deserve a jobToken for that. Here.
+RepairBot: Oh. you already did? Well you deserve a Job-Token for that. Here.
 <<set $libraryFixMachineJobStarted to true>>
 <<set $libraryFixMachineJobCompleted to true>>
 <<AddFloat jobTokenCount 1>>
@@ -61,7 +61,7 @@ tags:
 colorID: 8
 position: 773,620
 ---
-RepairBot: Your first job is to fix the library machine. Come back here after and ill give you a jobToken.
+RepairBot: Your first job is to fix the library machine. Come back here after and ill give you a Job-Token.
 <<set $libraryFixMachineJobStarted to true>>
 ===
 
@@ -71,7 +71,7 @@ colorID: 8
 position: 773,724
 ---
 <<if $libraryMachineFixed is true>>
-    RepairBot: Thanks for fixing the library machine. Heres the jobToken.
+    RepairBot: Thanks for fixing the library machine. Heres the Job-Token.
     <<AddFloat jobTokenCount 1>>
     <<set $libraryFixMachineJobCompleted to true>>
     <<jump LibraryFixVulcanJob>>
@@ -112,7 +112,7 @@ title: LibraryFixVulcanJobCompletedEarly
 position: 773,-15
 ---
 RepairBot: And for your next job, fix the vulcan thingy.
-RepairBot: Oh, you already did? We'll heres your jobToken for that.
+RepairBot: Oh, you already did? We'll heres your Job-Token for that.
 <<set $LibraryFixVulcanJobStarted to true>>
 <<set $LibraryFixVulcanJobCompleted to true>>
 <<AddFloat jobTokenCount 1>>
@@ -129,7 +129,7 @@ title: LibraryFixVulcanJobDuring
 position: 773,194
 ---
 <<if $libraryVulcanFixed is true>>
-    RepairBot: Thanks! Here's a jobToken
+    RepairBot: Thanks! Here's a Job-Token
     <<AddFloat jobTokenCount 1>>
     <<set $LibraryFixVulcanJobCompleted to true>>
 <<else>>
