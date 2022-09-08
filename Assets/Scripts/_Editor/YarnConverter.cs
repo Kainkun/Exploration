@@ -9,7 +9,7 @@ using System.Text.RegularExpressions;
 
 public class YarnConverter : EditorWindow
 {
-    private readonly (string[], string)[] pairs = new (string[], string)[]
+    private static readonly (string[], string)[] pairs = new (string[], string)[]
     {
         (new string[] { "grey" }, "9e9e9e"), //Computer Variable
         (new string[] { "error" }, "ff0000"), //Computer Error
@@ -20,7 +20,8 @@ public class YarnConverter : EditorWindow
     [MenuItem("Yarn Tools/Convert")]
     private static void ConvertFiles()
     {
-        string[] files = Directory.GetFiles(Application.dataPath + "/Yarn/Original", "*.yarn", SearchOption.AllDirectories);
+        string[] files =
+            Directory.GetFiles(Application.dataPath + "/Yarn/Original", "*.yarn", SearchOption.AllDirectories);
         foreach (string file in files)
             ConvertFile(file);
     }
@@ -29,19 +30,29 @@ public class YarnConverter : EditorWindow
     {
         string[] lines = File.ReadAllLines(originalFilePath);
 
-        for (int i = 0; i < lines.Length; i++)
-        {
-            foreach (var pair in pairs)
-            {
-                foreach (string s in pair.Item1)
-                {
-                    Regex regex = new Regex(s + @"(?!\<\/color\>)");
-                    lines[i] = regex.Replace(lines[i], @"<color=\#" + pair.Item2 + @">$&</color>");
-                }
-            }
-        }
+        // for (int i = 0; i < lines.Length; i++)
+        // {
+        //     foreach (var pair in pairs)
+        //     {
+        //         foreach (string s in pair.Item1)
+        //         {
+        //             Regex regex = new Regex(@"/(?<!^(title:|position:|<<|---|===).*)" + s + @"(?!\<\/color\>)/gm");
+        //             lines[i] = regex.Replace(lines[i], @"<color=\#" + pair.Item2 + @">$&</color>");
+        //         }
+        //     }
+        // }
 
-        string processedFilePath = originalFilePath.Replace(Application.dataPath + "/Yarn/Original", Application.dataPath + "/Yarn/Processed");
-        File.WriteAllLines(originalFilePath, lines);
+        string processedFilePath = originalFilePath.Replace(
+            Application.dataPath + "/Yarn/Original",
+            Application.dataPath + "/Yarn/Processed");
+        
+        string dir = Path.GetDirectoryName(processedFilePath);
+        Directory.CreateDirectory(dir);
+        
+        string ext = Path.GetExtension(processedFilePath);
+        string name = Path.GetFileNameWithoutExtension(processedFilePath);
+        processedFilePath = Path.Combine(dir, name + "_processed" + ext);
+        
+        File.WriteAllLines(processedFilePath, lines);
     }
 }
